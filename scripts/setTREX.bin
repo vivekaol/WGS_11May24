@@ -1,0 +1,321 @@
+#!/bin/bash
+echo setTREX.bin wrapper for RFE1400
+
+if [ $# -ne 3 ]
+  then
+    echo "Incorrect number of arguments supplied"
+    exit 
+fi
+
+#Status file (where we keep the state)
+SFILE=/tmp/setTREX.state
+
+#Original setTREX.bin
+#STBIN=/home/wgs/scripts/setTREX.original
+
+function updateStatusFile {
+	echo boardType=$boardType > $SFILE
+	echo DSP0M=$DSP0M >> $SFILE
+	echo DSP0B=$DSP0B >> $SFILE
+	echo DSP1M=$DSP1M >> $SFILE
+	echo DSP1B=$DSP1B >> $SFILE	
+}
+
+function setRFEE_9100 {
+	if [ $1 = 't' ] 
+	then 
+		echo "9100: Changing dsp: $3 to Tower Scan Mode for band:$2" 
+		MODE='ue'
+		obm rm -c $(($3-1)),0 -d fdd
+		if [ "$2" -eq 71 ]; then		
+			obm rf -c $(($3-1)),0 $MODE 1
+		else
+			obm rf -c $(($3-1)),0 $MODE $2
+		fi
+		obm rf -c $(($3-1)),0 tx 0,0
+		obm rf -c $(($3-1)),0 rx 0,1
+		obm rf -c $(($3-1)),0 rx 0,2
+	elif [ $1 = 'i' ] 
+	then 
+		echo "9100: Changing to ID Catcher Mode to band:$2" 
+		MODE='bts'
+	
+		if [ "$3" -eq 1 ] 
+		then 
+			echo "9100: Changing in Primary DSP" 
+			DSP0B=$2
+			DSP0M=$1
+			if [ "$2" = "28a" ] || [ "$2" = "28b" ]; then
+				obm rm -c 0,0 -d fdd
+			elif [ "$2" = "41a" ]; then
+				obm rm -c 0,0 -d tdd
+			elif [ "$2" -ge 33 ] && [ "$2" -le 51 ]; then
+				obm rm -c 0,0 -d tdd
+			else
+				obm rm -c 0,0 -d fdd
+			fi
+
+			if [ "$2" = "28a" ] || [ "$2" = "28b" ] || [ "$2" = "41a" ]; then
+			 	obm rf -c 0,0 $MODE $2
+			elif [ "$2" -eq 41 ]
+			then
+				echo "band 41 making as 41a" 
+				obm rf -c 0,0 $MODE 41a
+			elif [ "$2" -eq 28 ]
+			then
+				echo "band 28 making as 28b" 
+	              		obm rf -c 0,0 $MODE 28b
+			elif [ "$2" -eq 66 ]
+			then
+				echo "band 66 making as 4" 
+	              		obm rf -c 0,0 $MODE 4
+			else
+			 	obm rf -c 0,0 $MODE $2
+			fi
+		elif [ "$3" -eq 2 ] 
+		then 
+			echo "9100: Changing in Secondary DSP" 
+			DSP1B=$2
+			DSP1M=$1
+			if [ "$2" = "28a" ] || [ "$2" = "28b" ]; then
+				obm rm -c 1,0 -d fdd
+			elif [ "$2" = "41a" ]; then
+				obm rm -c 1,0 -d tdd
+			elif [ "$2" -ge 33 ] && [ "$2" -le 51 ]; then
+				obm rm -c 1,0 -d tdd
+			else
+				obm rm -c 1,0 -d fdd
+			fi
+			
+			if [ "$2" = "28a" ] || [ "$2" = "28b" ] || [ "$2" = "41a" ]; then
+			 	obm rf -c 1,0 $MODE $2
+			elif [ "$2" -eq 41 ]
+			then
+				echo "band 41 making as 41a" 
+				obm rf -c 1,0 $MODE 41a
+			elif [ "$2" -eq 28 ]
+			then
+				echo "band 28 making as 28b" 
+	              		obm rf -c 1,0 $MODE 28b
+			elif [ "$2" -eq 66 ]
+			then
+				echo "band 66 making as 4" 
+	              		obm rf -c 1,0 $MODE 4
+			else  	
+			 	obm rf -c 1,0 $MODE $2
+			fi
+		fi
+	fi
+	#obm ri -c 0,0
+	#obm ri -c 1,0
+	echo $MODE
+}
+
+function setRFEE_8500 {
+	if [ $1 = 't' ] 
+	then 
+		echo "8500: Changing to Tower Scan Mode for band:$2" 
+		MODE='ue'
+		obm rm -c $(($3-1)),0 -d fdd
+		if [ "$2" -eq 71 ]; then		
+			obm rf -c 0,0 $MODE 1
+		else
+			obm rf -c 0,0 $MODE $2
+		fi
+		obm rf -c $(($3-1)),0 tx 0,0
+		obm rf -c $(($3-1)),0 rx 1,1
+		obm rf -c $(($3-1)),0 rx 0,2
+	elif [ $1 = 'i' ] 
+	then 
+		echo "8500: Changing to ID Catcher Mode to band:$2" 
+		MODE='bts'
+	
+		if [ "$3" -eq 1 ] 
+		then 
+			echo "8500: Changing in Primary DSP" 
+			DSP0B=$2
+			DSP0M=$1
+			if [ "$2" = "28a" ] || [ "$2" ="28b" ]; then
+				obm rm -c 0,0 -d fdd
+			elif [ "$2" = "41a" ]; then
+				obm rm -c 0,0 -d tdd
+			elif [ "$2" -ge 33 ] && [ "$2" -le 51 ]; then
+				obm rm -c 0,0 -d tdd
+			else
+				obm rm -c 0,0 -d fdd
+			fi
+
+			if [ "$2" = "28a" ] || [ "$2" = "28b" ] || [ "$2" = "41a" ]; then
+			 	obm rf -c 0,0 $MODE $2
+			elif [ "$2" -eq 41 ]
+			then
+				echo "band 41 making as 41a" 
+				obm rf -c 0,0 $MODE 41a
+			elif [ "$2" -eq 28 ]
+			then
+				echo "band 28 making as 28b" 
+	              		obm rf -c 0,0 $MODE 28b
+			elif [ "$2" -eq 66 ]
+			then
+				echo "band 66 making as 4" 
+	              		obm rf -c 0,0 $MODE 4
+			else
+			 	obm rf -c 0,0 $MODE $2
+			fi
+			obm rf -c 0,0 rx 0,1
+		elif [ "$3" -eq 2 ] 
+		then 
+			echo "8500: Changing in Secondary DSP" 
+			DSP1B=$2
+			DSP1M=$1
+			#obm rf -c 1,0 $MODE $2
+		fi
+	fi
+	#obm ri -c 0,0
+	#obm ri -c 1,0
+	echo $MODE
+}
+
+function setRFEE_8000 {
+	if [ $1 = 't' ] 
+	then 
+		echo "8000: Changing to Tower Scan Mode for band:$2" 
+		MODE='ue'
+		obm rm -c 0,0 -d fdd
+		obm rf -c 0,0 $MODE $2
+	#	obm rf -c $(($3-1)),0 0 1,0
+	#	obm rf -c $(($3-1)),0 0 0,1
+	#	obm rf -c $(($3-1)),0 0 0,2
+	elif [ $1 = 'i' ] 
+	then 
+		echo "8000: Changing to ID Catcher Mode to band:$2" 
+		MODE='bts'
+		if [ "$3" -eq 1 ] 
+		then 
+			echo "8000: Changing in Primary DSP" 
+			DSP0B=$2
+			DSP0M=$1
+			if [ "$2" -ge 33 ] && [ "$2" -le 51 ]; then
+				obm rm -c 0,0 -d tdd
+			else
+				obm rm -c 0,0 -d fdd
+			fi			
+			obm ra 3			
+			obm rf -c 0,0 $MODE $2
+		elif [ "$3" -eq 2 ] 
+		then 
+			echo "8000: Changing in Secondary DSP" 
+			DSP1B=$2
+			DSP1M=$1
+			#obm rf -c 1,0 $MODE $2
+		fi
+	fi
+	#obm ri -c 0,0
+	#obm ri -c 1,0
+	echo $MODE
+}
+
+
+function setRFEE {
+	if [ -z "$boardType" ]; then
+		echo "Board Type is Empty, Retrieving via OBM Command"
+		boardType=`obm bi | grep Model | cut -d: -f2 | cut -d- -f1`
+		boardType=${boardType:7:4}
+		echo "The board is:$boardType $1 $2 $3"
+
+		if [ "$boardType" = "3800" ]; then
+			echo "The board is $boardType ...Two DSP Solution"
+			boardType=9100
+		elif [ "$boardType" = "9100" ]; then
+			echo "The board is $boardType ...Two DSP Solution"
+			boardType=9100
+		elif [ "$boardType" = "8000" ]; then
+			echo "The board is $boardType ...One DSP Solution"
+			boardType=8000
+		elif [ "$boardType" = "8500" ]; then
+			echo "The board is $boardType ...One DSP Solution"
+			boardType=8500
+		fi
+	fi
+
+	if [ $boardType -eq 8000 ]; then
+		if [ $3 -eq 1 ]; then
+			setRFEE_8000 $1 $2 $3
+		fi
+	elif [ $boardType -eq 8500 ]; then
+		if [ $3 -eq 1 ]; then
+			setRFEE_8500 $1 $2 $3
+		fi
+	else
+		setRFEE_9100 $1 $2 $3
+	fi
+}
+
+
+function setTREX {
+
+	setRFEE $1 $2 $3	
+	
+	if [ $3 -eq 1 ]
+	then
+		DSP0M=$1
+		DSP0B=$2
+		if [ $DSP1M == 'i' ] && [ $1 == 't' ]; then
+			echo WARNING: Also forcing DSP1 into Tower Scan Mode for band:$DSP1B
+			setRFEE 't' $DSP1B 2
+		fi
+	fi
+	if [ $3 -eq 2 ]
+	then
+		DSP1M=$1
+		DSP1B=$2
+		if [ $DSP0M == 'i' ] && [ $1 == 't' ]; then
+			echo WARNING: Also forcing DSP0 into Tower Scan Mode for band:$DSP0B
+			setRFEE 't' $DSP0B 1
+		fi
+	fi
+	if [ $3 -eq 1 ]
+	then
+		DSP0M=$1
+		DSP0B=$2
+		if [ $DSP1M == 't' ] && [ $1 == 'i' ]; then
+			echo WARNING: Also forcing DSP1 into ID Catcher Mode for band:$DSP1B
+			setRFEE 'i' $DSP1B 2
+		fi
+	fi
+	if [ $3 -eq 2 ]
+	then
+		DSP1M=$1
+		DSP1B=$2
+		if [ $DSP0M == 't' ] && [ $1 == 'i' ]; then
+			echo WARNING: Also forcing DSP0 into ID Catcher Mode for band:$DSP0B
+			setRFEE 'i' $DSP0B 1
+		fi
+	fi
+}
+
+if [ -f $SFILE ]
+then
+	. $SFILE
+	echo Board=$boardType
+	setTREX $1 $2 $3
+else
+	echo No previous status found for setTREX
+	echo Setting TREX to Tower scan mode on band 1 on both channels before proceeding.
+	DSP0M='t'
+	DSP0B=1
+	DSP1M='t'
+	DSP1B=1
+	setTREX 't' 1 1
+	setTREX 't' 1 2
+	echo Done. Now proceeding with requested configuration
+	setTREX $1 $2 $3
+fi
+
+# echo $DSP0M
+# echo $DSP0B
+# echo $DSP1M
+# echo $DSP1B
+
+updateStatusFile
+

@@ -1,0 +1,857 @@
+/*
+    C ECHO client example using sockets
+*/
+#include <stdio.h> //printf
+#include <stdlib.h>
+#include <string.h>     //strlen
+#include <sys/socket.h> //socket
+#include <arpa/inet.h>  //inet_addr
+#include <unistd.h>
+#include "fxLSocketInterfaceApi.h"
+#include "clientConfig.h"
+
+#define MAX_RECV_DATA_LEN 30000
+
+typedef enum
+{
+    NO_IMAGE = 0,
+    L1_SCANNER_IMAGE = 1,
+    L1_IDCATCHER_IMAGE = 2
+} l1imageType;
+
+unsigned char l1ImageLoaded = L1_IDCATCHER_IMAGE;
+unsigned char server_reply[MAX_RECV_DATA_LEN] = {0};
+unsigned char sendMsgBuf[MAX_RECV_DATA_LEN] = {0};
+unsigned char stop = 0;
+unsigned int numberOfMeasValue = 0;
+void sendHandshakeCmd(int sock)
+{
+    fxLHandShakeCmd *cmd = (fxLHandShakeCmd *)sendMsgBuf;
+    cmd->hdr.msgLength = sizeof(fxLHandShakeCmd);
+    cmd->hdr.msgType = FXL_HANDSHAKE_CMD;
+    cmd->hdr.rat = FXL_RAT_3G;
+    cmd->clientSocketApiVersion = FXL_SOCKETINTERFACEAPI_VERSION;
+
+    // Send some data
+    if (send(sock, sendMsgBuf, sizeof(fxLHandShakeCmd), 0) < 0)
+    {
+        printf("TcpClient : Error : Send Handshake Message failed\n");
+    }
+    else
+    {
+        printf("TcpClient : Handshake Message sent....\n");
+    }
+}
+
+void loadUmtsRusDspImage(int sock)
+{
+    fxLBootL1Cmd *cmd = (fxLBootL1Cmd *)sendMsgBuf;
+    cmd->hdr.msgLength = sizeof(fxLBootL1Cmd);
+    cmd->hdr.msgType = FXL_BOOT_L1_CMD;
+    cmd->hdr.rat = FXL_RAT_3G;
+
+    if (dspInUse == PRIMARY)
+        cmd->dspType = FXL_PRIMARY_DSP;
+    else
+        cmd->dspType = FXL_SECONDARY_DSP;
+
+    cmd->l1ImageType = FXL_L1_UMTS_SLS_IMAGE;
+
+    // Send some data
+    if (send(sock, sendMsgBuf, sizeof(fxLBootL1Cmd), 0) < 0)
+    {
+        printf("TcpClient : Sending Boot L1 Command for Scanner failed\n");
+    }
+    else
+    {
+        printf("TcpClient : Boot L1 Command for Scanner sent....\n");
+    }
+}
+
+void loadUmtsNativeDspImage(int sock)
+{
+    fxLBootL1Cmd *cmd = (fxLBootL1Cmd *)sendMsgBuf;
+    cmd->hdr.msgLength = sizeof(fxLBootL1Cmd);
+    cmd->hdr.msgType = FXL_BOOT_L1_CMD;
+    cmd->hdr.rat = FXL_RAT_3G;
+
+    if (dspInUse == PRIMARY)
+        cmd->dspType = FXL_PRIMARY_DSP;
+    else
+        cmd->dspType = FXL_SECONDARY_DSP;
+
+    cmd->l1ImageType = FXL_L1_UMTS_NATIVE_IMAGE;
+
+    // Send some data
+    if (send(sock, sendMsgBuf, sizeof(fxLBootL1Cmd), 0) < 0)
+    {
+        printf("TcpClient : Sending Boot L1 Command for IdCatcher failed\n");
+    }
+    else
+    {
+        printf("TcpClient : Boot L1 Command for IdCatcher sent....\n");
+    }
+}
+
+void confiureUarfcnForRus(int sock)
+{
+    fxL3gListenModeConfigureUarfcnCmd *cmd = (fxL3gListenModeConfigureUarfcnCmd *)sendMsgBuf;
+    cmd->noOfIteration = 1;
+    cmd->noOfUarfcn = 2;
+    // cmd->UarfcnList[0]=10833;
+    // cmd->UarfcnList[1]=10758;
+
+    cmd->hdr.msgLength = sizeof(fxL3gListenModeConfigureUarfcnCmd);
+    cmd->hdr.msgType = FXL_3G_LISTEN_MODE_PRIORITY_SCAN_CMD;
+    cmd->hdr.rat = FXL_RAT_3G;
+
+    if (send(sock, sendMsgBuf, sizeof(fxL3gListenModeConfigureUarfcnCmd), 0) < 0)
+    {
+        printf("TcpClient : 3G Listen Mode Configure Uarfcn send message failed\n");
+    }
+    else
+    {
+        printf("TcpClient : 3G Listen Mode Configure Uarfcn sent....\n");
+    }
+}
+
+void configBaseStationForRus(int sock)
+{
+    fxL3gListenModeConfigureBandsCmd *cmd = (fxL3gListenModeConfigureBandsCmd *)sendMsgBuf;
+    cmd->noOfBandsToScan = 1;
+    cmd->band[0] = FXL_UMTS_BAND_1;
+    cmd->noOfScanIterations = 1;
+
+    cmd->hdr.msgLength = sizeof(fxL3gListenModeConfigureBandsCmd);
+    cmd->hdr.msgType = FXL_3G_LISTEN_MODE_CONFIGURE_BANDS_CMD;
+    cmd->hdr.rat = FXL_RAT_3G;
+    // Send some data
+    if (send(sock, sendMsgBuf, sizeof(fxL3gListenModeConfigureBandsCmd), 0) < 0)
+    {
+        printf("TcpClient : 3G Listen Mode Configure Bands send message failed\n");
+    }
+    else
+    {
+        printf("TcpClient : 3G Listen Mode Configure Bands sent....\n");
+    }
+}
+
+void configureUmtsIdCatcher(int sock)
+{
+    fxL3gConfigureIdCatcherParamsCmd *cmd = (fxL3gConfigureIdCatcherParamsCmd *)sendMsgBuf;
+
+    cmd->dlUarfcn = 10833;
+    cmd->rncId = 14;
+    cmd->cellId = 87;
+    cmd->psc = 253;
+    cmd->numOfPlmn = 1;
+    cmd->plmn[0].mccLength = 3;
+    cmd->plmn[0].mncLength = 2;
+    cmd->plmn[0].mcc[0] = 4;
+    cmd->plmn[0].mcc[1] = 0;
+    cmd->plmn[0].mcc[2] = 4;
+    cmd->plmn[0].mnc[0] = 4;
+    cmd->plmn[0].mnc[1] = 5;
+    cmd->lac[0] = 10;
+    cmd->lac[1] = 100;
+    cmd->rac = 100;
+    cmd->rejectCauseEnable = 0;
+    cmd->rejectCause = 0;
+    cmd->redirectionType = FXL_UMTS_NO_REDIRECTION; // FXL_UMTS_NO_REDIRECTION, FXL_UMTS_REDIRECTION_TO_2G, FXL_UMTS_REDIRECTION_TO_3G
+    cmd->redirectionInfo.gsmRedirectinfo.startingarfcn = 0;
+    cmd->redirectionInfo.gsmRedirectinfo.bandIndicator = DCS1800; // DCS1800, PCS1900
+    cmd->redirectionInfo.dlUarfcn = 0;
+    cmd->t3212 = 20;
+    // cmd->nmo = 1;
+
+    cmd->txAttn = 0;
+    cmd->cpichTxPwr = 3;
+    cmd->hdr.msgLength = sizeof(fxL3gConfigureIdCatcherParamsCmd);
+    cmd->hdr.msgType = FXL_3G_CONFIGURE_IDCATCHER_PARAMS_CMD;
+    cmd->hdr.rat = FXL_RAT_3G;
+    // Send some data
+    if (send(sock, sendMsgBuf, sizeof(fxL3gConfigureIdCatcherParamsCmd), 0) < 0)
+    {
+        printf("TcpClient : 3G Configure Id Catcher Params Command send message failed\n");
+    }
+    else
+    {
+        printf("TcpClient : 3G Configure Id Catcher Params Command sent....\n");
+    }
+}
+
+void changeTxRxAntennaId(int sock)
+{
+    fxLChangeTxRxAntennaIdCmd *cmd = (fxLChangeTxRxAntennaIdCmd *)sendMsgBuf;
+    cmd->hdr.msgLength = sizeof(fxLChangeTxRxAntennaIdCmd);
+    cmd->hdr.msgType = FXL_CHANGE_TX_RX_ANTENNA_ID_CMD;
+    cmd->hdr.rat = FXL_RAT_3G;
+    cmd->dspType = FXL_PRIMARY_DSP;
+    cmd->txAntennaId = FXL_TX_RX_ANTENNA_ID_0;
+    cmd->rxAntennaId = FXL_TX_RX_ANTENNA_ID_0;
+
+    // Send
+    if (send(sock, sendMsgBuf, sizeof(fxLChangeTxRxAntennaIdCmd), 0) < 0)
+    {
+        printf("TcpClient : 3G Change Tx Rx Antenna Id Command send message failed\n");
+    }
+    else
+    {
+        printf("TcpClient : 3G Change Tx Rx Antenna Id Command sent....\n");
+    }
+}
+
+void sendSystemInfoUpdateCmd(int sock)
+{
+    fxL3gSysInfoConfigCmd *cmd = (fxL3gSysInfoConfigCmd *)sendMsgBuf;
+
+    cmd->numOfPlmn = 1;
+    cmd->plmn[0].mccLength = 3;
+    cmd->plmn[0].mncLength = 2;
+    cmd->plmn[0].mcc[0] = 0;
+    cmd->plmn[0].mcc[1] = 0;
+    cmd->plmn[0].mcc[2] = 1;
+    cmd->plmn[0].mnc[0] = 0;
+    cmd->plmn[0].mnc[1] = 1;
+    cmd->lac[0] = 50;
+    cmd->lac[1] = 10;
+    cmd->rac = 70;
+    cmd->t3212 = 30;
+    cmd->nmo = 0;
+    cmd->att = 1;
+
+    cmd->hdr.msgLength = sizeof(fxL3gSysInfoConfigCmd);
+    cmd->hdr.msgType = FXL_3G_SYSINFO_CONFIG_CMD;
+    cmd->hdr.rat = FXL_RAT_3G;
+
+    if (send(sock, sendMsgBuf, sizeof(fxL3gSysInfoConfigCmd), 0) < 0)
+    {
+        printf("TcpClient : 3G System Info Update command send message failed\n");
+    }
+    else
+    {
+        printf("TcpClient : 3G System Info Update command sent....\n");
+    }
+}
+
+void configIdentityListAddEntry(int sock)
+{
+    unsigned int idx = 0;
+    fxLConfigureIdentityListCmd *cmd = (fxLConfigureIdentityListCmd *)sendMsgBuf;
+    cmd->defaultListConfig = FXL_WHITEUSERSLIST;
+    cmd->noOfEntries = 1;
+
+    for (idx = 0; idx < cmd->noOfEntries; idx++)
+    {
+        memcpy(cmd->configList[idx].identity, "404450911141055", SIZE_OF_IDENTITY_STR);
+        cmd->configList[idx].idType = FXL_IDENTITY_IMSI;
+        cmd->configList[idx].listType = FXL_BLACKUSERSLIST;
+        cmd->configList[idx].rejectCauseIfWhitelist = 0;
+    }
+
+    cmd->hdr.msgLength = sizeof(fxLConfigureIdentityListCmd);
+    cmd->hdr.msgType = FXL_CONFIGURE_IDENTITY_LIST_CMD;
+    cmd->hdr.rat = FXL_RAT_3G;
+    // Send some data
+    if (send(sock, sendMsgBuf, sizeof(fxLConfigureIdentityListCmd), 0) < 0)
+    {
+        printf("TcpClient : 3G Configure Identity List Command send message failed\n");
+    }
+    else
+    {
+        printf("TcpClient : 3G Configure Identity List Command sent....\n");
+    }
+}
+
+void startBaseStationForRus(int sock)
+{
+    fxL3gListenModeStartStopScanCmd *cmd = (fxL3gListenModeStartStopScanCmd *)sendMsgBuf;
+    cmd->hdr.msgLength = sizeof(fxL3gListenModeStartStopScanCmd);
+    cmd->hdr.msgType = FXL_3G_LISTEN_MODE_STARTSTOP_SCAN_CMD;
+    cmd->hdr.rat = FXL_RAT_3G;
+    cmd->startStopScan = FXL_START_CONTINUOUS_TRIGGER;
+    cmd->scanType = scanCategory;
+    // Send some data
+    if (send(sock, sendMsgBuf, sizeof(fxL3gListenModeStartStopScanCmd), 0) < 0)
+    {
+        printf("TcpClient : 3G Listen Mode Start Command send message failed\n");
+    }
+    else
+    {
+        printf("TcpClient : 3G Listen Mode Start Command sent....\n");
+    }
+}
+
+void stopBaseStationForRus(int sock)
+{
+    fxL3gListenModeStartStopScanCmd *cmd = (fxL3gListenModeStartStopScanCmd *)sendMsgBuf;
+    cmd->hdr.msgLength = sizeof(fxL3gListenModeStartStopScanCmd);
+    cmd->hdr.msgType = FXL_3G_LISTEN_MODE_STARTSTOP_SCAN_CMD;
+    cmd->hdr.rat = FXL_RAT_3G;
+    cmd->startStopScan = FXL_STOP_CONTINUOUS_TRIGGER;
+    cmd->scanType = scanCategory;
+    // Send some data
+    if (send(sock, sendMsgBuf, sizeof(fxL3gListenModeStartStopScanCmd), 0) < 0)
+    {
+        printf("TcpClient : 3G Listen Mode Stop Command send message failed\n");
+    }
+    else
+    {
+        printf("TcpClient : 3G Listen Mode Stop Command sent....\n");
+        stop = 1;
+    }
+}
+
+void startUmtsIdCatcher(int sock)
+{
+    fxL3gStartIdCatcherCmd *cmd = (fxL3gStartIdCatcherCmd *)sendMsgBuf;
+    cmd->hdr.msgLength = sizeof(fxL3gStartIdCatcherCmd);
+    cmd->hdr.msgType = FXL_3G_START_IDCATCHER_CMD;
+    cmd->hdr.rat = FXL_RAT_3G;
+    // Send some data
+    if (send(sock, sendMsgBuf, sizeof(fxL3gStartIdCatcherCmd), 0) < 0)
+    {
+        printf("TcpClient : 3G Start IdCatcher Command send message failed\n");
+    }
+    else
+    {
+        printf("TcpClient : 3G Start IdCatcher Command sent....\n");
+    }
+}
+
+void stopUmtsIdCatcher(int sock)
+{
+    fxL3gStopIdCatcherCmd *cmd = (fxL3gStopIdCatcherCmd *)sendMsgBuf;
+    cmd->hdr.msgLength = sizeof(fxL3gStopIdCatcherCmd);
+    cmd->hdr.msgType = FXL_3G_STOP_IDCATCHER_CMD;
+    cmd->hdr.rat = FXL_RAT_3G;
+    // Send some data
+    if (send(sock, sendMsgBuf, sizeof(fxL3gStopIdCatcherCmd), 0) < 0)
+    {
+        printf("TcpClient : 3G Stop IdCatcher Command send message failed\n");
+    }
+    else
+    {
+        printf("TcpClient : 3G Stop IdCatcher Command sent....\n");
+    }
+}
+
+void changeTxAttnCpichTxPwr(int sock)
+{
+    fxL3gChgTxAttnCpichTxPwrCmd *cmd = (fxL3gChgTxAttnCpichTxPwrCmd *)sendMsgBuf;
+    cmd->hdr.msgLength = sizeof(fxL3gChgTxAttnCpichTxPwrCmd);
+    cmd->hdr.msgType = FXL_3G_CHANGE_TX_ATTN_CPICH_TX_PWR_CMD;
+    cmd->hdr.rat = FXL_RAT_3G;
+    cmd->txAttn = 50;
+    cmd->cpichTxPwr = 43;
+
+    if (send(sock, sendMsgBuf, sizeof(fxL3gChgTxAttnCpichTxPwrCmd), 0) < 0)
+    {
+        printf("TcpClient : Send 3G change txAttn & cpichTxPwr Command message failed\n");
+    }
+    else
+    {
+        printf("TcpClient : 3G change txAttn & cpichTxPwr is sent....\n");
+    }
+}
+
+void redirectToUmts(int sock)
+{
+    fxL3gBLUeRedirectCmd *cmd = (fxL3gBLUeRedirectCmd *)sendMsgBuf;
+    cmd->hdr.msgLength = sizeof(fxL3gBLUeRedirectCmd);
+    cmd->hdr.msgType = FXL_3G_BL_UE_REDIRECT_CMD;
+    cmd->hdr.rat = FXL_RAT_3G;
+    cmd->redirectionType = FXL_UMTS_REDIRECTION_TO_3G;
+    cmd->redirectionInfo.gsmRedirectinfo.startingarfcn = 0;
+    cmd->redirectionInfo.gsmRedirectinfo.bandIndicator = DCS1800;
+    cmd->redirectionInfo.dlUarfcn = 10833;
+    memcpy(cmd->imsiStr, "404450911141055", SIZE_OF_IDENTITY_STR);
+
+    if (send(sock, sendMsgBuf, sizeof(fxL3gBLUeRedirectCmd), 0) < 0)
+    {
+        printf("TcpClient : Send 3G Redirect to GSM Command message failed\n");
+    }
+    else
+    {
+        printf("TcpClient : 3G Redirect to GSM Command is sent....\n");
+    }
+}
+
+void redirectToGsm(int sock)
+{
+    fxL3gBLUeRedirectCmd *cmd = (fxL3gBLUeRedirectCmd *)sendMsgBuf;
+    cmd->hdr.msgLength = sizeof(fxL3gBLUeRedirectCmd);
+    cmd->hdr.msgType = FXL_3G_BL_UE_REDIRECT_CMD;
+    cmd->hdr.rat = FXL_RAT_3G;
+    cmd->redirectionType = FXL_UMTS_REDIRECTION_TO_2G;
+    cmd->redirectionInfo.gsmRedirectinfo.startingarfcn = 128;
+    cmd->redirectionInfo.gsmRedirectinfo.bandIndicator = DCS1800;
+    cmd->redirectionInfo.dlUarfcn = 0;
+    memcpy(cmd->imsiStr, "404450911141055", SIZE_OF_IDENTITY_STR);
+
+    if (send(sock, sendMsgBuf, sizeof(fxL3gBLUeRedirectCmd), 0) < 0)
+    {
+        printf("TcpClient : Send 3G Redirect to GSM Command message failed\n");
+    }
+    else
+    {
+        printf("TcpClient : 3G Redirect to GSM Command is sent....\n");
+    }
+}
+
+void startSilentCall(int sock, char *imsi)
+{
+    fxL3gStartSilentCallCmd *cmd = (fxL3gStartSilentCallCmd *)sendMsgBuf;
+    cmd->hdr.msgLength = sizeof(fxL3gStartSilentCallCmd);
+    cmd->hdr.msgType = FXL_3G_START_SILENT_CALL_CMD;
+    cmd->hdr.rat = FXL_RAT_3G;
+    cmd->measType = FXL_RTT_MEAS;
+    strncpy(cmd->imsiStr, imsi, SIZE_OF_IDENTITY_STR);
+
+    if (send(sock, sendMsgBuf, sizeof(fxL3gStartSilentCallCmd), 0) < 0)
+    {
+        printf("TcpClient : 3G start silent call Command send message failed\n");
+    }
+    else
+    {
+        printf("TcpClient : 3G start silent call Command sent....\n");
+    }
+}
+#ifdef FXL_3G_TX_JAMMER
+void start3gTxJammer(int sock)
+{
+    fxL3gTxJammerStartCmd *cmd = (fxL3gTxJammerStartCmd *)sendMsgBuf;
+    cmd->hdr.msgLength = sizeof(fxL3gTxJammerStartCmd);
+    cmd->hdr.msgType = FXL_3G_TX_JAMMER_START_CMD;
+    cmd->hdr.rat = FXL_RAT_3G;
+    cmd->uarfcn = 10833;
+
+    if (send(sock, sendMsgBuf, sizeof(fxL3gTxJammerStartCmd), 0) < 0)
+    {
+        printf("TcpClient : 3G start 3g Tx Jammer Command send message failed\n");
+    }
+    else
+    {
+        printf("TcpClient : 3G start 3g Tx Jammer Command sent....\n");
+    }
+}
+
+void stop3gTxJammer(int sock)
+{
+    fxL3gTxJammerStopCmd *cmd = (fxL3gTxJammerStopCmd *)sendMsgBuf;
+    cmd->hdr.msgLength = sizeof(fxL3gTxJammerStopCmd);
+    cmd->hdr.msgType = FXL_3G_TX_JAMMER_STOP_CMD;
+    cmd->hdr.rat = FXL_RAT_3G;
+
+    if (send(sock, sendMsgBuf, sizeof(fxL3gTxJammerStopCmd), 0) < 0)
+    {
+        printf("TcpClient : 3G stop 3g Tx Jammer Command send message failed\n");
+    }
+    else
+    {
+        printf("TcpClient : 3G stop 3g Tx Jammer Command sent....\n");
+    }
+}
+#endif // FXL_3G_TX_JAMMER
+
+int main(int argc, char *argv[])
+{
+    int sock;
+    struct sockaddr_in server;
+    fxLHeader *hdr = NULL;
+    int enable = 1;
+
+    static configIdLstDelDone = 0;
+    // Create socket
+    sock = socket(AF_INET, SOCK_STREAM, 0);
+    if (sock == -1)
+    {
+        printf("TcpClient : Error : Socket creation failed\n");
+        exit(0);
+    }
+    printf("TcpClient : Socket created....\n");
+
+    /* Reuse the address */
+    if (setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, &enable, sizeof(int)) < 0)
+    {
+        printf("TcpClient : Error : failed to set socket option for reuse\n");
+        return 1;
+    }
+
+    /* Set Send Buffer Size */
+    enable = MAX_RECV_DATA_LEN;
+    if (setsockopt(sock, SOL_SOCKET, SO_SNDBUF, &enable, sizeof(int)) < 0)
+    {
+        printf("TcpClient : Error : failed to set socket option for send buffer size\n");
+        return 1;
+    }
+
+    /* Set Recv Buffer Size */
+    enable = MAX_RECV_DATA_LEN;
+    if (setsockopt(sock, SOL_SOCKET, SO_RCVBUF, &enable, sizeof(int)) < 0)
+    {
+        printf("TcpClient : Error : failed to set socket option for recv buffer size\n");
+        return 1;
+    }
+
+    server.sin_addr.s_addr = inet_addr(ipaddress);
+    server.sin_family = AF_INET;
+
+    if (dspInUse == PRIMARY)
+        server.sin_port = htons(SERVER_PORT_FOR_PRI);
+    else
+        server.sin_port = htons(SERVER_PORT_FOR_SEC);
+
+    // Connect to remote server
+    if (connect(sock, (struct sockaddr *)&server, sizeof(server)) < 0)
+    {
+        printf("TcpClient : Error : Connection failed\n");
+        exit(0);
+    }
+
+    printf("TcpClient : Connected.....\n");
+    sendHandshakeCmd(sock);
+
+    // keep communicating with server
+    while (1)
+    {
+        // Receive a reply from the server
+        if (recv(sock, server_reply, MAX_RECV_DATA_LEN, 0) < 0)
+        {
+            puts("TcpClient : Error : Receive failed");
+        }
+        hdr = (fxLHeader *)server_reply;
+
+        switch (hdr->msgType)
+        {
+        case FXL_HANDSHAKE_RSP:
+        {
+            fxLHandShakeRsp *rsp = (fxLHandShakeRsp *)server_reply;
+            printf("TcpClient : Handshake Response received with result(%ld)\n", rsp->result);
+            l1ImageLoaded = L1_SCANNER_IMAGE;
+            loadUmtsRusDspImage(sock);
+            //                  l1ImageLoaded = L1_IDCATCHER_IMAGE;
+            //                  loadUmtsNativeDspImage (sock);
+        }
+        break;
+
+        case FXL_BOOT_L1_RSP:
+        {
+            fxLBootL1Rsp *rsp = (fxLBootL1Rsp *)server_reply;
+            printf("TcpClient : Boot L1 Response received with result(%ld)\n", rsp->result);
+
+            //                start3gTxJammer(sock);
+            if (l1ImageLoaded == L1_SCANNER_IMAGE)
+                configBaseStationForRus(sock);
+            else
+                configIdentityListAddEntry(sock);
+        }
+        break;
+
+#ifdef FXL_3G_TX_JAMMER
+        case FXL_3G_TX_JAMMER_START_RSP:
+        {
+            fxL3gTxJammerStartRsp *rsp = (fxL3gTxJammerStartRsp *)server_reply;
+            printf("TcpClient : Start 3g Tx Jammer Response received with result(%ld)\n", rsp->result);
+            //                sleep(60);
+            //                stop3gTxJammer(sock);
+        }
+        break;
+
+        case FXL_3G_TX_JAMMER_STOP_RSP:
+        {
+            fxL3gTxJammerStopRsp *rsp = (fxL3gTxJammerStopRsp *)server_reply;
+            printf("TcpClient : Stop 3g Tx Jammer Response received with result(%ld)\n", rsp->result);
+            sleep(10);
+            start3gTxJammer(sock);
+        }
+        break;
+
+        case FXL_3G_TX_JAMMER_STATUS_IND:
+        {
+            int i;
+            fxL3gTxJammerStatusInd *ind = (fxL3gTxJammerStatusInd *)server_reply;
+            printf("TcpClient : JAMMER STATUS INDICATION\n");
+            printf("TcpClient : JAMMER Number of Cells Found = %d\n", ind->numOfCell);
+            for (i = 0; i < ind->numOfCell; i++)
+            {
+                printf("TcpClient : JAMMER PSC[%d] = %d\n", i, ind->cellPsc[i]);
+            }
+            switch (ind->status)
+            {
+            case FXL_3G_TX_JAMMER_INITIALIZATION_FAILED:
+                printf("TcpClient : 3G Tx Jammer Initialization Failed\n");
+                break;
+
+            case FXL_3G_TX_JAMMER_SCANNING_CELL:
+                printf("TcpClient : 3G Tx Jammer Finding Cell\n");
+                break;
+
+            case FXL_3G_TX_JAMMER_SCANNING_CELL_FAILED:
+                printf("TcpClient : 3G Tx Jammer Finding Cell Failed\n");
+                break;
+
+            case FXL_3G_TX_JAMMER_CELL_FOUND:
+                printf("TcpClient : 3G Tx Jammer Cell Found\n");
+                break;
+
+            case FXL_3G_TX_JAMMER_NO_CELL_FOUND:
+                printf("TcpClient : 3G Tx Jammer No Cell Found\n");
+                sleep(5);
+                stop3gTxJammer(sock);
+                break;
+
+            case FXL_3G_TX_JAMMER_RUNNING:
+                printf("TcpClient : 3G Tx Jammer Running\n");
+                sleep(5);
+                stop3gTxJammer(sock);
+                break;
+
+            default:
+                printf("TcpClient : Unknown Status\n");
+                break;
+            }
+        }
+        break;
+#endif // FXL_3G_TX_JAMMER
+
+        case FXL_3G_LISTEN_MODE_PRIORITY_SCAN_RSP:
+        {
+            fxL3gListenModeConfigureUarfcnRsp *rsp = (fxL3gListenModeConfigureUarfcnRsp *)server_reply;
+            printf("TcpClient : Listen Mode Configure UARFCN Response received with result(%ld)\n", rsp->result);
+            startBaseStationForRus(sock);
+        }
+
+        case FXL_3G_LISTEN_MODE_CONFIGURE_BANDS_RSP:
+        {
+            fxL3gListenModeConfigureBandsRsp *rsp = (fxL3gListenModeConfigureBandsRsp *)server_reply;
+            printf("TcpClient : Listen Mode Configure Bands Response received with result(%ld)\n", rsp->result);
+            startBaseStationForRus(sock);
+        }
+        break;
+
+        case FXL_3G_LISTEN_MODE_SYSTEM_INFO_IND:
+        {
+            fxL3gListenModeSystemInfoInd *ind = (fxL3gListenModeSystemInfoInd *)server_reply;
+            int i = 0, j = 0;
+            printf("================================================\n");
+            printf("TcpClient : 3G Listen Mode Sys Info Ind received\n");
+            printf("================================================\n");
+#if 0
+				printf("MCC-0\t\t\t:\t%ld\n", ind->plmn.mcc[0]);
+				printf("MCC-1\t\t\t:\t%ld\n", ind->plmn.mcc[1]);
+				printf("MCC-2\t\t\t:\t%ld\n", ind->plmn.mcc[2]);
+				printf("MNC-0\t\t\t:\t%ld\n", ind->plmn.mnc[0]);
+				printf("MNC-1\t\t\t:\t%ld\n", ind->plmn.mnc[1]);
+				printf("MNC-2\t\t\t:\t%ld\n", ind->plmn.mnc[2]);
+				printf("UARFCN\t\t\t:\t%ld\n", ind->uarfcn);
+				printf("Band\t\t\t:\t%ld\n", ind->band);
+				printf("LAC\t\t\t:\t%ld\n", ind->lac);
+				printf("CELL-ID\t\t\t:\t%ld\n", ind->pci);
+                printf("No-Of-Cell\t\t:\t%ld\n",ind->numOfCell);
+                for(i=0; i < ind->numOfCell; i++)
+                {
+                	printf("RSSI\t\t\t:\t%lf\n", ind->cellInfo[i].rssi);
+                	printf("ECIO\t\t\t:\t%ld\n", ind->cellInfo[i].ecio);
+                	printf("PSC\t\t\t:\t%ld\n", ind->cellInfo[i].psc);
+                	printf("RSCP\t\t\t:\t%lf\n", ind->cellInfo[i].rscp);
+                	printf("networkCellId\t\t\t:\t%ld\n", ind->cellInfo[i].networkCellId);
+                	printf("maxAllowedULTxPower\t\t\t:\t%ld\n", ind->cellInfo[i].cellSelReselInfo.maxAllowedULTxPower);
+                	printf("qHyst2S\t\t\t:\t%ld\n", ind->cellInfo[i].cellSelReselInfo.qHyst2S);
+                	printf("qHystLS\t\t\t:\t%ld\n", ind->cellInfo[i].cellSelReselInfo.qHystLS);
+                	printf("qQualMin\t\t\t:\t%ld\n", ind->cellInfo[i].cellSelReselInfo.qQualMin);
+                	printf("qRxLevMin\t\t\t:\t%ld\n", ind->cellInfo[i].cellSelReselInfo.qRxLevMin);
+                	printf("tReselS\t\t\t:\t%ld\n", ind->cellInfo[i].cellSelReselInfo.tReselS);
+
+                	for(j=0; j< FXL_UMTS_MAX_INTRA_FREQ_CELL_LIST; j++)
+                	{
+                		printf("intraFreqCellList.cellId\t\t\t:\t%ld\n", ind->cellInfo[i].intraFreqCellList[j].cellId);
+                   		printf("intraFreqCellList.psc\t\t\t:\t%ld\n", ind->cellInfo[i].intraFreqCellList[j].psc);
+
+                	}
+                  	for(j=0; j< FXL_UMTS_MAX_INTER_FREQ_CELL_LIST; j++)
+                    	{
+                    		printf("interFreqCellList.cellId\t\t\t:\t%ld\n", ind->cellInfo[i].interFreqCellList[j].cellId);
+                       		printf("interFreqCellList.dlUarfcn\t\t\t:\t%ld\n", ind->cellInfo[i].interFreqCellList[j].dlUarfcn);
+                       		printf("interFreqCellList.psc\t\t\t:\t%ld\n", ind->cellInfo[i].interFreqCellList[j].psc);
+                        	printf("interFreqCellList.ulUarfcn\t\t\t:\t%ld\n", ind->cellInfo[i].interFreqCellList[j].ulUarfcn);
+                    	}
+                 	for(j=0; j < FXL_UMTS_MAX_INTER_RAT_CELL_LIST; j++)
+                    	{
+                    		printf("interRATCellList.arfcn\t\t\t:\t%ld\n", ind->cellInfo[i].interRATCellList[j].arfcn);
+                       		printf("cellInfo[i].interRATCellList.band\t\t\t:\t%ld\n", ind->cellInfo[i].interRATCellList[j].band);
+                       		printf("interRATCellList.bcc\t\t\t:\t%ld\n", ind->cellInfo[i].interRATCellList[j].bcc);
+                        	printf("interRATCellList.cellId\t\t\t:\t%ld\n", ind->cellInfo[i].interRATCellList[j].cellId);
+                        	printf("interRATCellList.ncc\t\t\t:\t%ld\n", ind->cellInfo[i].interRATCellList[j].ncc);
+                        	printf("interRATCellList.qRxLevMin\t\t\t:\t%ld\n", ind->cellInfo[i].interRATCellList[j].qRxLevMin);
+                    	}
+
+                }
+                printf("\n");
+#endif
+        }
+        break;
+
+        case FXL_3G_LISTEN_MODE_SCAN_COMP_IND:
+        {
+            fxL3gListenModeScanCompInd *rsp = (fxL3gListenModeScanCompInd *)server_reply;
+            printf("TcpClient : Listen Mode scan Complete Indication received\n");
+            printf("#########################################################\n");
+            printf("\n");
+
+            stopBaseStationForRus(sock);
+        }
+        break;
+
+        case FXL_3G_LISTEN_MODE_STARTSTOP_SCAN_RSP:
+        {
+            fxL2gListenModeStopScanRsp *rsp = (fxL2gListenModeStopScanRsp *)server_reply;
+            printf("TcpClient : 3G Listen Mode Stop Scan Response received with result(%ld)\n", rsp->result);
+
+            if (stop == 1)
+            {
+                //                	configIdentityListAddEntry(sock);
+            }
+        }
+        break;
+
+        case FXL_CONFIGURE_IDENTITY_LIST_RSP:
+        {
+            fxLConfigureIdentityListRsp *rsp = (fxLConfigureIdentityListRsp *)server_reply;
+            printf("TcpClient : 3G Identity List Configure Response received with result(%ld)\n", rsp->result);
+            changeTxRxAntennaId(sock);
+        }
+        break;
+
+        case FXL_CHANGE_TX_RX_ANTENNA_ID_RSP:
+        {
+            fxLChangeTxRxAntennaIdRsp *rsp = (fxLChangeTxRxAntennaIdRsp *)server_reply;
+            printf("TcpClient : 3G Change Tx Rx Antenna Id Response received with result(%ld)\n", rsp->result);
+            configureUmtsIdCatcher(sock);
+        }
+        break;
+
+        case FXL_3G_CONFIGURE_IDCATCHER_PARAMS_RSP:
+        {
+            fxL2gConfigureIdCatcherParamsRsp *rsp = (fxL2gConfigureIdCatcherParamsRsp *)server_reply;
+            printf("TcpClient : 3G Configure Id Catcher Params Response received with result(%ld)\n", rsp->result);
+            startUmtsIdCatcher(sock);
+        }
+        break;
+
+        case FXL_3G_START_IDCATCHER_RSP:
+        {
+            fxL3gStartIdCatcherRsp *rsp = (fxL3gStartIdCatcherRsp *)server_reply;
+            printf("TcpClient : 3G Id Catcher Start Response received with result(%ld)\n", rsp->result);
+        }
+        break;
+
+        case FXL_3G_REGISTRATION_ATTEMPTED_IND:
+        {
+            fxL3gRegistrationAttemptedInd *ind = (fxL3gRegistrationAttemptedInd *)server_reply;
+            printf("TcpClient : FXL_3G_REGISTRATION_ATTEMPTED_IND received \n");
+            printf("List Type = %d \n", ind->listType);
+            printf("IMSI Received = %s \n", ind->imsiStr);
+            printf("IMEI Received = %s \n", ind->imeiStr);
+            printf("TMSI Received = 0x%x 0x%x 0x%x 0x%x\n", ind->tmsi[0], ind->tmsi[1], ind->tmsi[2], ind->tmsi[3]);
+            printf("RTT Value = %f mili seconds \n", ind->initialRttVal);
+            printf("RSCP Value = %d dbm \n", ind->initialRscpVal);
+            printf("lastLac Value = %d  \n", ind->lastLac);
+            printf("imeiSv Value = %d   \n", ind->imeiSv);
+
+            sendSystemInfoUpdateCmd(sock);
+
+//                                sleep(10);
+//                                redirectToGsm (sock);
+// redirectToUmts (sock);
+//                                changeTxAttnCpichTxPwr (sock);
+//                                startSilentCall(sock, ind->imsiStr);
+#if 0
+//				stopUmtsIdCatcher(sock);
+                                if (numberOfMeasValue == 0 && ind->listType == 1 )
+                                {
+                                   numberOfMeasValue =1;
+                                   startSilentCall(sock, ind->imsiStr);
+                                }
+#endif
+        }
+        break;
+
+        case FXL_3G_SYSINFO_CONFIG_RSP:
+        {
+            fxL3gSysInfoConfigRsp *rsp = (fxL3gSysInfoConfigRsp *)server_reply;
+            printf("TcpClient : 3G System Info update response received with result(%ld)\n", rsp->result);
+        }
+        break;
+
+        case FXL_3G_BL_UE_REDIRECT_RSP:
+        {
+            fxL3gBLUeRedirectRsp *rsp = (fxL3gBLUeRedirectRsp *)server_reply;
+            printf("TcpClient : 3G BL UE Redirect Response received with result(%ld)\n", rsp->result);
+        }
+        break;
+
+        case FXL_3G_CHANGE_TX_ATTN_CPICH_TX_PWR_RSP:
+        {
+            fxL3gChgTxAttnCpichTxPwrRsp *rsp = (fxL3gChgTxAttnCpichTxPwrRsp *)server_reply;
+            printf("TcpClient : 3G Change txAttn & cpichTxPwr Response received with result(%ld)\n", rsp->result);
+        }
+        break;
+
+        case FXL_3G_START_SILENT_CALL_RSP:
+        {
+            fxL3gStartSilentCallRsp *rsp = (fxL3gStartSilentCallRsp *)server_reply;
+            printf("TcpClient : 3G Start Silent call Response received with result(%ld)\n", rsp->result);
+            printf("TcpClient : 3G Start Silent call Response received for IMSI(%s)\n", rsp->imsiStr);
+        }
+        break;
+
+        case FXL_3G_BL_UE_OUT_OF_COVERAGE_IND:
+        {
+            fxL3gBlUeOutOfCoverage *ind = (fxL3gBlUeOutOfCoverage *)server_reply;
+            printf("TcpClient : FXL_3G_BL_UE_OUT_OF_COVERAGE_IND: received \n");
+            printf("IMSI Received = %s \n", ind->imsiStr);
+        }
+        break;
+
+        case FXL_3G_DED_MEAS_VALUE_IND:
+        {
+            fxL3gDedMeasValueInd *ind = (fxL3gDedMeasValueInd *)server_reply;
+            printf("TcpClient : FXL_3G_DEDICATED_MEAS_VALUE_IND received \n");
+            printf("IMSI Received = %s \n", ind->imsiStr);
+            printf("RTT Value = %f mili seconds \n", ind->rttValue);
+            printf("RSCP Value = %d dbm \n", ind->rscpValue);
+        }
+        break;
+
+        case FXL_3G_STOP_IDCATCHER_RSP:
+        {
+            fxL3gStopIdCatcherRsp *rsp = (fxL3gStopIdCatcherRsp *)server_reply;
+            printf("TcpClient : 3G Id Catcher Stop Response received with result(%ld)\n", rsp->result);
+        }
+        break;
+
+        case FXL_LISTEN_MODE_RSSI_SCAN_RESULT_IND:
+        {
+            int i;
+            fxLListenModeRssiScanResultInd *ind = (fxLListenModeRssiScanResultInd *)server_reply;
+            printf("TcpClient : fxLListenModeRssiScanResultInd received\n");
+            printf("TcpClinet : Band = %d, Number of Channels = %d\n", ind->band3g, ind->numOfChannels);
+            for (i = 0; i < ind->numOfChannels; i++)
+            {
+                printf("UARFCN = %d & RSSI = %6.3f\n",
+                       ind->channelInfo[i].channelNum, ind->channelInfo[i].rssi);
+            }
+            printf("\n");
+        }
+        break;
+        default:
+        {
+            printf("TcpClient : Unknown message received msgType(%ld)\n", hdr->msgType);
+        }
+        break;
+        }
+    }
+
+    return 0;
+}

@@ -1,0 +1,445 @@
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\
+
+File: octvc1_lic2string.h
+
+Copyright (c) 2019 Octasic Technologies Private Limited. All rights reserved.
+
+Description:
+
+This file contains the lic2string implementation for package OCTVC1
+
+This source code is Octasic Technologies Confidential. Use of and access to this code
+is covered by the Octasic Technologies Device Enabling Software License Agreement.
+Acknowledgement of the Octasic Technologies Device Enabling Software License was
+required for access to this code. A copy was also provided with the release.
+
+Release: OCTSDR Software Development Kit OCTSDR_GSM-04.02.00-B3135 (2019/03/05)
+
+$Revision:  $
+
+\*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+
+
+#ifndef __OCTVC1_LIC2STRING__
+#define __OCTVC1_LIC2STRING__
+
+#include "../octdev_types.h"
+/* -------------------------------------------------------------------------------------
+	OCTVC1_LIC2STRING
+   -------------------------------------------------------------------------------------*/
+#define mOCTVC1_LIC2STRING( _f_ulLic ) \
+	octvc1_lic2string( _f_ulLic )
+
+/* -------------------------------------------------------------------------------------
+	OCTVC1_STRING2LIC
+   -------------------------------------------------------------------------------------*/
+#define mOCTVC1_STRING2LIC( _f_strLic ) \
+	octvc1_string2lic( _f_strLic )
+
+#ifndef OCTVC1_LIC2STRING_DECLARE
+extern const char * octvc1_lic2string( tOCT_UINT32 f_ulLic );
+#endif
+
+#ifndef OCTVC1_STRING2LIC_DECLARE
+extern tOCT_UINT32 octvc1_string2lic( const char * f_strLic );
+#endif 
+
+
+#include <stdio.h>
+#include <string.h>
+#include "rus/octvc1_rus_lic.h"
+#include "gsm/octvc1_gsm_lic.h"
+#include "lte/octvc1_lte_lic.h"
+#include "3g_nodeb/octvc1_3g_nodeb_lic.h"
+#ifdef WGS_LICENSING
+#include "octvc1_wgs_lic.h"
+#endif
+
+#ifdef OCTVC1_LIC2STRING_DECLARE
+/* -------------------------------------------------------------------------------------
+	octvc1_lic2string
+   -------------------------------------------------------------------------------------*/
+const char * octvc1_lic2string( tOCT_UINT32 f_ulLic )
+{
+	static char g_szUnknownoctvc1_lic2string[32];
+	switch( f_ulLic )
+	{
+		case cOCTVC1_RUS_LIC_BASS_2G_PHY_ENABLE:
+			return "cOCTVC1_RUS_LIC_BASS_2G_PHY_ENABLE";
+		case cOCTVC1_RUS_LIC_BASS_3G_PHY_ENABLE:
+			return "cOCTVC1_RUS_LIC_BASS_3G_PHY_ENABLE";
+		case cOCTVC1_RUS_LIC_BASS_4G_PHY_ENABLE:
+			return "cOCTVC1_RUS_LIC_BASS_4G_PHY_ENABLE";
+		case cOCTVC1_RUS_LIC_BASS_ALL_PHY_ENABLE:
+			return "cOCTVC1_RUS_LIC_BASS_ALL_PHY_ENABLE";
+		case cOCTVC1_RUS_LIC_RF_TOOLS_ENABLE:
+			return "cOCTVC1_RUS_LIC_RF_TOOLS_ENABLE";
+		case cOCTVC1_RUS_LIC_SCAN_SPEED_FAST_ENABLE:
+			return "cOCTVC1_RUS_LIC_SCAN_SPEED_FAST_ENABLE";
+		case cOCTVC1_RUS_LIC_SCAN_THRESHOLD_VALUE:
+			return "cOCTVC1_RUS_LIC_SCAN_THRESHOLD_VALUE";
+		case cOCTVC1_RUS_LIC_SCAN_NR_ENABLE:
+			return "cOCTVC1_RUS_LIC_SCAN_NR_ENABLE";
+		case cOCTVC1_GSM_LIC_RF_BAND_ALL_ENABLE:
+			return "cOCTVC1_GSM_LIC_RF_BAND_ALL_ENABLE";
+		case cOCTVC1_GSM_LIC_RF_BAND_410_ENABLE:
+			return "cOCTVC1_GSM_LIC_RF_BAND_410_ENABLE";
+		case cOCTVC1_GSM_LIC_RF_BAND_450_ENABLE:
+			return "cOCTVC1_GSM_LIC_RF_BAND_450_ENABLE";
+		case cOCTVC1_GSM_LIC_RF_BAND_480_ENABLE:
+			return "cOCTVC1_GSM_LIC_RF_BAND_480_ENABLE";
+		case cOCTVC1_GSM_LIC_RF_BAND_710_ENABLE:
+			return "cOCTVC1_GSM_LIC_RF_BAND_710_ENABLE";
+		case cOCTVC1_GSM_LIC_RF_BAND_750_ENABLE:
+			return "cOCTVC1_GSM_LIC_RF_BAND_750_ENABLE";
+		case cOCTVC1_GSM_LIC_RF_BAND_810_ENABLE:
+			return "cOCTVC1_GSM_LIC_RF_BAND_810_ENABLE";
+		case cOCTVC1_GSM_LIC_RF_BAND_850_ENABLE:
+			return "cOCTVC1_GSM_LIC_RF_BAND_850_ENABLE";
+		case cOCTVC1_GSM_LIC_RF_BAND_900_ENABLE:
+			return "cOCTVC1_GSM_LIC_RF_BAND_900_ENABLE";
+		case cOCTVC1_GSM_LIC_RF_BAND_1800_ENABLE:
+			return "cOCTVC1_GSM_LIC_RF_BAND_1800_ENABLE";
+		case cOCTVC1_GSM_LIC_RF_BAND_1900_ENABLE:
+			return "cOCTVC1_GSM_LIC_RF_BAND_1900_ENABLE";
+		case cOCTVC1_GSM_LIC_GPRS_EDGE_ENABLE:
+			return "cOCTVC1_GSM_LIC_GPRS_EDGE_ENABLE";
+		case cOCTVC1_GSM_LIC_MULTI_TRX_ENABLE:
+			return "cOCTVC1_GSM_LIC_MULTI_TRX_ENABLE";
+		case cOCTVC1_GSM_LIC_RAW_DATA_ENABLE:
+			return "cOCTVC1_GSM_LIC_RAW_DATA_ENABLE";			
+		case cOCTVC1_LTE_LIC_FDD_ENABLE:
+			return "cOCTVC1_LTE_LIC_FDD_ENABLE";
+		case cOCTVC1_LTE_LIC_TDD_ENABLE:
+			return "cOCTVC1_LTE_LIC_TDD_ENABLE";
+		case cOCTVC1_LTE_LIC_TDD_BASS_ENABLE:
+			return "cOCTVC1_LTE_LIC_TDD_BASS_ENABLE";
+		case cOCTVC1_LTE_LIC_RF_BAND_ALL_ENABLE:
+			return "cOCTVC1_LTE_LIC_RF_BAND_ALL_ENABLE";
+		case cOCTVC1_LTE_LIC_RF_BAND_1_ENABLE:
+			return "cOCTVC1_LTE_LIC_RF_BAND_1_ENABLE";
+		case cOCTVC1_LTE_LIC_RF_BAND_2_ENABLE:
+			return "cOCTVC1_LTE_LIC_RF_BAND_2_ENABLE";
+		case cOCTVC1_LTE_LIC_RF_BAND_3_ENABLE:
+			return "cOCTVC1_LTE_LIC_RF_BAND_3_ENABLE";
+		case cOCTVC1_LTE_LIC_RF_BAND_4_ENABLE:
+			return "cOCTVC1_LTE_LIC_RF_BAND_4_ENABLE";
+		case cOCTVC1_LTE_LIC_RF_BAND_5_ENABLE:
+			return "cOCTVC1_LTE_LIC_RF_BAND_5_ENABLE";
+		case cOCTVC1_LTE_LIC_RF_BAND_6_ENABLE:
+			return "cOCTVC1_LTE_LIC_RF_BAND_6_ENABLE";
+		case cOCTVC1_LTE_LIC_RF_BAND_7_ENABLE:
+			return "cOCTVC1_LTE_LIC_RF_BAND_7_ENABLE";
+		case cOCTVC1_LTE_LIC_RF_BAND_8_ENABLE:
+			return "cOCTVC1_LTE_LIC_RF_BAND_8_ENABLE";
+		case cOCTVC1_LTE_LIC_RF_BAND_9_ENABLE:
+			return "cOCTVC1_LTE_LIC_RF_BAND_9_ENABLE";
+		case cOCTVC1_LTE_LIC_RF_BAND_10_ENABLE:
+			return "cOCTVC1_LTE_LIC_RF_BAND_10_ENABLE";
+		case cOCTVC1_LTE_LIC_RF_BAND_11_ENABLE:
+			return "cOCTVC1_LTE_LIC_RF_BAND_11_ENABLE";
+		case cOCTVC1_LTE_LIC_RF_BAND_12_ENABLE:
+			return "cOCTVC1_LTE_LIC_RF_BAND_12_ENABLE";
+		case cOCTVC1_LTE_LIC_RF_BAND_13_ENABLE:
+			return "cOCTVC1_LTE_LIC_RF_BAND_13_ENABLE";
+		case cOCTVC1_LTE_LIC_RF_BAND_14_ENABLE:
+			return "cOCTVC1_LTE_LIC_RF_BAND_14_ENABLE";
+		case cOCTVC1_LTE_LIC_RF_BAND_15_ENABLE:
+			return "cOCTVC1_LTE_LIC_RF_BAND_15_ENABLE";
+		case cOCTVC1_LTE_LIC_RF_BAND_16_ENABLE:
+			return "cOCTVC1_LTE_LIC_RF_BAND_16_ENABLE";
+		case cOCTVC1_LTE_LIC_RF_BAND_17_ENABLE:
+			return "cOCTVC1_LTE_LIC_RF_BAND_17_ENABLE";
+		case cOCTVC1_LTE_LIC_RF_BAND_18_ENABLE:
+			return "cOCTVC1_LTE_LIC_RF_BAND_18_ENABLE";
+		case cOCTVC1_LTE_LIC_RF_BAND_19_ENABLE:
+			return "cOCTVC1_LTE_LIC_RF_BAND_19_ENABLE";
+		case cOCTVC1_LTE_LIC_RF_BAND_20_ENABLE:
+			return "cOCTVC1_LTE_LIC_RF_BAND_20_ENABLE";
+		case cOCTVC1_LTE_LIC_RF_BAND_21_ENABLE:
+			return "cOCTVC1_LTE_LIC_RF_BAND_21_ENABLE";
+		case cOCTVC1_LTE_LIC_RF_BAND_22_ENABLE:
+			return "cOCTVC1_LTE_LIC_RF_BAND_22_ENABLE";
+		case cOCTVC1_LTE_LIC_RF_BAND_23_ENABLE:
+			return "cOCTVC1_LTE_LIC_RF_BAND_23_ENABLE";
+		case cOCTVC1_LTE_LIC_RF_BAND_24_ENABLE:
+			return "cOCTVC1_LTE_LIC_RF_BAND_24_ENABLE";
+		case cOCTVC1_LTE_LIC_RF_BAND_25_ENABLE:
+			return "cOCTVC1_LTE_LIC_RF_BAND_25_ENABLE";
+		case cOCTVC1_LTE_LIC_RF_BAND_26_ENABLE:
+			return "cOCTVC1_LTE_LIC_RF_BAND_26_ENABLE";
+		case cOCTVC1_LTE_LIC_RF_BAND_27_ENABLE:
+			return "cOCTVC1_LTE_LIC_RF_BAND_27_ENABLE";
+		case cOCTVC1_LTE_LIC_RF_BAND_28_ENABLE:
+			return "cOCTVC1_LTE_LIC_RF_BAND_28_ENABLE";
+		case cOCTVC1_LTE_LIC_RF_BAND_29_ENABLE:
+			return "cOCTVC1_LTE_LIC_RF_BAND_29_ENABLE";
+		case cOCTVC1_LTE_LIC_RF_BAND_30_ENABLE:
+			return "cOCTVC1_LTE_LIC_RF_BAND_30_ENABLE";
+		case cOCTVC1_LTE_LIC_RF_BAND_31_ENABLE:
+			return "cOCTVC1_LTE_LIC_RF_BAND_31_ENABLE";
+		case cOCTVC1_LTE_LIC_RF_BAND_32_ENABLE:
+			return "cOCTVC1_LTE_LIC_RF_BAND_32_ENABLE";
+		case cOCTVC1_LTE_LIC_RF_BAND_33_ENABLE:
+			return "cOCTVC1_LTE_LIC_RF_BAND_33_ENABLE";
+		case cOCTVC1_LTE_LIC_RF_BAND_34_ENABLE:
+			return "cOCTVC1_LTE_LIC_RF_BAND_34_ENABLE";
+		case cOCTVC1_LTE_LIC_RF_BAND_35_ENABLE:
+			return "cOCTVC1_LTE_LIC_RF_BAND_35_ENABLE";
+		case cOCTVC1_LTE_LIC_RF_BAND_36_ENABLE:
+			return "cOCTVC1_LTE_LIC_RF_BAND_36_ENABLE";
+		case cOCTVC1_LTE_LIC_RF_BAND_37_ENABLE:
+			return "cOCTVC1_LTE_LIC_RF_BAND_37_ENABLE";
+		case cOCTVC1_LTE_LIC_RF_BAND_38_ENABLE:
+			return "cOCTVC1_LTE_LIC_RF_BAND_38_ENABLE";
+		case cOCTVC1_LTE_LIC_RF_BAND_39_ENABLE:
+			return "cOCTVC1_LTE_LIC_RF_BAND_39_ENABLE";
+		case cOCTVC1_LTE_LIC_RF_BAND_40_ENABLE:
+			return "cOCTVC1_LTE_LIC_RF_BAND_40_ENABLE";
+		case cOCTVC1_LTE_LIC_RF_BAND_41_ENABLE:
+			return "cOCTVC1_LTE_LIC_RF_BAND_41_ENABLE";
+		case cOCTVC1_LTE_LIC_RF_BAND_42_ENABLE:
+			return "cOCTVC1_LTE_LIC_RF_BAND_42_ENABLE";
+		case cOCTVC1_LTE_LIC_RF_BAND_43_ENABLE:
+			return "cOCTVC1_LTE_LIC_RF_BAND_43_ENABLE";
+		case cOCTVC1_LTE_LIC_RF_BAND_44_ENABLE:
+			return "cOCTVC1_LTE_LIC_RF_BAND_44_ENABLE";
+
+		case cOCTVC1_3G_NODEB_LIC_HSPA_ENABLE:
+			return "cOCTVC1_3G_NODEB_LIC_HSPA_ENABLE";
+		case cOCTVC1_3G_NODEB_LIC_RF_BAND_ALL_ENABLE:
+			return "cOCTVC1_3G_NODEB_LIC_RF_BAND_ALL_ENABLE";
+		case cOCTVC1_3G_NODEB_LIC_RF_BAND_1_ENABLE:
+			return "cOCTVC1_3G_NODEB_LIC_RF_BAND_1_ENABLE";
+		case cOCTVC1_3G_NODEB_LIC_RF_BAND_2_ENABLE:
+			return "cOCTVC1_3G_NODEB_LIC_RF_BAND_2_ENABLE";
+		case cOCTVC1_3G_NODEB_LIC_RF_BAND_3_ENABLE:
+			return "cOCTVC1_3G_NODEB_LIC_RF_BAND_3_ENABLE";
+		case cOCTVC1_3G_NODEB_LIC_RF_BAND_4_ENABLE:
+			return "cOCTVC1_3G_NODEB_LIC_RF_BAND_4_ENABLE";
+		case cOCTVC1_3G_NODEB_LIC_RF_BAND_5_ENABLE:
+			return "cOCTVC1_3G_NODEB_LIC_RF_BAND_5_ENABLE";
+		case cOCTVC1_3G_NODEB_LIC_RF_BAND_6_ENABLE:
+			return "cOCTVC1_3G_NODEB_LIC_RF_BAND_6_ENABLE";
+		case cOCTVC1_3G_NODEB_LIC_RF_BAND_7_ENABLE:
+			return "cOCTVC1_3G_NODEB_LIC_RF_BAND_7_ENABLE";
+		case cOCTVC1_3G_NODEB_LIC_RF_BAND_8_ENABLE:
+			return "cOCTVC1_3G_NODEB_LIC_RF_BAND_8_ENABLE";
+		case cOCTVC1_3G_NODEB_LIC_RF_BAND_9_ENABLE:
+			return "cOCTVC1_3G_NODEB_LIC_RF_BAND_9_ENABLE";
+		case cOCTVC1_3G_NODEB_LIC_RF_BAND_10_ENABLE:
+			return "cOCTVC1_3G_NODEB_LIC_RF_BAND_10_ENABLE";
+		case cOCTVC1_3G_NODEB_LIC_RF_BAND_11_ENABLE:
+			return "cOCTVC1_3G_NODEB_LIC_RF_BAND_11_ENABLE";
+		case cOCTVC1_3G_NODEB_LIC_RF_BAND_12_ENABLE:
+			return "cOCTVC1_3G_NODEB_LIC_RF_BAND_12_ENABLE";
+		case cOCTVC1_3G_NODEB_LIC_RF_BAND_13_ENABLE:
+			return "cOCTVC1_3G_NODEB_LIC_RF_BAND_13_ENABLE";
+		case cOCTVC1_3G_NODEB_LIC_RF_BAND_14_ENABLE:
+			return "cOCTVC1_3G_NODEB_LIC_RF_BAND_14_ENABLE";
+		case cOCTVC1_3G_NODEB_LIC_RF_BAND_15_ENABLE:
+			return "cOCTVC1_3G_NODEB_LIC_RF_BAND_15_ENABLE";
+		case cOCTVC1_3G_NODEB_LIC_RF_BAND_16_ENABLE:
+			return "cOCTVC1_3G_NODEB_LIC_RF_BAND_16_ENABLE";
+		case cOCTVC1_3G_NODEB_LIC_RF_BAND_17_ENABLE:
+			return "cOCTVC1_3G_NODEB_LIC_RF_BAND_17_ENABLE";
+		case cOCTVC1_3G_NODEB_LIC_RF_BAND_18_ENABLE:
+			return "cOCTVC1_3G_NODEB_LIC_RF_BAND_18_ENABLE";
+		case cOCTVC1_3G_NODEB_LIC_RF_BAND_19_ENABLE:
+			return "cOCTVC1_3G_NODEB_LIC_RF_BAND_19_ENABLE";
+		case cOCTVC1_3G_NODEB_LIC_RF_BAND_20_ENABLE:
+			return "cOCTVC1_3G_NODEB_LIC_RF_BAND_20_ENABLE";
+		case cOCTVC1_3G_NODEB_LIC_RF_BAND_21_ENABLE:
+			return "cOCTVC1_3G_NODEB_LIC_RF_BAND_21_ENABLE";
+		case cOCTVC1_3G_NODEB_LIC_RF_BAND_22_ENABLE:
+			return "cOCTVC1_3G_NODEB_LIC_RF_BAND_22_ENABLE";
+		case cOCTVC1_3G_NODEB_LIC_RF_BAND_23_ENABLE:
+			return "cOCTVC1_3G_NODEB_LIC_RF_BAND_23_ENABLE";
+		case cOCTVC1_3G_NODEB_LIC_RF_BAND_24_ENABLE:
+			return "cOCTVC1_3G_NODEB_LIC_RF_BAND_24_ENABLE";
+		case cOCTVC1_3G_NODEB_LIC_RF_BAND_25_ENABLE:
+			return "cOCTVC1_3G_NODEB_LIC_RF_BAND_25_ENABLE";
+		case cOCTVC1_3G_NODEB_LIC_RF_BAND_26_ENABLE:
+			return "cOCTVC1_3G_NODEB_LIC_RF_BAND_26_ENABLE";
+		case cOCTVC1_3G_NODEB_LIC_RF_BAND_ADD_2_ENABLE:
+			return "cOCTVC1_3G_NODEB_LIC_RF_BAND_ADD_2_ENABLE";
+		case cOCTVC1_3G_NODEB_LIC_RF_BAND_ADD_4_ENABLE:
+			return "cOCTVC1_3G_NODEB_LIC_RF_BAND_ADD_4_ENABLE";
+		case cOCTVC1_3G_NODEB_LIC_RF_BAND_ADD_5_ENABLE:
+			return "cOCTVC1_3G_NODEB_LIC_RF_BAND_ADD_5_ENABLE";
+		case cOCTVC1_3G_NODEB_LIC_RF_BAND_ADD_6_ENABLE:
+			return "cOCTVC1_3G_NODEB_LIC_RF_BAND_ADD_6_ENABLE";
+		case cOCTVC1_3G_NODEB_LIC_RF_BAND_ADD_7_ENABLE:
+			return "cOCTVC1_3G_NODEB_LIC_RF_BAND_ADD_7_ENABLE";
+		case cOCTVC1_3G_NODEB_LIC_RF_BAND_ADD_10_ENABLE:
+			return "cOCTVC1_3G_NODEB_LIC_RF_BAND_ADD_10_ENABLE";
+		case cOCTVC1_3G_NODEB_LIC_RF_BAND_ADD_12_ENABLE:
+			return "cOCTVC1_3G_NODEB_LIC_RF_BAND_ADD_12_ENABLE";
+		case cOCTVC1_3G_NODEB_LIC_RF_BAND_ADD_13_ENABLE:
+			return "cOCTVC1_3G_NODEB_LIC_RF_BAND_ADD_13_ENABLE";
+		case cOCTVC1_3G_NODEB_LIC_RF_BAND_ADD_14_ENABLE:
+			return "cOCTVC1_3G_NODEB_LIC_RF_BAND_ADD_14_ENABLE";
+		case cOCTVC1_3G_NODEB_LIC_RF_BAND_ADD_19_ENABLE:
+			return "cOCTVC1_3G_NODEB_LIC_RF_BAND_ADD_19_ENABLE";
+		case cOCTVC1_3G_NODEB_LIC_RF_BAND_ADD_25_ENABLE:
+			return "cOCTVC1_3G_NODEB_LIC_RF_BAND_ADD_25_ENABLE";
+		case cOCTVC1_3G_NODEB_LIC_RF_BAND_ADD_26_ENABLE:
+			return "cOCTVC1_3G_NODEB_LIC_RF_BAND_ADD_26_ENABLE";
+		case cOCTVC1_3G_NODEB_LIC_NUM_USERS_FULL_CAPACITY_ENABLE:
+			return "cOCTVC1_3G_NODEB_LIC_NUM_USERS_FULL_CAPACITY_ENABLE";
+		case cOCTVC1_3G_NODEB_LIC_NUM_USERS_QUARTER_CAPACITY_ENABLE:
+			return "cOCTVC1_3G_NODEB_LIC_NUM_USERS_QUARTER_CAPACITY_ENABLE";
+
+#ifdef WGS_LICENSING
+		case cOCTVC1_WGS_LIC_INTERNAL_ENABLE:
+			return "cOCTVC1_WGS_LIC_INTERNAL_ENABLE";
+		case cOCTVC1_WGS_LIC_LTE_FDD_ENABLE:
+			return "cOCTVC1_WGS_LIC_LTE_FDD_ENABLE";
+		case cOCTVC1_WGS_LIC_LTE_TDD_ENABLE:
+			return "cOCTVC1_WGS_LIC_LTE_TDD_ENABLE";
+		case cOCTVC1_PORTIA_LIC_ACE_ENABLE:
+			return "cOCTVC1_PORTIA_LIC_ACE_ENABLE";
+		case cOCTVC1_PORTIA_LIC_PRO_ENABLE:
+			return "cOCTVC1_PORTIA_LIC_PRO_ENABLE";
+#endif
+		case 0:
+		default:
+			break;
+	}
+	sprintf( g_szUnknownoctvc1_lic2string, "0x%.8X", f_ulLic ); 
+	return g_szUnknownoctvc1_lic2string;
+}
+#endif
+
+#ifdef OCTVC1_STRING2LIC_DECLARE
+/* -------------------------------------------------------------------------------------
+	octvc1_string2lic
+   -------------------------------------------------------------------------------------*/
+tOCT_UINT32 octvc1_string2lic( const char * f_strLic )
+{
+	if( strcmp( f_strLic, "cOCTVC1_RUS_LIC_BASS_2G_PHY_ENABLE" ) == 0 ) return cOCTVC1_RUS_LIC_BASS_2G_PHY_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_RUS_LIC_BASS_3G_PHY_ENABLE" ) == 0 ) return cOCTVC1_RUS_LIC_BASS_3G_PHY_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_RUS_LIC_BASS_4G_PHY_ENABLE" ) == 0 ) return cOCTVC1_RUS_LIC_BASS_4G_PHY_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_RUS_LIC_BASS_ALL_PHY_ENABLE" ) == 0 ) return cOCTVC1_RUS_LIC_BASS_ALL_PHY_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_RUS_LIC_RF_TOOLS_ENABLE" ) == 0 ) return cOCTVC1_RUS_LIC_RF_TOOLS_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_RUS_LIC_SCAN_SPEED_FAST_ENABLE" ) == 0 ) return cOCTVC1_RUS_LIC_SCAN_SPEED_FAST_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_RUS_LIC_SCAN_THRESHOLD_VALUE" ) == 0 ) return cOCTVC1_RUS_LIC_SCAN_THRESHOLD_VALUE;
+	if( strcmp( f_strLic, "cOCTVC1_RUS_LIC_SCAN_NR_ENABLE" ) == 0 ) return cOCTVC1_RUS_LIC_SCAN_NR_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_GSM_LIC_RF_BAND_ALL_ENABLE" ) == 0 ) return cOCTVC1_GSM_LIC_RF_BAND_ALL_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_GSM_LIC_RF_BAND_410_ENABLE" ) == 0 ) return cOCTVC1_GSM_LIC_RF_BAND_410_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_GSM_LIC_RF_BAND_450_ENABLE" ) == 0 ) return cOCTVC1_GSM_LIC_RF_BAND_450_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_GSM_LIC_RF_BAND_480_ENABLE" ) == 0 ) return cOCTVC1_GSM_LIC_RF_BAND_480_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_GSM_LIC_RF_BAND_710_ENABLE" ) == 0 ) return cOCTVC1_GSM_LIC_RF_BAND_710_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_GSM_LIC_RF_BAND_750_ENABLE" ) == 0 ) return cOCTVC1_GSM_LIC_RF_BAND_750_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_GSM_LIC_RF_BAND_810_ENABLE" ) == 0 ) return cOCTVC1_GSM_LIC_RF_BAND_810_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_GSM_LIC_RF_BAND_850_ENABLE" ) == 0 ) return cOCTVC1_GSM_LIC_RF_BAND_850_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_GSM_LIC_RF_BAND_900_ENABLE" ) == 0 ) return cOCTVC1_GSM_LIC_RF_BAND_900_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_GSM_LIC_RF_BAND_1800_ENABLE" ) == 0 ) return cOCTVC1_GSM_LIC_RF_BAND_1800_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_GSM_LIC_RF_BAND_1900_ENABLE" ) == 0 ) return cOCTVC1_GSM_LIC_RF_BAND_1900_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_GSM_LIC_GPRS_EDGE_ENABLE" ) == 0 ) return cOCTVC1_GSM_LIC_GPRS_EDGE_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_GSM_LIC_MULTI_TRX_ENABLE" ) == 0 ) return cOCTVC1_GSM_LIC_MULTI_TRX_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_GSM_LIC_RAW_DATA_ENABLE" ) == 0 ) return cOCTVC1_GSM_LIC_RAW_DATA_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_LTE_LIC_FDD_ENABLE" ) == 0 ) return cOCTVC1_LTE_LIC_FDD_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_LTE_LIC_TDD_ENABLE" ) == 0 ) return cOCTVC1_LTE_LIC_TDD_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_LTE_LIC_TDD_BASS_ENABLE" ) == 0 ) return cOCTVC1_LTE_LIC_TDD_BASS_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_LTE_LIC_RF_BAND_ALL_ENABLE" ) == 0 ) return cOCTVC1_LTE_LIC_RF_BAND_ALL_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_LTE_LIC_RF_BAND_1_ENABLE" ) == 0 ) return cOCTVC1_LTE_LIC_RF_BAND_1_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_LTE_LIC_RF_BAND_2_ENABLE" ) == 0 ) return cOCTVC1_LTE_LIC_RF_BAND_2_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_LTE_LIC_RF_BAND_3_ENABLE" ) == 0 ) return cOCTVC1_LTE_LIC_RF_BAND_3_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_LTE_LIC_RF_BAND_4_ENABLE" ) == 0 ) return cOCTVC1_LTE_LIC_RF_BAND_4_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_LTE_LIC_RF_BAND_5_ENABLE" ) == 0 ) return cOCTVC1_LTE_LIC_RF_BAND_5_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_LTE_LIC_RF_BAND_6_ENABLE" ) == 0 ) return cOCTVC1_LTE_LIC_RF_BAND_6_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_LTE_LIC_RF_BAND_7_ENABLE" ) == 0 ) return cOCTVC1_LTE_LIC_RF_BAND_7_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_LTE_LIC_RF_BAND_8_ENABLE" ) == 0 ) return cOCTVC1_LTE_LIC_RF_BAND_8_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_LTE_LIC_RF_BAND_9_ENABLE" ) == 0 ) return cOCTVC1_LTE_LIC_RF_BAND_9_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_LTE_LIC_RF_BAND_10_ENABLE" ) == 0 ) return cOCTVC1_LTE_LIC_RF_BAND_10_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_LTE_LIC_RF_BAND_11_ENABLE" ) == 0 ) return cOCTVC1_LTE_LIC_RF_BAND_11_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_LTE_LIC_RF_BAND_12_ENABLE" ) == 0 ) return cOCTVC1_LTE_LIC_RF_BAND_12_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_LTE_LIC_RF_BAND_13_ENABLE" ) == 0 ) return cOCTVC1_LTE_LIC_RF_BAND_13_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_LTE_LIC_RF_BAND_14_ENABLE" ) == 0 ) return cOCTVC1_LTE_LIC_RF_BAND_14_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_LTE_LIC_RF_BAND_15_ENABLE" ) == 0 ) return cOCTVC1_LTE_LIC_RF_BAND_15_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_LTE_LIC_RF_BAND_16_ENABLE" ) == 0 ) return cOCTVC1_LTE_LIC_RF_BAND_16_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_LTE_LIC_RF_BAND_17_ENABLE" ) == 0 ) return cOCTVC1_LTE_LIC_RF_BAND_17_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_LTE_LIC_RF_BAND_18_ENABLE" ) == 0 ) return cOCTVC1_LTE_LIC_RF_BAND_18_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_LTE_LIC_RF_BAND_19_ENABLE" ) == 0 ) return cOCTVC1_LTE_LIC_RF_BAND_19_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_LTE_LIC_RF_BAND_20_ENABLE" ) == 0 ) return cOCTVC1_LTE_LIC_RF_BAND_20_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_LTE_LIC_RF_BAND_21_ENABLE" ) == 0 ) return cOCTVC1_LTE_LIC_RF_BAND_21_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_LTE_LIC_RF_BAND_22_ENABLE" ) == 0 ) return cOCTVC1_LTE_LIC_RF_BAND_22_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_LTE_LIC_RF_BAND_23_ENABLE" ) == 0 ) return cOCTVC1_LTE_LIC_RF_BAND_23_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_LTE_LIC_RF_BAND_24_ENABLE" ) == 0 ) return cOCTVC1_LTE_LIC_RF_BAND_24_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_LTE_LIC_RF_BAND_25_ENABLE" ) == 0 ) return cOCTVC1_LTE_LIC_RF_BAND_25_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_LTE_LIC_RF_BAND_26_ENABLE" ) == 0 ) return cOCTVC1_LTE_LIC_RF_BAND_26_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_LTE_LIC_RF_BAND_27_ENABLE" ) == 0 ) return cOCTVC1_LTE_LIC_RF_BAND_27_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_LTE_LIC_RF_BAND_28_ENABLE" ) == 0 ) return cOCTVC1_LTE_LIC_RF_BAND_28_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_LTE_LIC_RF_BAND_29_ENABLE" ) == 0 ) return cOCTVC1_LTE_LIC_RF_BAND_29_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_LTE_LIC_RF_BAND_30_ENABLE" ) == 0 ) return cOCTVC1_LTE_LIC_RF_BAND_30_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_LTE_LIC_RF_BAND_31_ENABLE" ) == 0 ) return cOCTVC1_LTE_LIC_RF_BAND_31_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_LTE_LIC_RF_BAND_32_ENABLE" ) == 0 ) return cOCTVC1_LTE_LIC_RF_BAND_32_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_LTE_LIC_RF_BAND_33_ENABLE" ) == 0 ) return cOCTVC1_LTE_LIC_RF_BAND_33_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_LTE_LIC_RF_BAND_34_ENABLE" ) == 0 ) return cOCTVC1_LTE_LIC_RF_BAND_34_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_LTE_LIC_RF_BAND_35_ENABLE" ) == 0 ) return cOCTVC1_LTE_LIC_RF_BAND_35_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_LTE_LIC_RF_BAND_36_ENABLE" ) == 0 ) return cOCTVC1_LTE_LIC_RF_BAND_36_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_LTE_LIC_RF_BAND_37_ENABLE" ) == 0 ) return cOCTVC1_LTE_LIC_RF_BAND_37_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_LTE_LIC_RF_BAND_38_ENABLE" ) == 0 ) return cOCTVC1_LTE_LIC_RF_BAND_38_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_LTE_LIC_RF_BAND_39_ENABLE" ) == 0 ) return cOCTVC1_LTE_LIC_RF_BAND_39_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_LTE_LIC_RF_BAND_40_ENABLE" ) == 0 ) return cOCTVC1_LTE_LIC_RF_BAND_40_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_LTE_LIC_RF_BAND_41_ENABLE" ) == 0 ) return cOCTVC1_LTE_LIC_RF_BAND_41_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_LTE_LIC_RF_BAND_42_ENABLE" ) == 0 ) return cOCTVC1_LTE_LIC_RF_BAND_42_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_LTE_LIC_RF_BAND_43_ENABLE" ) == 0 ) return cOCTVC1_LTE_LIC_RF_BAND_43_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_LTE_LIC_RF_BAND_44_ENABLE" ) == 0 ) return cOCTVC1_LTE_LIC_RF_BAND_44_ENABLE;
+
+	if( strcmp( f_strLic, "cOCTVC1_3G_NODEB_LIC_HSPA_ENABLE" ) == 0 ) return cOCTVC1_3G_NODEB_LIC_HSPA_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_3G_NODEB_LIC_RF_BAND_ALL_ENABLE" ) == 0 ) return cOCTVC1_3G_NODEB_LIC_RF_BAND_ALL_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_3G_NODEB_LIC_RF_BAND_1_ENABLE" ) == 0 ) return cOCTVC1_3G_NODEB_LIC_RF_BAND_1_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_3G_NODEB_LIC_RF_BAND_2_ENABLE" ) == 0 ) return cOCTVC1_3G_NODEB_LIC_RF_BAND_2_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_3G_NODEB_LIC_RF_BAND_3_ENABLE" ) == 0 ) return cOCTVC1_3G_NODEB_LIC_RF_BAND_3_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_3G_NODEB_LIC_RF_BAND_4_ENABLE" ) == 0 ) return cOCTVC1_3G_NODEB_LIC_RF_BAND_4_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_3G_NODEB_LIC_RF_BAND_5_ENABLE" ) == 0 ) return cOCTVC1_3G_NODEB_LIC_RF_BAND_5_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_3G_NODEB_LIC_RF_BAND_6_ENABLE" ) == 0 ) return cOCTVC1_3G_NODEB_LIC_RF_BAND_6_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_3G_NODEB_LIC_RF_BAND_7_ENABLE" ) == 0 ) return cOCTVC1_3G_NODEB_LIC_RF_BAND_7_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_3G_NODEB_LIC_RF_BAND_8_ENABLE" ) == 0 ) return cOCTVC1_3G_NODEB_LIC_RF_BAND_8_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_3G_NODEB_LIC_RF_BAND_9_ENABLE" ) == 0 ) return cOCTVC1_3G_NODEB_LIC_RF_BAND_9_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_3G_NODEB_LIC_RF_BAND_10_ENABLE" ) == 0 ) return cOCTVC1_3G_NODEB_LIC_RF_BAND_10_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_3G_NODEB_LIC_RF_BAND_11_ENABLE" ) == 0 ) return cOCTVC1_3G_NODEB_LIC_RF_BAND_11_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_3G_NODEB_LIC_RF_BAND_12_ENABLE" ) == 0 ) return cOCTVC1_3G_NODEB_LIC_RF_BAND_12_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_3G_NODEB_LIC_RF_BAND_13_ENABLE" ) == 0 ) return cOCTVC1_3G_NODEB_LIC_RF_BAND_13_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_3G_NODEB_LIC_RF_BAND_14_ENABLE" ) == 0 ) return cOCTVC1_3G_NODEB_LIC_RF_BAND_14_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_3G_NODEB_LIC_RF_BAND_15_ENABLE" ) == 0 ) return cOCTVC1_3G_NODEB_LIC_RF_BAND_15_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_3G_NODEB_LIC_RF_BAND_16_ENABLE" ) == 0 ) return cOCTVC1_3G_NODEB_LIC_RF_BAND_16_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_3G_NODEB_LIC_RF_BAND_17_ENABLE" ) == 0 ) return cOCTVC1_3G_NODEB_LIC_RF_BAND_17_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_3G_NODEB_LIC_RF_BAND_18_ENABLE" ) == 0 ) return cOCTVC1_3G_NODEB_LIC_RF_BAND_18_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_3G_NODEB_LIC_RF_BAND_19_ENABLE" ) == 0 ) return cOCTVC1_3G_NODEB_LIC_RF_BAND_19_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_3G_NODEB_LIC_RF_BAND_20_ENABLE" ) == 0 ) return cOCTVC1_3G_NODEB_LIC_RF_BAND_20_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_3G_NODEB_LIC_RF_BAND_21_ENABLE" ) == 0 ) return cOCTVC1_3G_NODEB_LIC_RF_BAND_21_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_3G_NODEB_LIC_RF_BAND_22_ENABLE" ) == 0 ) return cOCTVC1_3G_NODEB_LIC_RF_BAND_22_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_3G_NODEB_LIC_RF_BAND_23_ENABLE" ) == 0 ) return cOCTVC1_3G_NODEB_LIC_RF_BAND_23_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_3G_NODEB_LIC_RF_BAND_24_ENABLE" ) == 0 ) return cOCTVC1_3G_NODEB_LIC_RF_BAND_24_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_3G_NODEB_LIC_RF_BAND_25_ENABLE" ) == 0 ) return cOCTVC1_3G_NODEB_LIC_RF_BAND_25_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_3G_NODEB_LIC_RF_BAND_26_ENABLE" ) == 0 ) return cOCTVC1_3G_NODEB_LIC_RF_BAND_26_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_3G_NODEB_LIC_RF_BAND_ADD_2_ENABLE" ) == 0 ) return cOCTVC1_3G_NODEB_LIC_RF_BAND_ADD_2_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_3G_NODEB_LIC_RF_BAND_ADD_4_ENABLE" ) == 0 ) return cOCTVC1_3G_NODEB_LIC_RF_BAND_ADD_4_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_3G_NODEB_LIC_RF_BAND_ADD_5_ENABLE" ) == 0 ) return cOCTVC1_3G_NODEB_LIC_RF_BAND_ADD_5_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_3G_NODEB_LIC_RF_BAND_ADD_6_ENABLE" ) == 0 ) return cOCTVC1_3G_NODEB_LIC_RF_BAND_ADD_6_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_3G_NODEB_LIC_RF_BAND_ADD_7_ENABLE" ) == 0 ) return cOCTVC1_3G_NODEB_LIC_RF_BAND_ADD_7_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_3G_NODEB_LIC_RF_BAND_ADD_10_ENABLE" ) == 0 ) return cOCTVC1_3G_NODEB_LIC_RF_BAND_ADD_10_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_3G_NODEB_LIC_RF_BAND_ADD_12_ENABLE" ) == 0 ) return cOCTVC1_3G_NODEB_LIC_RF_BAND_ADD_12_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_3G_NODEB_LIC_RF_BAND_ADD_13_ENABLE" ) == 0 ) return cOCTVC1_3G_NODEB_LIC_RF_BAND_ADD_13_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_3G_NODEB_LIC_RF_BAND_ADD_14_ENABLE" ) == 0 ) return cOCTVC1_3G_NODEB_LIC_RF_BAND_ADD_14_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_3G_NODEB_LIC_RF_BAND_ADD_19_ENABLE" ) == 0 ) return cOCTVC1_3G_NODEB_LIC_RF_BAND_ADD_19_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_3G_NODEB_LIC_RF_BAND_ADD_25_ENABLE" ) == 0 ) return cOCTVC1_3G_NODEB_LIC_RF_BAND_ADD_25_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_3G_NODEB_LIC_RF_BAND_ADD_26_ENABLE" ) == 0 ) return cOCTVC1_3G_NODEB_LIC_RF_BAND_ADD_26_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_3G_NODEB_LIC_NUM_USERS_FULL_CAPACITY_ENABLE" ) == 0 ) return cOCTVC1_3G_NODEB_LIC_NUM_USERS_FULL_CAPACITY_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_3G_NODEB_LIC_NUM_USERS_QUARTER_CAPACITY_ENABLE" ) == 0 ) return cOCTVC1_3G_NODEB_LIC_NUM_USERS_QUARTER_CAPACITY_ENABLE;
+#ifdef WGS_LICENSING
+	if( strcmp( f_strLic, "cOCTVC1_WGS_LIC_INTERNAL_ENABLE" ) == 0 ) return cOCTVC1_WGS_LIC_INTERNAL_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_WGS_LIC_LTE_FDD_ENABLE" ) == 0 ) return cOCTVC1_WGS_LIC_LTE_FDD_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_WGS_LIC_LTE_TDD_ENABLE" ) == 0 ) return cOCTVC1_WGS_LIC_LTE_TDD_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_PORTIA_LIC_ACE_ENABLE" ) == 0 ) return cOCTVC1_PORTIA_LIC_ACE_ENABLE;
+	if( strcmp( f_strLic, "cOCTVC1_PORTIA_LIC_PRO_ENABLE" ) == 0 ) return cOCTVC1_PORTIA_LIC_PRO_ENABLE;
+#endif
+	return( 0 );
+
+}
+#endif 
+
+#endif /* __OCTVC1_LIC2STRING__ */

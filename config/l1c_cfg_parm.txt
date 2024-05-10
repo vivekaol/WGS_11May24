@@ -1,0 +1,9 @@
+l23SrcMacAddr = 50 0C 29 95 21 6E
+l1DstMacAddr  = 00 0c 90 2e 22 a6
+deviceHost = eth0
+tx_rx_PowerGain = 5 50
+l1DspType = 0
+gpsWeek = 845
+gpsTow  = 1234567
+Logs-Enabled = 0
+pumpDelay = 60

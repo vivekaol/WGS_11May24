@@ -1,0 +1,21 @@
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\
+
+File: content.txt
+
+Copyright (c) 2015 Octasic Inc. All rights reserved.
+
+Description: 
+This directory is the destination of all Octasic libraries. 
+Each project makefile will automatically copy the result of the compilation to 
+this location.
+
+This source code is Octasic Confidential. Use of and access to this code
+is covered by the Octasic Device Enabling Software License Agreement.
+Acknowledgement of the Octasic Device Enabling Software License was
+required for access to this code. A copy was also provided with the release.
+
+Release: Octasic System Development Framework OCTSYSTEM-02.06.00-B247 (2015/01/09)
+
+$Octasic_Revision: 7 $
+
+\*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/

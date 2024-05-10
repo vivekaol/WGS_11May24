@@ -1,0 +1,12 @@
+
+#ifndef DBG_MODULE
+#define DBG_MODULE(mod)
+#endif
+DBG_MODULE(sls)
+DBG_MODULE(app)
+DBG_MODULE(cmn)
+DBG_MODULE(mac)
+DBG_MODULE(rlc)
+DBG_MODULE(rrc)
+#undef DBG_MODULE
+

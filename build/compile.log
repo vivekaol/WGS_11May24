@@ -1,0 +1,605 @@
+make[1]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/build'
+rm -f -R  Debug32/
+rm -f -R ../bin/oneBin
+make[1]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/build'
+make[1]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/build'
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/UserConvHdlrs/src/L1C_cctrchConvHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/UserConvHdlrs/src/L1C_cellProcedureConvHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/UserConvHdlrs/src/L1C_commonMeasProcedureConvHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/UserConvHdlrs/src/L1C_phyShareCHProcedureConvHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/UserConvHdlrs/src/L1C_prachProcedureConvHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/UserConvHdlrs/src/L1C_radiolinkProcedureConvHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/UserConvHdlrs/src/L1C_radiolinkProcedureEdchConvHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/UserConvHdlrs/src/L1C_radiolinkProcedureHsDschConvHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/UserConvHdlrs/src/L1C_dedicatedMeasProcedureConvHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/UserConvHdlrs/src/L1C_sccpchProcedureConvHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/UserConvHdlrs/src/L1C_responseProcedureConvHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/UserConvHdlrs/src/L1C_tfsConvHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/ParamsValidate/src/L1C_cctrchParamValidate.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/ParamsValidate/src/L1C_cellProcedureParamValidate.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/ParamsValidate/src/L1C_commonMeasProcedureParamValidate.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/ParamsValidate/src/L1C_phyShareCHProcedureParamValidate.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/ParamsValidate/src/L1C_prachProcedureParamValidate.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/ParamsValidate/src/L1C_radiolinkProcedureEdchParamValidate.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/ParamsValidate/src/L1C_radiolinkProcedureHsDschParamValidate.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/ParamsValidate/src/L1C_radiolinkProcedureParamValidate.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/ParamsValidate/src/L1C_dedicatedMeasProcedureParamValidate.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/ParamsValidate/src/L1C_sccpchProcedureParamValidate.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/ParamsValidate/src/L1C_tfsParamValidate.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/MsgEncHdlrs/src/L1C_tfsEncHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/FpEncDecHdlrs/src/L1C_FpDecHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/FpEncDecHdlrs/src/L1C_FpEncHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/Serilization/src/msgGetPrimitives.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/Serilization/src/msgPutPrimitives.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/Serilization/src/msgPrimitives.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/Serilization/src/msgHeaderCodec.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/MsgDecHdlrs/src/L1C_responseProcDecHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/MsgEncHdlrs/src/L1C_cctrchEncHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/MsgEncHdlrs/src/L1C_modemSetupEncHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/MsgEncHdlrs/src/L1C_cellProcedureEncHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/MsgEncHdlrs/src/L1C_commonMeasProcedureEncHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/MsgEncHdlrs/src/L1C_phyShareCHProcedureEncHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/MsgEncHdlrs/src/L1C_prachProcedureEncHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/MsgEncHdlrs/src/L1C_radiolinkProcedureEdchEncHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/MsgEncHdlrs/src/L1C_radiolinkProcedureEncHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/MsgEncHdlrs/src/L1C_radiolinkProcedureHsDschEncHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/MsgEncHdlrs/src/L1C_dedicatedMeasProcedureEncHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/MsgEncHdlrs/src/L1C_sccpchProcedureEncHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/MsgEncHdlrs/src/L1C_sysInfoEncHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1IoApi/src/oct_etherApi.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1IoApi/src/oct_l1cIoApi.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1IoApi/src/oct_l1cIoDebug.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1IoApi/src/oct_l1cIoInit.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1IoApi/src/oct_util_license.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1IoApi/src/oct_util_config.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1IoApi/src/octWgsLicense.c
+compiling for linux-32: ../sls/src/sls.c
+make[1]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/build'
+make[1]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/build'
+rm -f -R  Debug32/
+rm -f -R ../bin/oneBin
+make[1]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/build'
+make[1]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/build'
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/UserConvHdlrs/src/L1C_cctrchConvHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/UserConvHdlrs/src/L1C_cellProcedureConvHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/UserConvHdlrs/src/L1C_commonMeasProcedureConvHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/UserConvHdlrs/src/L1C_phyShareCHProcedureConvHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/UserConvHdlrs/src/L1C_prachProcedureConvHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/UserConvHdlrs/src/L1C_radiolinkProcedureConvHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/UserConvHdlrs/src/L1C_radiolinkProcedureEdchConvHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/UserConvHdlrs/src/L1C_radiolinkProcedureHsDschConvHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/UserConvHdlrs/src/L1C_dedicatedMeasProcedureConvHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/UserConvHdlrs/src/L1C_sccpchProcedureConvHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/UserConvHdlrs/src/L1C_responseProcedureConvHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/UserConvHdlrs/src/L1C_tfsConvHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/ParamsValidate/src/L1C_cctrchParamValidate.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/ParamsValidate/src/L1C_cellProcedureParamValidate.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/ParamsValidate/src/L1C_commonMeasProcedureParamValidate.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/ParamsValidate/src/L1C_phyShareCHProcedureParamValidate.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/ParamsValidate/src/L1C_prachProcedureParamValidate.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/ParamsValidate/src/L1C_radiolinkProcedureEdchParamValidate.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/ParamsValidate/src/L1C_radiolinkProcedureHsDschParamValidate.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/ParamsValidate/src/L1C_radiolinkProcedureParamValidate.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/ParamsValidate/src/L1C_dedicatedMeasProcedureParamValidate.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/ParamsValidate/src/L1C_sccpchProcedureParamValidate.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/ParamsValidate/src/L1C_tfsParamValidate.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/MsgEncHdlrs/src/L1C_tfsEncHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/FpEncDecHdlrs/src/L1C_FpDecHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/FpEncDecHdlrs/src/L1C_FpEncHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/Serilization/src/msgGetPrimitives.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/Serilization/src/msgPutPrimitives.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/Serilization/src/msgPrimitives.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/Serilization/src/msgHeaderCodec.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/MsgDecHdlrs/src/L1C_responseProcDecHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/MsgEncHdlrs/src/L1C_cctrchEncHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/MsgEncHdlrs/src/L1C_modemSetupEncHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/MsgEncHdlrs/src/L1C_cellProcedureEncHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/MsgEncHdlrs/src/L1C_commonMeasProcedureEncHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/MsgEncHdlrs/src/L1C_phyShareCHProcedureEncHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/MsgEncHdlrs/src/L1C_prachProcedureEncHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/MsgEncHdlrs/src/L1C_radiolinkProcedureEdchEncHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/MsgEncHdlrs/src/L1C_radiolinkProcedureEncHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/MsgEncHdlrs/src/L1C_radiolinkProcedureHsDschEncHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/MsgEncHdlrs/src/L1C_dedicatedMeasProcedureEncHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/MsgEncHdlrs/src/L1C_sccpchProcedureEncHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1Intf/MsgEncHdlrs/src/L1C_sysInfoEncHdlr.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1IoApi/src/oct_etherApi.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1IoApi/src/oct_l1cIoApi.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1IoApi/src/oct_l1cIoDebug.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1IoApi/src/oct_l1cIoInit.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1IoApi/src/oct_util_license.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1IoApi/src/oct_util_config.c
+compiling for linux-32: ../3rdparty/octasic/oct2224_l1IoApi/src/octWgsLicense.c
+compiling for linux-32: ../sls/src/sls.c
+compiling for linux-32: ../sls/src/slsDecode2g.c
+compiling for linux-32: ../sls/src/slsDecode3g.c
+compiling for linux-32: ../sls/src/ratSocketItf.c
+compiling for linux-32: ../sls/src/octsamples_pkt_api_session.c
+compiling for linux-32: ../sls/src/octsamples_string_utils.c
+compiling for linux-32: ../sls/src/oct_common_getopt.c
+compiling for linux-32: ../callcontrol/3g/app/src/callCDefaultParam.c
+compiling for linux-32: ../callcontrol/3g/app/src/clSendL1Msg.c
+compiling for linux-32: ../callcontrol/3g/app/src/memAlloc.c
+compiling for linux-32: ../callcontrol/3g/app/src/rlcUlDataHndlr.c
+compiling for linux-32: ../callcontrol/3g/app/src/callCMain.c
+compiling for linux-32: ../callcontrol/3g/app/src/l2TaskHndlr.c
+compiling for linux-32: ../callcontrol/3g/app/src/rlcAmData.c
+compiling for linux-32: ../callcontrol/3g/app/src/rlcUmTx.c
+compiling for linux-32: ../callcontrol/3g/app/src/callCMainUtil.c
+compiling for linux-32: ../callcontrol/3g/app/src/macCfgHndlr.c
+compiling for linux-32: ../callcontrol/3g/app/src/rlcCfgHndlr.c
+compiling for linux-32: ../callcontrol/3g/app/src/rrcCellSetup.c
+compiling for linux-32: ../callcontrol/3g/app/src/callCSysInfoUpdate.c
+compiling for linux-32: ../callcontrol/3g/app/src/macContext.c
+compiling for linux-32: ../callcontrol/3g/app/src/rlcContext.c
+compiling for linux-32: ../callcontrol/3g/app/src/rrcMsg.c
+compiling for linux-32: ../callcontrol/3g/app/src/callCTaskHndlr.c
+compiling for linux-32: ../callcontrol/3g/app/src/macDlDataHndlr.c
+compiling for linux-32: ../callcontrol/3g/app/src/rlcDlDataIndHndlr.c
+compiling for linux-32: ../callcontrol/3g/app/src/clL1RcvMsg.c
+compiling for linux-32: ../callcontrol/3g/app/src/macUlDataHndlr.c
+compiling for linux-32: ../callcontrol/3g/app/src/rlcDlSduHndlr.c
+compiling for linux-32: ../callcontrol/3g/cmn/src/msgQue.c
+compiling for linux-32: ../callcontrol/3g/cmn/src/cmnDebug.c
+compiling for linux-32: ../callcontrol/3g/cmn/src/taskHndlr.c
+compiling for linux-32: ../callcontrol/3g/cmn/src/timerApi.c
+compiling for linux-32: ../callcontrol/3g/cmn/src/timer.c
+compiling for linux-32: ../callcontrol/3g/rrc/src/rrcMain.c
+compiling for linux-32: ../callcontrol/3g/rrc/src/rrcRcvMsg.c
+compiling for linux-32: ../callcontrol/2g/src/cleanChannelSelectionManager.c
+compiling for linux-32: ../callcontrol/2g/src/dataIndMsgHandler.c
+compiling for linux-32: ../callcontrol/2g/src/gprsLlcSndcpMsgHandler.c
+compiling for linux-32: ../callcontrol/2g/src/gprsRlcMacMsgHandler.c
+compiling for linux-32: ../callcontrol/2g/src/gprsRlcMacEncDec.c
+compiling for linux-32: ../callcontrol/2g/src/gsmCommon.c
+compiling for linux-32: ../callcontrol/2g/src/l1InterfaceManager.c
+compiling for linux-32: ../callcontrol/2g/src/l2Scheduler.c
+compiling for linux-32: ../callcontrol/2g/src/lapdm.c
+compiling for linux-32: ../callcontrol/2g/src/linkedlist.c
+compiling for linux-32: ../callcontrol/2g/src/logManager.c
+compiling for linux-32: ../callcontrol/2g/src/main.c
+compiling for linux-32: ../callcontrol/2g/src/rtsTxMsgHandler.c
+compiling for linux-32: ../callcontrol/2g/src/sysInfo.c
+compiling for linux-32: ../callcontrol/2g/src/sms.c
+compiling for linux-32: ../callcontrol/2g/src/transactionMemoryManager.c
+compiling for linux-32: ../callcontrol/2g/src/userManager.c
+compiling for linux-32: ../callcontrol/4g/src/lteCmn.c
+compiling for linux-32: ../callcontrol/4g/src/lteAsn1IntfcHandler.c
+compiling for linux-32: ../callcontrol/4g/src/lteBufferManager.c
+compiling for linux-32: ../callcontrol/4g/src/lteL1IfApi.c
+compiling for linux-32: ../callcontrol/4g/src/lteLayer1IfManager.c
+compiling for linux-32: ../callcontrol/4g/src/lteMacEncDec.c
+compiling for linux-32: ../callcontrol/4g/src/lteMacIntfcHandler.c
+compiling for linux-32: ../callcontrol/4g/src/lteMacScheduler.c
+compiling for linux-32: ../callcontrol/4g/src/lteUserManager.c
+compiling for linux-32: ../callcontrol/4g/src/rawSocketApi.c
+compiling for linux-32: ../sls/src/slsDecode4g.c
+compiling for linux-32: ../callcontrol/4g/src/lteRrcIntfcHandler.c
+compiling for linux-32: ../callcontrol/4g/src/lteRrcMain.c
+compiling for linux-32: ../callcontrol/4g/src/lteRlcEncDec.c
+compiling for linux-32: ../callcontrol/4g/src/lteRlcIntfcHandler.c
+compiling for linux-32: ../callcontrol/4g/src/lteAutoConfigManager.c
+compiling for linux-32: ../sls/src/obm_battery_stats.c
+compiling for linux-32: ../sls/src/obm_board_info.c
+compiling for linux-32: ../sls/src/obm_board_stop.c
+compiling for linux-32: ../sls/src/obm_board_update.c
+compiling for linux-32: ../sls/src/obm_dsp_info.c
+compiling for linux-32: ../sls/src/obm_dsp_reset.c
+compiling for linux-32: ../sls/src/obm_gps_info.c
+compiling for linux-32: ../sls/src/obm_gps_reset.c
+compiling for linux-32: ../sls/src/obm_gps_stats.c
+compiling for linux-32: ../sls/src/obm_power_switch.c
+compiling for linux-32: ../sls/src/obm_rf_amplifier.c
+compiling for linux-32: ../sls/src/obm_rf_frequency.c
+compiling for linux-32: ../sls/src/obm_rf_info.c
+compiling for linux-32: ../sls/src/obm_refclk_in.c
+compiling for linux-32: ../sls/src/obm_refclk_out.c
+compiling for linux-32: ../sls/src/obm_target_info.c
+compiling for linux-32: ../sls/src/obm_i2c_read.c
+compiling for linux-32: ../sls/src/obm_i2c_write.c
+compiling for linux-32: ../sls/src/obm_config_write.c
+compiling for linux-32: ../sls/src/obm_gps_antenna.c
+compiling for linux-32: ../sls/src/obm.c
+compiling for linux-32: ../sls/src/obm_system_info.c
+compiling for linux-32: ../sls/src/obm_system_modify.c
+compiling for linux-32: ../sls/src/obm_board_attach.c
+compiling for linux-32: ../sls/src/obm_board_detach.c
+compiling for linux-32: ../sls/src/obm_board_modify.c
+compiling for linux-32: ../sls/src/obm_dsp_modify.c
+compiling for linux-32: ../sls/src/obm_eth_switch_info.c
+compiling for linux-32: ../sls/src/obm_eth_switch_modify.c
+compiling for linux-32: ../sls/src/obm_eth_switch_stats.c
+compiling for linux-32: ../sls/src/obm_gps_modify.c
+compiling for linux-32: ../sls/src/obm_rf_modify.c
+compiling for linux-32: ../sls/src/obm_rf_stats.c
+make[2]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/build'
+make[3]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/octvc1pktapi'
+compiling for linux-32: source/pktapi_cnct.c
+compiling for linux-32: source/pktapi_helper.c
+compiling for linux-32: source/pktapi_inst.c
+compiling for linux-32: source/pktapi_pkt.c
+compiling for linux-32: source/pktapi_sess.c
+make[4]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/octvc1pktapi'
+make[4]: Nothing to be done for `libs'.
+make[4]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/octvc1pktapi'
+make[4]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/octvc1pktapi'
+make[4]: Nothing to be done for `libs'.
+make[4]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/octvc1pktapi'
+make[4]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/octvc1pktapi'
+make[4]: Nothing to be done for `libs'.
+make[4]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/octvc1pktapi'
+Linking and building (Debug) for linux-32... Debug32/liboctvc1pktapid.a
+make[3]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/octvc1pktapi'
+make[3]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[4]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[5]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[5]: Nothing to be done for `default'.
+make[5]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[4]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+Linking and building (Debug) for linux-32... Debug32/libocttransapid.a
+make[3]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[3]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_eth'
+make[4]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_eth'
+make[5]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[6]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[7]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[7]: Nothing to be done for `default'.
+make[7]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[6]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+Linking and building (Debug) for linux-32... Debug32/libocttransapid.a
+make[5]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[4]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_eth'
+Linking and building (Debug) for linux-32... Debug32/libocttransapi_ethd.a
+make[3]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_eth'
+make[3]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_udp'
+make[4]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_udp'
+make[5]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[6]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[7]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[7]: Nothing to be done for `default'.
+make[7]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[6]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+Linking and building (Debug) for linux-32... Debug32/libocttransapid.a
+make[5]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[4]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_udp'
+Linking and building (Debug) for linux-32... Debug32/libocttransapi_udpd.a
+make[3]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_udp'
+make[3]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_tcp'
+make[4]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_tcp'
+make[5]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[6]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[7]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[7]: Nothing to be done for `default'.
+make[7]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[6]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+Linking and building (Debug) for linux-32... Debug32/libocttransapid.a
+make[5]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[4]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_tcp'
+Linking and building (Debug) for linux-32... Debug32/libocttransapi_tcpd.a
+make[3]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_tcp'
+make[3]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[3]: Nothing to be done for `default'.
+make[3]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[2]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/build'
+make[2]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/build'
+make[3]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/octvc1pktapi'
+make[4]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/octvc1pktapi'
+make[4]: Nothing to be done for `libs'.
+make[4]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/octvc1pktapi'
+make[4]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/octvc1pktapi'
+make[4]: Nothing to be done for `libs'.
+make[4]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/octvc1pktapi'
+make[4]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/octvc1pktapi'
+make[4]: Nothing to be done for `libs'.
+make[4]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/octvc1pktapi'
+Linking and building (Debug) for linux-32... Debug32/liboctvc1pktapid.a
+make[3]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/octvc1pktapi'
+make[3]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[4]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[5]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[5]: Nothing to be done for `default'.
+make[5]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[4]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+Linking and building (Debug) for linux-32... Debug32/libocttransapid.a
+make[3]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[3]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_eth'
+make[4]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_eth'
+make[5]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[6]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[7]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[7]: Nothing to be done for `default'.
+make[7]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[6]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+Linking and building (Debug) for linux-32... Debug32/libocttransapid.a
+make[5]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[4]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_eth'
+Linking and building (Debug) for linux-32... Debug32/libocttransapi_ethd.a
+make[3]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_eth'
+make[3]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_udp'
+make[4]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_udp'
+make[5]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[6]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[7]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[7]: Nothing to be done for `default'.
+make[7]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[6]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+Linking and building (Debug) for linux-32... Debug32/libocttransapid.a
+make[5]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[4]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_udp'
+Linking and building (Debug) for linux-32... Debug32/libocttransapi_udpd.a
+make[3]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_udp'
+make[3]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_tcp'
+make[4]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_tcp'
+make[5]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[6]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[7]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[7]: Nothing to be done for `default'.
+make[7]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[6]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+Linking and building (Debug) for linux-32... Debug32/libocttransapid.a
+make[5]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[4]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_tcp'
+Linking and building (Debug) for linux-32... Debug32/libocttransapi_tcpd.a
+make[3]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_tcp'
+make[3]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[3]: Nothing to be done for `default'.
+make[3]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[2]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/build'
+make[2]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/build'
+make[3]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/octvc1pktapi'
+make[4]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/octvc1pktapi'
+make[4]: Nothing to be done for `libs'.
+make[4]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/octvc1pktapi'
+make[4]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/octvc1pktapi'
+make[4]: Nothing to be done for `libs'.
+make[4]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/octvc1pktapi'
+make[4]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/octvc1pktapi'
+make[4]: Nothing to be done for `libs'.
+make[4]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/octvc1pktapi'
+Linking and building (Debug) for linux-32... Debug32/liboctvc1pktapid.a
+make[3]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/octvc1pktapi'
+make[3]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[4]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[5]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[5]: Nothing to be done for `default'.
+make[5]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[4]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+Linking and building (Debug) for linux-32... Debug32/libocttransapid.a
+make[3]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[3]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_eth'
+make[4]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_eth'
+make[5]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[6]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[7]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[7]: Nothing to be done for `default'.
+make[7]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[6]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+Linking and building (Debug) for linux-32... Debug32/libocttransapid.a
+make[5]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[4]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_eth'
+Linking and building (Debug) for linux-32... Debug32/libocttransapi_ethd.a
+make[3]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_eth'
+make[3]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_udp'
+make[4]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_udp'
+make[5]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[6]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[7]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[7]: Nothing to be done for `default'.
+make[7]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[6]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+Linking and building (Debug) for linux-32... Debug32/libocttransapid.a
+make[5]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[4]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_udp'
+Linking and building (Debug) for linux-32... Debug32/libocttransapi_udpd.a
+make[3]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_udp'
+make[3]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_tcp'
+make[4]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_tcp'
+make[5]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[6]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[7]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[7]: Nothing to be done for `default'.
+make[7]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[6]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+Linking and building (Debug) for linux-32... Debug32/libocttransapid.a
+make[5]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[4]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_tcp'
+Linking and building (Debug) for linux-32... Debug32/libocttransapi_tcpd.a
+make[3]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_tcp'
+make[3]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[3]: Nothing to be done for `default'.
+make[3]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[2]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/build'
+make[2]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/build'
+make[3]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/octvc1pktapi'
+make[4]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/octvc1pktapi'
+make[4]: Nothing to be done for `libs'.
+make[4]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/octvc1pktapi'
+make[4]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/octvc1pktapi'
+make[4]: Nothing to be done for `libs'.
+make[4]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/octvc1pktapi'
+make[4]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/octvc1pktapi'
+make[4]: Nothing to be done for `libs'.
+make[4]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/octvc1pktapi'
+Linking and building (Debug) for linux-32... Debug32/liboctvc1pktapid.a
+make[3]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/octvc1pktapi'
+make[3]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[4]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[5]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[5]: Nothing to be done for `default'.
+make[5]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[4]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+Linking and building (Debug) for linux-32... Debug32/libocttransapid.a
+make[3]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[3]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_eth'
+make[4]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_eth'
+make[5]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[6]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[7]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[7]: Nothing to be done for `default'.
+make[7]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[6]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+Linking and building (Debug) for linux-32... Debug32/libocttransapid.a
+make[5]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[4]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_eth'
+Linking and building (Debug) for linux-32... Debug32/libocttransapi_ethd.a
+make[3]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_eth'
+make[3]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_udp'
+make[4]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_udp'
+make[5]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[6]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[7]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[7]: Nothing to be done for `default'.
+make[7]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[6]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+Linking and building (Debug) for linux-32... Debug32/libocttransapid.a
+make[5]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[4]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_udp'
+Linking and building (Debug) for linux-32... Debug32/libocttransapi_udpd.a
+make[3]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_udp'
+make[3]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_tcp'
+make[4]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_tcp'
+make[5]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[6]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[7]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[7]: Nothing to be done for `default'.
+make[7]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[6]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+Linking and building (Debug) for linux-32... Debug32/libocttransapid.a
+make[5]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[4]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_tcp'
+Linking and building (Debug) for linux-32... Debug32/libocttransapi_tcpd.a
+make[3]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_tcp'
+make[3]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[3]: Nothing to be done for `default'.
+make[3]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[2]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/build'
+make[2]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/build'
+make[3]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/octvc1pktapi'
+make[4]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/octvc1pktapi'
+make[4]: Nothing to be done for `libs'.
+make[4]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/octvc1pktapi'
+make[4]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/octvc1pktapi'
+make[4]: Nothing to be done for `libs'.
+make[4]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/octvc1pktapi'
+make[4]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/octvc1pktapi'
+make[4]: Nothing to be done for `libs'.
+make[4]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/octvc1pktapi'
+Linking and building (Debug) for linux-32... Debug32/liboctvc1pktapid.a
+make[3]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/octvc1pktapi'
+make[3]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[4]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[5]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[5]: Nothing to be done for `default'.
+make[5]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[4]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+Linking and building (Debug) for linux-32... Debug32/libocttransapid.a
+make[3]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[3]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_eth'
+make[4]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_eth'
+make[5]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[6]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[7]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[7]: Nothing to be done for `default'.
+make[7]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[6]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+Linking and building (Debug) for linux-32... Debug32/libocttransapid.a
+make[5]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[4]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_eth'
+Linking and building (Debug) for linux-32... Debug32/libocttransapi_ethd.a
+make[3]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_eth'
+make[3]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_udp'
+make[4]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_udp'
+make[5]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[6]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[7]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[7]: Nothing to be done for `default'.
+make[7]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[6]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+Linking and building (Debug) for linux-32... Debug32/libocttransapid.a
+make[5]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[4]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_udp'
+Linking and building (Debug) for linux-32... Debug32/libocttransapi_udpd.a
+make[3]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_udp'
+make[3]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_tcp'
+make[4]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_tcp'
+make[5]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[6]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[7]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[7]: Nothing to be done for `default'.
+make[7]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[6]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+Linking and building (Debug) for linux-32... Debug32/libocttransapid.a
+make[5]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[4]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_tcp'
+Linking and building (Debug) for linux-32... Debug32/libocttransapi_tcpd.a
+make[3]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_tcp'
+make[3]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[3]: Nothing to be done for `default'.
+make[3]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[2]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/build'
+make[2]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/build'
+make[3]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/octvc1pktapi'
+make[4]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/octvc1pktapi'
+make[4]: Nothing to be done for `libs'.
+make[4]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/octvc1pktapi'
+make[4]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/octvc1pktapi'
+make[4]: Nothing to be done for `libs'.
+make[4]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/octvc1pktapi'
+make[4]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/octvc1pktapi'
+make[4]: Nothing to be done for `libs'.
+make[4]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/octvc1pktapi'
+Linking and building (Debug) for linux-32... Debug32/liboctvc1pktapid.a
+make[3]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/octvc1pktapi'
+make[3]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[4]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[5]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[5]: Nothing to be done for `default'.
+make[5]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[4]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+Linking and building (Debug) for linux-32... Debug32/libocttransapid.a
+make[3]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[3]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_eth'
+make[4]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_eth'
+make[5]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[6]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[7]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[7]: Nothing to be done for `default'.
+make[7]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[6]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+Linking and building (Debug) for linux-32... Debug32/libocttransapid.a
+make[5]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[4]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_eth'
+Linking and building (Debug) for linux-32... Debug32/libocttransapi_ethd.a
+make[3]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_eth'
+make[3]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_udp'
+make[4]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_udp'
+make[5]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[6]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[7]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[7]: Nothing to be done for `default'.
+make[7]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[6]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+Linking and building (Debug) for linux-32... Debug32/libocttransapid.a
+make[5]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[4]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_udp'
+Linking and building (Debug) for linux-32... Debug32/libocttransapi_udpd.a
+make[3]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_udp'
+make[3]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_tcp'
+make[4]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_tcp'
+make[5]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[6]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[7]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[7]: Nothing to be done for `default'.
+make[7]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[6]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+Linking and building (Debug) for linux-32... Debug32/libocttransapid.a
+make[5]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi'
+make[4]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_tcp'
+Linking and building (Debug) for linux-32... Debug32/libocttransapi_tcpd.a
+make[3]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octtransapi/octtransapi_tcp'
+make[3]: Entering directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[3]: Nothing to be done for `default'.
+make[3]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/common/octosal'
+make[2]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/build'
+Linking and building (Debug) for linux-32... Debug32/oneBind
+make[1]: Leaving directory `/media/sf_L1_UPDATE/WGS_RUS_LTE/oneBin/build'

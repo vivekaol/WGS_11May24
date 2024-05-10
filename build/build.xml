@@ -1,0 +1,395 @@
+<project name="WGS" default="create_pkg" basedir="..">
+  <description>Celliber Software Build Script, $Revision: 1 $</description>
+
+ <taskdef resource="net/sf/antcontrib/antlib.xml">
+	<classpath>
+		<pathelement location="${basedir}/build/buildEnv/ant-contrib/ant-contrib-1.0b3.jar"/>
+	</classpath>
+ </taskdef>
+
+ <scriptdef language="javascript" name="lower">
+	<attribute name="string"/>
+	<attribute name="to"/>
+		project.setProperty( attributes.get( "to" ), attributes.get( "string" ).toLowerCase() );
+</scriptdef>
+
+<property environment="env"/>
+<property name="artifact_path" value="${basedir}/build/artifact"/>
+	
+ <target name="create_pkg" depends="pkg_version,zip_source,compile,copy_l1_images">
+  <zip destfile="${artifact_path}/${stack.name}-${stack.number}-INTERNAL.zip">
+      <fileset dir="${artifact_path}">
+			<include name="bin-pri/**"/>
+			<include name="bin-sec/**"/>
+			<include name="config/**"/>
+			<include name="scripts/**"/>
+			<include name="l1images/BTS3500/**"/>
+			<include name="l1images/BTS8000/**"/>
+			<include name="l1images/BTS9100/**"/>
+			<include name="l1images/BTS8500/**"/>
+			<include name="docs/**"/>
+      </fileset>
+	 </zip>
+  <delete dir="${artifact_path}/l1images" failonerror="false" />
+  <delete dir="${artifact_path}/bin-pri" failonerror="false" />
+  <delete dir="${artifact_path}/bin-sec" failonerror="false" />
+  <delete dir="${artifact_path}/config" failonerror="false" />
+  <delete dir="${artifact_path}/docs" failonerror="false" />
+  <delete dir="${artifact_path}/scripts" failonerror="false" />
+ </target>
+
+ <target name="zip_source">
+      <!-- Zip source code to copy to vm and compile -->
+	<zip destfile="${artifact_path}/${stack.name}-SRC-${stack.number}-INTERNAL.zip">
+      <fileset dir="${basedir}">
+        <include name="**/**"/>
+      </fileset>
+	 </zip>
+ </target>
+ 
+ <target name="pkg_version">
+ 
+    <!-- Following is a clear view of the release labelling convention:
+
+    Generic      Major         Minor
+    deliverable  feature set   feature set   Bug    Build
+    name         modification  modification  fixes  number  Extension
+    ==================================================================
+    HFW         -01           .00           .04    -B01    -BETA 
+
+    The extension –BETA is added to all Beta releases. The extension PR is
+    added for all prereleases. There is no extension for releases when the
+    product has reached the limited availability.
+    
+    
+    We extend this with the following extentions:
+      Extension     Use
+      =====================
+      -DEV          SVN URL is /devbranches/.*
+
+    The version string is built with the following properties prefixed with [curversion.]:
+                               Generic      Major         Minor
+                               deliverable  feature set   feature set   Bug    Build
+                               name         modification  modification  fixes  number  Extension
+                               ==================================================================
+    from version.properties:   name         major         minor         fix
+    from Jenkins:                                                              build   ext
+    -->
+
+    <!-- Load current version  -->
+    <loadproperties prefix="stack.">
+      <file File="${basedir}\build\version.properties"/>
+    </loadproperties>
+
+    <!-- Set build number: curversion.hfw.build -->
+    <condition property="stack.build" value="${env.BUILD_NUMBER}">
+      <isset property="env.BUILD_NUMBER"/>
+    </condition>
+	<property name="stack.build" value="0"/>
+
+    <!-- Set build extension: curversion.hfw.ext -->
+	<property name="stack.svn1" value="${env.SVN_URL_1}@r${env.SVN_REVISION_1}"/>
+    <condition property="stack.ext" value="-DEV">
+      <matches pattern=".*/devbranches/.*$" string="${env.SVN_URL_1}"/>
+    </condition>
+    <property name="stack.ext" value=""/>
+	
+	<property name="stack.svn2" value="${env.SVN_URL_2}@r${env.SVN_REVISION_2}"/>
+
+	
+	<echo message="Building package                ${stack.name}"/>
+	<echo message="Build Version               	   ${stack.major}.${stack.minor}.${stack.fix}"/>
+	<echo message="Build Extension                 ${stack.ext}"/>
+    <echo message="SVN repository                  ${stack.svn1}"/>
+	<echo message="SVN repository                  ${stack.svn2}"/>
+    <echo message="Basedir (working directory):    ${basedir}"/>
+    <echo message="We are running on host:         ${env.COMPUTERNAME}"/>
+    <echo message="Operating system:               ${os.name}"/>
+    <echo message="User name is:                   ${user.name}"/>
+	<echo message="Linux Virtual Machine IP:       ${env.VM_IP}"/>
+	
+
+    <!-- Build Version Strings -->
+    <propertyregex property="number_major_minorStr"
+                input="${stack.major}.${stack.minor}"
+                override="true"
+                regexp="(^|[\D])(\d)([-|.]|$)"
+                global="true"
+                replace="\10\2\3" />
+
+    <propertyregex property="number_major_minorStr"
+                input="${number_major_minorStr}"
+                override="true"
+                regexp="(^|[\D])(\d)([-|.]|$)"
+                global="true"
+                replace="\10\2\3" />
+
+    <property name="stack.number" value="${number_major_minorStr}.${stack.fix}-B${stack.build}${stack.ext}"/>
+    <property name="stack.string" value="${stack.name}-${stack.number}"/>
+
+    <property name="pkg_name" value="${stack.name}"/>
+    <lower string="${pkg_name}" to="pkg_name_lower"/>
+    
+    <property name="stack.path" value="\\blr-data\octasictech\builds\SYSTEM\CBRSDR-GUI\${pkg_name_lower}\${number_major_minorStr}.XX\${stack.number}\internal"/> 
+	<echo message="stack.number          		${stack.number}"/>
+	<echo message="stack.string          		${stack.string}"/>
+	<echo message="stack.path         			${stack.path}"/>
+	
+	<propertyregex property="phy.gsm.string" input="${gsm_pkg}"
+               regexp=".*\/(.*)" select="\1" />
+	<propertyregex property="phy.3g.string" input="${3g_pkg}"
+               regexp=".*\/(.*)" select="\1" />		   
+	<propertyregex property="phy.lte.string" input="${lte_pkg}"
+               regexp=".*\/(.*)" select="\1" />
+	<propertyregex property="phy.rus.string" input="${rus_pkg}"
+               regexp=".*\/(.*)" select="\1" />
+	<property name="phy.obm.string" value="${obm_pkg}"/>
+			   
+	<property name="phy.gsm.path" value="\\blr-data\octasictech\proddb\Verification\Octasic\CBRSDR-SR-GSM\${gsm_pkg}"/>
+	<property name="phy.3g.path" value="\\blr-data\octasictech\proddb\Verification\Octasic\CBRSDR-SR-3G\${3g_pkg}"/>
+	<property name="phy.lte.path" value="\\blr-data\octasictech\proddb\Verification\Octasic\CBRSDR-SR-LTE\${lte_pkg}"/>
+	<property name="phy.rus.path" value="\\blr-data\octasictech\proddb\Verification\Octasic\CBRSDR-SR-RUS\${rus_pkg}"/>
+	<property name="phy.obm.path" value="\\blr-data\OctasicTech\builds\lowlevelsw\obm\${obm_pkg}\linux_arm"/>
+	
+	<echo message="phy.gsm.string          	${phy.gsm.string}"/>
+	<echo message="phy.3g.string          	${phy.3g.string}"/>
+	<echo message="phy.lte.string         	${phy.lte.string}"/>
+	<echo message="phy.rus.string          	${phy.rus.string}"/>
+	<echo message="phy.obm.string          	${phy.obm.string}"/>
+	<echo message="phy.gsm.path          	${phy.gsm.path}"/>
+	<echo message="phy.3g.path          	${phy.3g.path}"/>
+	<echo message="phy.lte.path         	${phy.lte.path}"/>
+	<echo message="phy.rus.path          	${phy.rus.path}"/>
+	<echo message="phy.obm.path          	${phy.obm.path}"/>
+	
+	<replace file="${basedir}/sls/inc/fxLSocketInterfaceApi.h" token="&#35;define FXL_SOCKETINTERFACEAPI_VERSION 0.0" value="&#35;define FXL_SOCKETINTERFACEAPI_VERSION ${stack.major}.${stack.minor}"/>
+	<replace file="${basedir}/sls/inc/fxLSocketInterfaceApi.h" token="&#35;define FXL_MINOR_VERSION 0" value="&#35;define FXL_MINOR_VERSION ${stack.fix}"/>
+	
+	<!-- save version information -->
+	<mkdir dir="${artifact_path}"/>
+    <echoproperties prefix="stack" destfile="${artifact_path}/stack_version.properties"/>
+	<echoproperties prefix="phy" destfile="${artifact_path}/phy_version.properties"/>
+	
+	   <!--Copy the main properties, then append the defaults selectively-->
+    <copy file="${artifact_path}/stack_version.properties" tofile="${artifact_path}/curversion.properties" overwrite="true"/>
+    <concat destfile="${artifact_path}/curversion.properties" append="true">
+        <fileset file="${artifact_path}/phy_version.properties"/>
+    </concat>
+  </target>
+
+  <target name="compile" >
+    <!-- Build software project -->
+    <echo message=" "/>
+    <echo message="============================================================"/>
+    <echo message="Build WGS Project"/>
+    <echo message="============================================================"/>
+	
+	<property name="vm_ws_path" value="/home/abcd/jenkins_workspace/wgs"/>
+   
+   <!-- Clean linux workspace -->
+    <sshexec host="${env.VM_IP}" username="abcd" password="abcd" trust="yes"
+      command="mkdir -p ${vm_ws_path};
+				rm -rf ${vm_ws_path}/*;"/>
+
+    <echo message="Extracting files in VM to build:${vm_ws_path}"/>
+    <scp file="${artifact_path}/${stack.name}-SRC-${stack.number}-INTERNAL.zip" todir="abcd:abcd@${env.VM_IP}:${vm_ws_path}" trust="true" />
+    <sshexec host="${env.VM_IP}" username="abcd" password="abcd" trust="yes" command="unzip -qq -o ${vm_ws_path}/${stack.name}-SRC-${stack.number}-INTERNAL.zip -d ${vm_ws_path}"/>
+
+    <sshexec host="${env.VM_IP}" username="abcd" password="abcd"
+                 command="chmod 777 ${vm_ws_path}/build/*;" trust="true"/>	
+	<sshexec host="${env.VM_IP}" username="abcd" password="abcd"
+                 command="echo $PATH" trust="true"/>	
+	<sshexec host="${env.VM_IP}" username="abcd" password="abcd"
+                 command="cd ${vm_ws_path}/asn; make -f asnOnelib.mak;"
+                 trust="true" output="${artifact_path}/vm_asn_build.txt"/>
+	<sshexec host="${env.VM_IP}" username="abcd" password="abcd"
+                 command="cd ${vm_ws_path}/build; ./oneBin.sh;"
+                 trust="true" output="${artifact_path}/vm_onebin_build.txt"/>					 
+	<scp file="abcd:abcd@${env.VM_IP}:${vm_ws_path}/bin/*" todir="${basedir}/bin" trust="true" />
+  </target>
+
+  <target name="copy_l1_images" >
+  
+	<echo message=" "/>
+    <echo message="============================================================"/>
+    <echo message="Copying L1 Images with Celliber License"/>
+    <echo message="============================================================"/>
+	
+	<mkdir dir="${artifact_path}/l1images"/>
+	
+	<unzip src="${phy.gsm.path}/CUSTOMER-BOOT-IMAGES-${phy.gsm.string}-INTERNAL.zip" dest="${artifact_path}/l1images"/>
+	<unzip src="${phy.3g.path}/CUSTOMER-BOOT-IMAGES-${phy.3g.string}-INTERNAL.zip" dest="${artifact_path}/l1images"/>
+	<unzip src="${phy.lte.path}/CUSTOMER-BOOT-IMAGES-${phy.lte.string}-INTERNAL.zip" dest="${artifact_path}/l1images"/>
+	<unzip src="${phy.rus.path}/CUSTOMER-BOOT-IMAGES-${phy.rus.string}-INTERNAL.zip" dest="${artifact_path}/l1images"/>
+	
+	<mkdir dir="${artifact_path}/l1images/BTS3500"/>
+	<mkdir dir="${artifact_path}/l1images/BTS8000"/>
+	<mkdir dir="${artifact_path}/l1images/BTS9100"/>
+	<mkdir dir="${artifact_path}/l1images/BTS8500"/>	
+	
+	<if>
+        <available file="${artifact_path}/l1images/Celliber_Octasic/cbrsdr_gsm_B3500-999999.img"/>
+        <then>
+             <echo message="GSM PHY Image Exists, Copied"/>
+			 <copy file="${artifact_path}/l1images/Celliber_Octasic/cbrsdr_gsm_B3500-999999.img" tofile="${artifact_path}/l1images/BTS3500/GSM_NATIVE.img" /> 
+			 <copy file="${artifact_path}/l1images/Celliber_Octasic/cbrsdr_gsm_B8000-999999.img" tofile="${artifact_path}/l1images/BTS8000/GSM_NATIVE.img" /> 
+			 <copy file="${artifact_path}/l1images/Celliber_Octasic/cbrsdr_gsm_B9100-999999.img" tofile="${artifact_path}/l1images/BTS9100/GSM_NATIVE.img" /> 
+			 <copy file="${artifact_path}/l1images/Celliber_Octasic/cbrsdr_gsm_B8500-999999.img" tofile="${artifact_path}/l1images/BTS8500/GSM_NATIVE.img" /> 
+        </then>
+        <else>
+            <if>
+				<available file="${artifact_path}/l1images/Celliber_Octasic/cbrsdr_gsm_B3500-999999-009.img"/>
+				<then>
+					 <echo message="GSM PHY Image Exists with Index:009, Copied"/>
+					 <copy file="${artifact_path}/l1images/Celliber_Octasic/cbrsdr_gsm_B3500-999999-009.img" tofile="${artifact_path}/l1images/BTS3500/GSM_NATIVE.img" /> 
+					 <copy file="${artifact_path}/l1images/Celliber_Octasic/cbrsdr_gsm_B8000-999999-008.img" tofile="${artifact_path}/l1images/BTS8000/GSM_NATIVE.img" /> 
+					 <copy file="${artifact_path}/l1images/Celliber_Octasic/cbrsdr_gsm_B9100-999999-006.img" tofile="${artifact_path}/l1images/BTS9100/GSM_NATIVE.img" /> 
+					 <copy file="${artifact_path}/l1images/Celliber_Octasic/cbrsdr_gsm_B8500-999999-006.img" tofile="${artifact_path}/l1images/BTS8500/GSM_NATIVE.img" /> 
+				</then>
+				<else>
+					 <echo message="No Proper GSM PHY File exists, May be issue with package"/>
+				</else>
+			</if>
+        </else>
+    </if>
+	
+	<if>
+        <available file="${artifact_path}/l1images/Celliber_Octasic/cbrsdr_lte_B3500-999999.img"/>
+        <then>
+             <echo message="LTE PHY Image Exists, Copied"/>
+			 <copy file="${artifact_path}/l1images/Celliber_Octasic/cbrsdr_lte_B3500-999999.img" tofile="${artifact_path}/l1images/BTS3500/LTE_NATIVE.img" /> 
+			 <copy file="${artifact_path}/l1images/Celliber_Octasic/cbrsdr_lte_B8000-999999.img" tofile="${artifact_path}/l1images/BTS8000/LTE_NATIVE.img" /> 
+			 <copy file="${artifact_path}/l1images/Celliber_Octasic/cbrsdr_lte_B9100-999999.img" tofile="${artifact_path}/l1images/BTS9100/LTE_NATIVE.img" /> 
+			 <copy file="${artifact_path}/l1images/Celliber_Octasic/cbrsdr_lte_B8500-999999.img" tofile="${artifact_path}/l1images/BTS8500/LTE_NATIVE.img" /> 
+        </then>
+        <else>
+            <if>
+				<available file="${artifact_path}/l1images/Celliber_Octasic/cbrsdr_lte_B3500-999999-009.img"/>
+				<then>
+					 <echo message="LTE PHY Image Exists with Index:009, Copied"/>
+					 <copy file="${artifact_path}/l1images/Celliber_Octasic/cbrsdr_lte_B3500-999999-009.img" tofile="${artifact_path}/l1images/BTS3500/LTE_NATIVE.img" /> 
+					 <copy file="${artifact_path}/l1images/Celliber_Octasic/cbrsdr_lte_B8000-999999-008.img" tofile="${artifact_path}/l1images/BTS8000/LTE_NATIVE.img" /> 
+					 <copy file="${artifact_path}/l1images/Celliber_Octasic/cbrsdr_lte_B9100-999999-006.img" tofile="${artifact_path}/l1images/BTS9100/LTE_NATIVE.img" /> 
+					 <copy file="${artifact_path}/l1images/Celliber_Octasic/cbrsdr_lte_B8500-999999-006.img" tofile="${artifact_path}/l1images/BTS8500/LTE_NATIVE.img" /> 
+				</then>
+				<else>
+					 <echo message="No Proper LTE PHY File exists, May be issue with package"/>
+				</else>
+			</if>
+        </else>
+    </if>
+	
+	<!-- copy file="${artifact_path}/l1images/Celliber_Octasic/cbrsdr_gsm_B3500-999999.img" tofile="${artifact_path}/l1images/BTS3500/GSM_NATIVE.img" /--> 
+	<copy file="${artifact_path}/l1images/Celliber_Octasic/cbrsdr_3g_nodeb_B3500-999999.img" tofile="${artifact_path}/l1images/BTS3500/UMTS_NATIVE.img" /> 
+	<!-- copy file="${artifact_path}/l1images/Celliber_Octasic/cbrsdr_lte_B3500-999999.img" tofile="${artifact_path}/l1images/BTS3500/LTE_NATIVE.img" /--> 
+	<copy file="${artifact_path}/l1images/Celliber_Octasic/cbrsdr_rus_B3500-999999.img" tofile="${artifact_path}/l1images/BTS3500/RAT_SLS.img" /> 
+	
+	<!-- copy file="${artifact_path}/l1images/Celliber_Octasic/cbrsdr_gsm_B8000-999999.img" tofile="${artifact_path}/l1images/BTS8000/GSM_NATIVE.img" /--> 
+	<copy file="${artifact_path}/l1images/Celliber_Octasic/cbrsdr_3g_nodeb_B8000-999999.img" tofile="${artifact_path}/l1images/BTS8000/UMTS_NATIVE.img" /> 
+	<!-- copy file="${artifact_path}/l1images/Celliber_Octasic/cbrsdr_lte_B8000-999999.img" tofile="${artifact_path}/l1images/BTS8000/LTE_NATIVE.img" /--> 
+	<copy file="${artifact_path}/l1images/Celliber_Octasic/cbrsdr_rus_B8000-999999.img" tofile="${artifact_path}/l1images/BTS8000/RAT_SLS.img" /> 
+	
+	<!-- copy file="${artifact_path}/l1images/Celliber_Octasic/cbrsdr_gsm_B9100-999999.img" tofile="${artifact_path}/l1images/BTS9100/GSM_NATIVE.img" /--> 
+	<copy file="${artifact_path}/l1images/Celliber_Octasic/cbrsdr_3g_nodeb_B9100-999999.img" tofile="${artifact_path}/l1images/BTS9100/UMTS_NATIVE.img" /> 
+	<!-- copy file="${artifact_path}/l1images/Celliber_Octasic/cbrsdr_lte_B9100-999999.img" tofile="${artifact_path}/l1images/BTS9100/LTE_NATIVE.img" /--> 
+	<copy file="${artifact_path}/l1images/Celliber_Octasic/cbrsdr_rus_B9100-999999.img" tofile="${artifact_path}/l1images/BTS9100/RAT_SLS.img" /> 
+	
+	<!-- copy file="${artifact_path}/l1images/Celliber_Octasic/cbrsdr_gsm_B9100-999999.img" tofile="${artifact_path}/l1images/BTS9100/GSM_NATIVE.img" /--> 
+	<copy file="${artifact_path}/l1images/Celliber_Octasic/cbrsdr_3g_nodeb_B8500-999999.img" tofile="${artifact_path}/l1images/BTS8500/UMTS_NATIVE.img" /> 
+	<!-- copy file="${artifact_path}/l1images/Celliber_Octasic/cbrsdr_lte_B9100-999999.img" tofile="${artifact_path}/l1images/BTS9100/LTE_NATIVE.img" /--> 
+	<copy file="${artifact_path}/l1images/Celliber_Octasic/cbrsdr_rus_B8500-999999.img" tofile="${artifact_path}/l1images/BTS8500/RAT_SLS.img" /> 
+	
+	<mkdir dir="${artifact_path}/bin-pri"/>
+	<mkdir dir="${artifact_path}/bin-sec"/>
+    <echo message="Creating WgsPri and WgsSec for all configurations from compiled oneBin"/>
+ 
+	<copy file="${basedir}/bin/oneBin_PackH_8000" tofile="${artifact_path}/bin-pri/wgsPri_PackH_8000" /> 
+	<copy file="${basedir}/bin/oneBin_PackH_9100" tofile="${artifact_path}/bin-pri/wgsPri_PackH_9100" /> 
+	<copy file="${basedir}/bin/oneBin_PackH_9100" tofile="${artifact_path}/bin-sec/wgsSec_PackH_9100" /> 
+
+	<copy file="${basedir}/config/current.alm" tofile="${artifact_path}/bin-pri/current.alm" /> 
+	<copy file="${basedir}/config/current.alm" tofile="${artifact_path}/bin-sec/current.alm" /> 
+	<copy file="${basedir}/config/l1c_cfg_parm.txt" tofile="${artifact_path}/bin-pri/l1c_cfg_parm.txt" />
+	<copy file="${basedir}/config/l1c_cfg_parm.txt" tofile="${artifact_path}/bin-sec/l1c_cfg_parm.txt" />
+	
+	<replace file="${artifact_path}/bin-sec/l1c_cfg_parm.txt" token="l1DspType = 0" value="l1DspType = 1"/>
+	
+	<mkdir dir="${artifact_path}/config"/>
+	<copy file="${basedir}/config/rsyslog.conf" tofile="${artifact_path}/config/rsyslog.conf" /> 
+	<copy file="${basedir}/config/rc.local" tofile="${artifact_path}/config/rc.local" /> 
+	<copy file="${basedir}/config/uaputl.conf" tofile="${artifact_path}/config/uaputl.conf" /> 
+	
+	<mkdir dir="${artifact_path}/scripts"/>
+	<copy file="${basedir}/scripts/9100_PA_SCRIPTS/ext_i2c_bus.sh" tofile="${artifact_path}/scripts/ext_i2c_bus.sh" /> 
+	<copy file="${basedir}/scripts/setGPSPri.sh" tofile="${artifact_path}/scripts/setGPSPri.sh" /> 
+	<copy file="${basedir}/scripts/setGPSSec.sh" tofile="${artifact_path}/scripts/setGPSSec.sh" /> 
+	<copy file="${basedir}/scripts/setTREX.bin" tofile="${artifact_path}/scripts/setTREX.bin" /> 
+	<copy file="${basedir}/scripts/startWGS.sh" tofile="${artifact_path}/scripts/startWGS.sh" /> 
+	
+	<mkdir dir="${artifact_path}/docs"/>
+	<copy todir="${artifact_path}/docs" >
+        <fileset dir="${basedir}/docs/${stack.name}-${stack.major}.${stack.minor}.${stack.fix}">
+          <include name="**/**"/>
+        </fileset>
+    </copy>
+	<copy file="${basedir}/sls/inc/fxLSocketInterfaceApi.h" tofile="${artifact_path}/docs/fxLSocketInterfaceApi.h" /> 	
+	
+    <loadfile property="config.mac" srcFile="${basedir}/3rdparty/octasic/oct2224_l1IoApi/src/oct_l1cIoInit.c">
+      <filterchain>
+        <tokenfilter>
+          <filetokenizer/>
+             <replaceregex
+                pattern="^.*(// Begin DSP_MAC_ADDRESS_HARDCODING\b.*?// End DSP_MAC_ADDRESS_HARDCODING\b).*"
+                replace="\1" flags="s" />
+        </tokenfilter>
+      </filterchain>
+    </loadfile>
+
+	<propertyfile file="${artifact_path}/docs/all_mac_ids.txt">
+		<entry  key="all_mac_ids" value="${config.mac}"/>
+   </propertyfile>
+
+  </target>
+  
+  
+   <target name="publish" description="Publishes the packages.">
+
+    <loadproperties>
+      <file File="${artifact_path}/curversion.properties"/>
+    </loadproperties>
+
+    <property name="pkg_name" value="${stack.name}"/>
+    <lower string="${pkg_name}" to="pkg_name_lower"/>
+
+
+    <echo message="Basedir (working directory):    ${basedir}"/>
+    <echo message="We are running on host:         ${env.COMPUTERNAME}"/>
+    <echo message="Operating system:               ${os.name}"/>
+    <echo message="User name is:                   ${user.name}"/>
+    <echo message="Current Version:                ${stack.string}"/>
+    <echo message="Publish Path:                   ${stack.path}"/>
+
+	<copy file="${artifact_path}/curversion.properties" tofile="${artifact_path}/${pkg_name_lower}_version.properties" /> 
+	
+	<mkdir dir="${stack.path}"/>
+	
+    <fileset dir="${artifact_path}" id="pubPkg">
+      <include name="${stack.name}-${stack.number}-INTERNAL.zip"/>
+	  <include name="${stack.name}-SRC-${stack.number}-INTERNAL.zip"/>
+      <include name="${pkg_name_lower}_version.properties"/>
+    </fileset>
+
+    <echo message="Publish:"/>
+    <pathconvert pathsep="${line.separator}" property="published_packages">
+      <fileset refid="pubPkg"/>
+    </pathconvert>
+
+    <echo message="Publishing ${published_packages} to ${stack.path}"/>
+
+    <copy todir="${stack.path}">
+      <fileset refid="pubPkg"/>
+    </copy>
+
+  </target>
+  
+</project>

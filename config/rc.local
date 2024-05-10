@@ -1,0 +1,16 @@
+#!/bin/sh
+
+##################################################################
+#
+# Hook for adding comands to be executed on startup.
+#
+# **** PLEASE do NOT use this file to bypass OS mechanisms.
+#      Daemons, for one, should NOT be spawned in this script;
+#      register a new systemd service instead.
+#
+##################################################################
+ipcrm -M 0x00002fc9
+ipcrm -M 0x00002fca
+ipcrm -M 0x00002fcb
+sh /home/wgs/scripts/startWGS.sh
+exit 0

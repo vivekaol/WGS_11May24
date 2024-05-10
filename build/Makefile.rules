@@ -1,0 +1,138 @@
+#------------------------------------- Make rules --------------------------------------#
+#
+# Included by Makefile.pre
+#
+#---------------------------------------------------------------------------------------#
+
+#------------------------------------- VPATH Rule --------------------------------------#
+#
+# Must be done after file list
+#
+#---------------------------------------------------------------------------------------#
+SRC_PATH = $(addsuffix :, $(dir $(SRC_FILES) ) )
+SRC_PATH := $(subst $(space),,$(SRC_PATH))
+VSRC_DIR = $(addsuffix :, $(SRC_DIR) )
+VSRC_DIR := $(subst $(space),,$(VSRC_DIR))
+
+#------------------------------------- Make rules --------------------------------------#
+#
+# Included by Makefile.pre
+#
+#---------------------------------------------------------------------------------------#
+
+default:: $(OUTFILE)
+libs:: $(OCTLIB_DEP)
+
+#------------------------------------ Debug rules --------------------------------------#
+#
+#---------------------------------------------------------------------------------------#
+
+.PHONY		:   all clean rebuild
+ 
+all: 
+	@$(MAKE) -f $(MAKEFILENAME) libs
+	@$(MAKE) -f $(MAKEFILENAME)
+
+cleanlibs:
+	@$(MAKE) -f $(MAKEFILENAME) libs LIBTG=clean
+
+clean:
+	$(RD) $(OBJPATH)
+	$(POSTBUILD_CLEAN_CMD)
+
+clean+:
+	@$(MAKE) -f $(MAKEFILENAME) cleanlibs
+	@$(MAKE) -f $(MAKEFILENAME) clean
+
+rebuild:
+	@$(MAKE) -f $(MAKEFILENAME) clean
+	@$(MAKE) -f $(MAKEFILENAME)
+
+install:
+
+#----------------------------------- Release rules -------------------------------------#
+#
+#---------------------------------------------------------------------------------------#
+
+rel :
+	@$(MAKE) -f $(MAKEFILENAME) TGT_REL=1
+
+rel+ :
+	@$(MAKE) -f $(MAKEFILENAME) libs LIBTG=rel
+	@$(MAKE) -f $(MAKEFILENAME) TGT_REL=1
+
+cleanrel :
+	@$(MAKE) -f $(MAKEFILENAME) clean TGT_REL=1
+
+cleanrel+ :
+	@$(MAKE) -f $(MAKEFILENAME) cleanlibs TGT_REL=1 LIBTG=rel
+	@$(MAKE) -f $(MAKEFILENAME) cleanrel
+
+rebuildrel :
+	@$(MAKE) -f $(MAKEFILENAME) cleanrel
+	@$(MAKE) -f $(MAKEFILENAME) rel
+
+#----------------------------------- Help rules -------------------------------------#
+#
+#---------------------------------------------------------------------------------------#
+
+help :
+	@echo "Make rules:"
+	@echo "    make -f filename         -> build debug version of current project"
+	@echo "    make -f filename all     -> build debug version of all related projects"
+	@echo "    make -f filename clean   -> clean debug version of current project"
+	@echo "    make -f filename clean+  -> clean debug version of all related projects"
+	@echo "    make -f filename rebuild -> rebuild debug version of current project"
+	@echo
+	@echo "    make -f filename rel       -> build release version of current project"
+	@echo "    make -f filename rel+      -> build release version of all related projects"
+	@echo "    make -f filename cleanrel  -> clean release version of current project"
+	@echo "    make -f filename cleanrel+ -> clean release version of all related projects"
+
+#--------------------------------- Output dependency -----------------------------------#
+#
+#---------------------------------------------------------------------------------------#
+$(OUTFILE):   $(OBJ) $(MAKEFILENAME) $(SYSLIBDEP) $(OCTLIB_LIST_USED)
+		@echo $(ECHOSTR) $@
+		@$(AR_LD)
+		@$(POSTBUILDCMD)
+
+$(MAKEFILENAME):
+	
+%.so %.a: 
+	@$(MAKE) -f $(MAKEFILENAME) libs	
+
+#Must use vpath to allow referencing to source not from subdirectory.
+#obj file are flat in the objpath
+vpath %.c $(VSRC_DIR)$(SRC_PATH)
+
+$(OBJPATH)%.o:%.c
+		@echo compiling for $(TGT_SYS_STR): $<
+		@$(CHCKMKDIR)
+		@$(OCT_CC) -c $(CCFLAGS2) $< $(OUTDEP)
+		@$(OCT_CC) -c $(CCFLAGS) $< -o $@
+
+#Must use vpath to allow referencing to source not from subdirectory.
+#obj file are flat in the objpath
+vpath %.cpp $(VSRC_DIR)$(SRC_PATH)
+
+$(OBJPATH)%.o:%.cpp
+		@echo compiling for $(TGT_SYS_STR): $<
+		@$(CHCKMKDIR)
+		@$(OCT_CC) -c $(CCFLAGS2) $< $(OUTDEP2)
+		@$(OCT_CC) -c $(CCFLAGS) $< -o $@
+
+
+$(OCTLIB_DEP): force
+		@$(MAKE) -C $(addprefix $(BUILD)/, $(dir $@)) -f $(notdir $@) $(LIBTG)
+force:;
+
+
+#---------------------------------- Dependency rules -----------------------------------#
+#
+#---------------------------------------------------------------------------------------#
+
+DEPS := $(wildcard $(OBJPATH)*.d)
+ifneq ($(DEPS),)
+include $(DEPS)
+endif

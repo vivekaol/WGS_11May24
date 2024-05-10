@@ -1,0 +1,106 @@
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+File: octvc1_rus_gsm_api_swap.h	
+
+Copyright (c) 2015 Octasic Inc. All rights reserved.	
+
+Description:	
+
+This source code is Octasic Confidential. Use of and access to this code
+is covered by the Octasic Device Enabling Software License Agreement.
+Acknowledgement of the Octasic Device Enabling Software License was
+required for access to this code. A copy was also provided with the release.	
+
+Release: OCTSDR Software Development Kit OCTSDR_RUS-02.08.00-B1331 (2015/12/16)	
+
+\*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/	
+#ifndef __OCTVC1_RUS_GSM_API_SWAP_H__
+#define __OCTVC1_RUS_GSM_API_SWAP_H__
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/*****************************  INCLUDE FILES  *******************************/
+#include "../octvc1_swap_hdrs.h"
+#include "octvc1_rus_gsm_api.h"
+
+/*********************************  MACROS  **********************************/
+
+
+#if defined( _OCT_ENDIAN_TYPE_LE_ )
+#define mOCTVC1_RUS_GSM_BS_SEARCH_STATE_ENUM_SWAP( pType ){ \
+		*((tOCT_UINT32 *)pType) = mOCT_SWAP32_IF_LE( *((tOCT_UINT32 *)pType) ); }
+#else
+
+#define mOCTVC1_RUS_GSM_BS_SEARCH_STATE_ENUM_SWAP( pType )
+
+#endif /* _OCT_ENDIAN_TYPE_LE_ */
+
+#if defined( _OCT_ENDIAN_TYPE_LE_ )
+#define mOCTVC1_RUS_GSM_DNLK_BS_STATS_SWAP( _f_pParms ){ 	tOCTVC1_RUS_GSM_DNLK_BS_STATS * pOCTVC1_RUS_GSM_DNLK_BS_STATS = (_f_pParms); SWAP_UNUSED(pOCTVC1_RUS_GSM_DNLK_BS_STATS)\
+	((tOCTVC1_RUS_GSM_DNLK_BS_STATS *)pOCTVC1_RUS_GSM_DNLK_BS_STATS)->ulFrameNumber = \
+		mOCT_SWAP32_IF_LE(((tOCTVC1_RUS_GSM_DNLK_BS_STATS *)pOCTVC1_RUS_GSM_DNLK_BS_STATS)->ulFrameNumber); \
+	((tOCTVC1_RUS_GSM_DNLK_BS_STATS *)pOCTVC1_RUS_GSM_DNLK_BS_STATS)->uSlotNumber = \
+		mOCT_SWAP32_IF_LE(((tOCTVC1_RUS_GSM_DNLK_BS_STATS *)pOCTVC1_RUS_GSM_DNLK_BS_STATS)->uSlotNumber); \
+	{ mOCTVC1_RUS_GSM_BS_SEARCH_STATE_ENUM_SWAP( &((tOCTVC1_RUS_GSM_DNLK_BS_STATS *)pOCTVC1_RUS_GSM_DNLK_BS_STATS)->State ); }  \
+	((tOCTVC1_RUS_GSM_DNLK_BS_STATS *)pOCTVC1_RUS_GSM_DNLK_BS_STATS)->ulRelativeDelay = \
+		mOCT_SWAP32_IF_LE(((tOCTVC1_RUS_GSM_DNLK_BS_STATS *)pOCTVC1_RUS_GSM_DNLK_BS_STATS)->ulRelativeDelay); \
+	((tOCTVC1_RUS_GSM_DNLK_BS_STATS *)pOCTVC1_RUS_GSM_DNLK_BS_STATS)->lRTWPdBm = \
+		mOCT_SWAP32_IF_LE(((tOCTVC1_RUS_GSM_DNLK_BS_STATS *)pOCTVC1_RUS_GSM_DNLK_BS_STATS)->lRTWPdBm); \
+}
+#else
+#define mOCTVC1_RUS_GSM_DNLK_BS_STATS_SWAP( pOCTVC1_RUS_GSM_DNLK_BS_STATS )
+#endif /* _OCT_ENDIAN_TYPE_LE_ */
+
+#if defined( _OCT_ENDIAN_TYPE_LE_ )
+#define mOCTVC1_RUS_GSM_UPLK_MS_PRM_SWAP( _f_pParms ){ 	tOCTVC1_RUS_GSM_UPLK_MS_PRM * pOCTVC1_RUS_GSM_UPLK_MS_PRM = (_f_pParms); SWAP_UNUSED(pOCTVC1_RUS_GSM_UPLK_MS_PRM)\
+	((tOCTVC1_RUS_GSM_UPLK_MS_PRM *)pOCTVC1_RUS_GSM_UPLK_MS_PRM)->ulChannelNumber = \
+		mOCT_SWAP32_IF_LE(((tOCTVC1_RUS_GSM_UPLK_MS_PRM *)pOCTVC1_RUS_GSM_UPLK_MS_PRM)->ulChannelNumber); \
+	((tOCTVC1_RUS_GSM_UPLK_MS_PRM *)pOCTVC1_RUS_GSM_UPLK_MS_PRM)->ulMeasurementTimer = \
+		mOCT_SWAP32_IF_LE(((tOCTVC1_RUS_GSM_UPLK_MS_PRM *)pOCTVC1_RUS_GSM_UPLK_MS_PRM)->ulMeasurementTimer); \
+	((tOCTVC1_RUS_GSM_UPLK_MS_PRM *)pOCTVC1_RUS_GSM_UPLK_MS_PRM)->HoppingEnableFlag = \
+		mOCT_SWAP32_IF_LE(((tOCTVC1_RUS_GSM_UPLK_MS_PRM *)pOCTVC1_RUS_GSM_UPLK_MS_PRM)->HoppingEnableFlag); \
+	((tOCTVC1_RUS_GSM_UPLK_MS_PRM *)pOCTVC1_RUS_GSM_UPLK_MS_PRM)->ulMA = \
+		mOCT_SWAP32_IF_LE(((tOCTVC1_RUS_GSM_UPLK_MS_PRM *)pOCTVC1_RUS_GSM_UPLK_MS_PRM)->ulMA); \
+	((tOCTVC1_RUS_GSM_UPLK_MS_PRM *)pOCTVC1_RUS_GSM_UPLK_MS_PRM)->ulMAIO = \
+		mOCT_SWAP32_IF_LE(((tOCTVC1_RUS_GSM_UPLK_MS_PRM *)pOCTVC1_RUS_GSM_UPLK_MS_PRM)->ulMAIO); \
+	((tOCTVC1_RUS_GSM_UPLK_MS_PRM *)pOCTVC1_RUS_GSM_UPLK_MS_PRM)->ulHSN = \
+		mOCT_SWAP32_IF_LE(((tOCTVC1_RUS_GSM_UPLK_MS_PRM *)pOCTVC1_RUS_GSM_UPLK_MS_PRM)->ulHSN); \
+	((tOCTVC1_RUS_GSM_UPLK_MS_PRM *)pOCTVC1_RUS_GSM_UPLK_MS_PRM)->ulTSC = \
+		mOCT_SWAP32_IF_LE(((tOCTVC1_RUS_GSM_UPLK_MS_PRM *)pOCTVC1_RUS_GSM_UPLK_MS_PRM)->ulTSC); \
+}
+#else
+#define mOCTVC1_RUS_GSM_UPLK_MS_PRM_SWAP( pOCTVC1_RUS_GSM_UPLK_MS_PRM )
+#endif /* _OCT_ENDIAN_TYPE_LE_ */
+
+#if defined( _OCT_ENDIAN_TYPE_LE_ )
+#define mOCTVC1_RUS_GSM_UPLK_MS_STATS_SWAP( _f_pParms ){ 	tOCTVC1_RUS_GSM_UPLK_MS_STATS * pOCTVC1_RUS_GSM_UPLK_MS_STATS = (_f_pParms); SWAP_UNUSED(pOCTVC1_RUS_GSM_UPLK_MS_STATS)\
+	((tOCTVC1_RUS_GSM_UPLK_MS_STATS *)pOCTVC1_RUS_GSM_UPLK_MS_STATS)->ulFrameNumber = \
+		mOCT_SWAP32_IF_LE(((tOCTVC1_RUS_GSM_UPLK_MS_STATS *)pOCTVC1_RUS_GSM_UPLK_MS_STATS)->ulFrameNumber); \
+	((tOCTVC1_RUS_GSM_UPLK_MS_STATS *)pOCTVC1_RUS_GSM_UPLK_MS_STATS)->uSlotNumber = \
+		mOCT_SWAP32_IF_LE(((tOCTVC1_RUS_GSM_UPLK_MS_STATS *)pOCTVC1_RUS_GSM_UPLK_MS_STATS)->uSlotNumber); \
+	((tOCTVC1_RUS_GSM_UPLK_MS_STATS *)pOCTVC1_RUS_GSM_UPLK_MS_STATS)->lRTWPdBm = \
+		mOCT_SWAP32_IF_LE(((tOCTVC1_RUS_GSM_UPLK_MS_STATS *)pOCTVC1_RUS_GSM_UPLK_MS_STATS)->lRTWPdBm); \
+	((tOCTVC1_RUS_GSM_UPLK_MS_STATS *)pOCTVC1_RUS_GSM_UPLK_MS_STATS)->lRSSIdBm = \
+		mOCT_SWAP32_IF_LE(((tOCTVC1_RUS_GSM_UPLK_MS_STATS *)pOCTVC1_RUS_GSM_UPLK_MS_STATS)->lRSSIdBm); \
+	((tOCTVC1_RUS_GSM_UPLK_MS_STATS *)pOCTVC1_RUS_GSM_UPLK_MS_STATS)->lSNRdB = \
+		mOCT_SWAP32_IF_LE(((tOCTVC1_RUS_GSM_UPLK_MS_STATS *)pOCTVC1_RUS_GSM_UPLK_MS_STATS)->lSNRdB); \
+	((tOCTVC1_RUS_GSM_UPLK_MS_STATS *)pOCTVC1_RUS_GSM_UPLK_MS_STATS)->ulBER = \
+		mOCT_SWAP32_IF_LE(((tOCTVC1_RUS_GSM_UPLK_MS_STATS *)pOCTVC1_RUS_GSM_UPLK_MS_STATS)->ulBER); \
+	{ tOCT_UINT32 iOCTVC1_RUS_GSM_UPLK_MS_STATS; \
+	for( iOCTVC1_RUS_GSM_UPLK_MS_STATS=0; \
+		iOCTVC1_RUS_GSM_UPLK_MS_STATS<(cOCTVC1_RUS_GSM_UL_MS_BUSRT_LENGTH);iOCTVC1_RUS_GSM_UPLK_MS_STATS++ ) \
+	((tOCTVC1_RUS_GSM_UPLK_MS_STATS *)pOCTVC1_RUS_GSM_UPLK_MS_STATS)->aulRawBurst[iOCTVC1_RUS_GSM_UPLK_MS_STATS] = \
+		mOCT_SWAP32_IF_LE(((tOCTVC1_RUS_GSM_UPLK_MS_STATS *)pOCTVC1_RUS_GSM_UPLK_MS_STATS)->aulRawBurst[iOCTVC1_RUS_GSM_UPLK_MS_STATS]);}\
+}
+#else
+#define mOCTVC1_RUS_GSM_UPLK_MS_STATS_SWAP( pOCTVC1_RUS_GSM_UPLK_MS_STATS )
+#endif /* _OCT_ENDIAN_TYPE_LE_ */
+
+#ifdef __cplusplus
+}
+
+#endif
+
+#endif /* __OCTVC1_RUS_GSM_API_SWAP_H__ */

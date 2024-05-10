@@ -1,0 +1,329 @@
+#----------------------------------  Make  Options   -----------------------------------#
+# Makefile.pre
+#
+# Specify the application (lib) directives
+#
+#---------------------------------------------------------------------------------------#
+
+
+#------------------------------ Release/Debug directive --------------------------------#
+#
+#	Default is debug mode
+#
+#---------------------------------------------------------------------------------------#
+BUILD_RELEASE = 0
+ifeq '$(TGT_REL)' '1'
+	BUILD_RELEASE = 1
+endif
+
+#------------------------------ Release/Debug directive --------------------------------#
+#
+#	Default is 64 on proper system
+#
+#---------------------------------------------------------------------------------------#
+FORCE_32BITS = 1
+ifeq '$(TGT_32B)' '1'
+	FORCE_32BITS = 1
+endif
+
+#----------------------------- Validate Application vars -------------------------------#
+#
+#---------------------------------------------------------------------------------------#
+APP_NAME := $(strip $(APP_NAME))
+ifeq '$(APP_NAME)' ''
+$(error need a valid application name )
+endif
+
+
+ifeq (,$(findstring $(APP_TYPE), lib dll exe ))
+$(error Application type OK '$(APP_TYPE)' not supported )
+endif
+
+ifeq '$(APP_TYPE)' 'lib'
+	FILE_EXT = .a
+	FILE_PREFIX = lib
+endif	
+ifeq '$(APP_TYPE)' 'dll'
+	FILE_EXT = .so
+	FILE_PREFIX = lib
+endif	
+ifeq '$(APP_TYPE)' 'exe'
+	FILE_EXT = $(APP_EXT)
+	FILE_PREFIX = 
+endif
+
+
+#------------------------------------ Generic Vars -------------------------------------#
+#
+#---------------------------------------------------------------------------------------#
+empty:=
+space:= $(empty) $(empty)
+
+
+#---------------------------------- System Commands ------------------------------------#
+#
+#---------------------------------------------------------------------------------------#
+# RM = Remove file
+RM	=   rm -f
+
+# RD = Remove Directory
+RD  =   rm -f -R 
+
+# MKDIR = Create Directory
+MKDIR	=   mkdir -p
+
+# COPY = File copy
+COPY	= cp
+
+
+
+#----------------------------------- Compiler flags ------------------------------------#
+#
+# Assume GCC like compiler
+#
+#---------------------------------------------------------------------------------------#
+
+# TARGET_PLATFORM = Compiler's CPU Flags if necesary
+#TARGET_PLATFORM = -DCPU=PPC860 
+
+ifeq '$(FORCE_32BITS)' '1'
+#SYSTEM_FLAG32 = -m32
+else
+SYSTEM_FLAG32 =
+endif
+
+# SYSTEM_CFLAG = Compiler options
+SYSTEM_CFLAG = -D_REENTRANT -D_GNU_SOURCE -nostdlib -fno-builtin -fno-defer-pop -Wall
+
+SYSTEM_CFLAG += -fPIC $(SYSTEM_FLAG32)
+
+# SYSTEM_CFLAG2 = Compiler options used to build dependencies
+SYSTEM_CFLAG2 = -MM $(SYSTEM_CFLAG)
+
+# DEBUG = Compiler flag for Debug/Release build
+ifeq '$(BUILD_RELEASE)' '1'
+DEBUG = -O2 -DNDEBUG -DOCT_OPT_REMOVE_FNC_PARAM_VALIDATION -DUMTS_DEBUG
+else
+DEBUG = -g -O0 -DUMTS_DEBUG
+endif
+
+#-------------------------------------  Linker flags -----------------------------------#
+# LNKFLAGS = Linker arguements (-r)
+LNKFLAGS =  
+
+
+#------------------------------------ Other flags --------------------------------------#
+#
+#---------------------------------------------------------------------------------------#
+OS_DEF	= $(MACH_ENDIAN) \
+	-DOCTTRANSAPI_OPT_SELECT \
+	-DOCTOSAL_OPT_MULTI_THREAD \
+	-DOCTOSAL_OPT_ASSERT
+
+
+#------------------------------  Env Tgt type ---------------------------------#
+#
+#---------------------------------------------------------------------------------------#
+# DEFAULT TO 32bit env
+ENV_BIT=32
+PRJ_LIB_PATH=lib/arm
+#PRJ_LIB_PATH=lib/gcc
+
+
+#COMMENT this section and set proper size if does not support getconf
+ifneq '$(FORCE_32BITS)' '1'
+LBITS := $(shell getconf LONG_BIT)
+ifeq ($(LBITS),64)
+ENV_BIT=64
+PRJ_LIB_PATH=lib64
+endif
+endif
+#
+#-------------------------------- Target dependencies ----------------------------------#
+#
+#	Specify the system target dependencies: ( linux, vxwork, psos )
+#	
+#	Tool related path 
+#
+#---------------------------------------------------------------------------------------#
+include $(BUILD)/Makefile.tgt
+
+#------------------------------  Operating system type ---------------------------------#
+# 
+#---------------------------------------------------------------------------------------#
+OS_TYPE = $(shell uname -o)
+
+
+
+#------------------------------------ Default Vars -------------------------------------#
+#
+# May be modified by application makefile
+#
+#---------------------------------------------------------------------------------------#
+CONFIGNAME := $(strip $(CONFIGNAME))
+
+ifneq '$(CONFIGNAME)' ''
+CONFIG_SEP = _
+endif
+
+ifeq '$(MAKEFILENAME)' ''
+MAKEFILENAME = $(APP_NAME).mak
+endif
+
+ifeq '$(BUILD_RELEASE)' '1'
+ifneq '$(FORCE_32BITS)' '1'
+BUILD_DIR=Release/
+else
+BUILD_DIR=Release32/
+endif
+else
+ifneq '$(FORCE_32BITS)' '1'
+BUILD_DIR=Debug/
+else
+BUILD_DIR=Debug32/
+endif
+endif
+
+
+
+#------------------------------- Object path directory ---------------------------------#
+#
+# May be modified by application makefile
+#
+#---------------------------------------------------------------------------------------#
+OBJPATH := $(strip $(OBJPATH))
+
+ifeq '$(OBJPATH)' ''
+OBJPATH := $(CONFIGNAME)$(CONFIG_SEP)$(BUILD_DIR)$(OBJ_PATH_SUFFIX)
+else
+OBJPATH := $(addsuffix /,$(OBJPATH))
+endif
+
+ifeq '$(OS_TYPE)' 'Windows'
+OBJPATH	:=   $(subst /,\,$(OBJPATH))
+endif
+
+OBJPATH	:=   $(subst //,/,$(OBJPATH))
+
+
+#---------------------------------- Output file path -----------------------------------#
+#
+# May be modified by application makefile
+#
+#---------------------------------------------------------------------------------------#
+# Output file path name creation base on build type and file extension
+APP_FULL_NAME := $(strip $(APP_FULL_NAME))
+
+ifeq '$(APP_FULL_NAME)' ''
+APP_FULL_NAME=$(FILE_PREFIX)$(APP_NAME)$(CONFIG_SEP)$(CONFIGNAME)$(TGT_SUFFIX)
+
+ifneq '$(BUILD_RELEASE)' '1'
+APP_FULL_NAME := $(addsuffix d,$(APP_FULL_NAME))
+endif
+
+APP_FULL_NAME := $(addsuffix $(FILE_EXT),$(APP_FULL_NAME))
+
+endif
+
+# Application full path
+OUTFILE = $(OBJPATH)$(APP_FULL_NAME)
+
+
+#--------------------------  Directory separator substitution --------------------------#
+# 
+#---------------------------------------------------------------------------------------#
+ifeq '$(OS_TYPE)' 'Windows'
+POSTBUILDCMD =   $(subst /,\,$(POSTBUILD))
+else
+POSTBUILDCMD =   $(POSTBUILD)
+endif
+
+ifeq '$(OS_TYPE)' 'Windows'
+POSTBUILD_CLEAN_CMD = $(subst /,\,$(POSTBUILD_CLEAN))
+else
+POSTBUILD_CLEAN_CMD = $(POSTBUILD_CLEAN)
+endif
+
+
+#-------------------------  Application obj dependency path ----------------------------#
+# 
+#---------------------------------------------------------------------------------------#
+OBJ_LIST  = $(patsubst %.cpp, %.o, $(notdir $(SRCC_FILES) ) ) \
+			$(patsubst %.c, %.o, $(notdir $(SRC_FILES) ) )
+
+OBJ 	 = $(addprefix $(OBJPATH), $(OBJ_LIST))
+
+# Lib name creation base from the list of associated makefile
+# ( use .a to use .a dependency rules ... App will link to -lfile )
+OCTLIB_LIST=	\
+		$(addprefix $(BUILD)/../lib, $(patsubst %.mak, %$(TGT_SUFFIX)d.a, $(notdir $(OCTLIB_DEP) ) ))
+
+# Include octasic libs
+OCTLIB_LIST+=	\
+		$(addprefix $(BUILD)/../lib, $(addsuffix $(TGT_SUFFIX)d.a, $(notdir $(OCTLIB_BIN) ) ) )
+
+# Output file path name creation base on build type .. remove suffix 'd'
+ifeq '$(BUILD_RELEASE)' '1'
+OCTLIB_LIST_USED = $(patsubst %d.a,%.a,$(OCTLIB_LIST))
+else
+OCTLIB_LIST_USED = $(OCTLIB_LIST)
+endif
+
+# List of lib to include by application ... remove '.a'
+OCTLIBS = $(SYSTEM_LIB) -L$(BUILD)/../$(PRJ_LIB_PATH) -L$(BUILD)/../../application/$(PRJ_LIB_PATH) $(patsubst %.a,%,$(patsubst lib%,-l%,$(notdir $(OCTLIB_LIST_USED)))) $(SYSTEM_LIB)
+
+#-------------------------------------- CCFLAGS ----------------------------------------#
+# 
+#---------------------------------------------------------------------------------------#
+DEFINES = $(TARGET_DEF) $(OS_DEF) $(APP_CC_FLAGS)
+
+INC = $(SYSTEM_INC)  \
+		-I$(BUILD)/../sls/inc \
+
+CCFLAGS	=   $(SYSTEM_CFLAG) \
+		    $(INC) $(TARGET_PLATFORM) $(DEBUG) $(DEFINES)
+
+CCFLAGS2=   $(SYSTEM_CFLAG2) \
+			$(INC) $(TARGET_PLATFORM) $(DEFINES)
+
+
+#------------------------------- Linker string display ---------------------------------#
+# 
+#---------------------------------------------------------------------------------------#
+ifeq '$(BUILD_RELEASE)' '0'
+ECHOSTR = Linking and building "(Debug)" for $(TGT_SYS_STR)... 
+else
+ECHOSTR = Linking and building "(Release)" for $(TGT_SYS_STR)... 
+endif
+
+
+#---------------------------------- Linker directive -----------------------------------#
+# 
+#---------------------------------------------------------------------------------------#
+ifeq '$(APP_TYPE)' 'lib'
+AR_LD = $(OCT_AR) $@ $(OBJ)
+endif
+ifeq '$(APP_TYPE)' 'dll'
+AR_LD =	$(OCT_LD) -o $@ $(LNKFLAGS) $(SYSTEM_FLAG32) $(OBJ) $(OCTLIBS)
+endif
+ifeq '$(APP_TYPE)' 'exe'
+AR_LD =	$(OCT_CC) $(LDFLAGS) $(SYSTEM_FLAG32) -o $@ $(OBJ) $(OCTLIBS)
+endif
+
+#-------------------------------- Dependency directive ---------------------------------#
+# 
+#---------------------------------------------------------------------------------------#
+OUTDEP	= | sed "1s/^/\$$(OBJPATH)/" > $(OBJPATH)$(subst .c,.d,$(notdir $<))
+OUTDEP2	= | sed "1s/^/\$$(OBJPATH)/" > $(OBJPATH)$(subst .cpp,.d,$(notdir $<))
+
+# CHCKMKDIR = Verify if directory exists and create if not exist
+ifeq '$(OS_TYPE)' 'Windows'
+CHCKMKDIR	=	@$(shell if not exist "$(dir $@)" $(MKDIR) "$(dir $@)")
+else
+CHCKMKDIR	=	@(if [ -d $(dir $@) ]; then :; else $(MKDIR) $(dir $@); fi)
+#CHCKMKDIR = mkdir -p Debug
+endif
+
+
+
+

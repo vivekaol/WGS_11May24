@@ -1,0 +1,92 @@
+#------------------------  Target system related definitions ---------------------------#
+#
+# Makefile.tgt_linux
+# Included by applicatio Makefile
+#---------------------------------------------------------------------------------------#
+
+
+#--------------------------------- Target system name ----------------------------------#
+#
+# TGT_SYS = vxwork, psos, linux, solaris
+#
+#---------------------------------------------------------------------------------------#
+TGT_SYS = linux
+
+#----------------------------- Target sub directory name -------------------------------#
+# OBJ_PATH_SUFFIX = Directory name for Objects and libraries (optional)
+#            Note: Must end with a directory separator if used
+#
+# Ex:
+#
+# OBJ_PATH_SUFFIX = tgt/ 
+#
+#	<dev>/app/debug/tgt/
+#---------------------------------------------------------------------------------------#
+#OBJ_PATH_SUFFIX = $(TGT_SYS)/
+
+#-------------------------------- Target lib suffix name -------------------------------#
+# TGT_SUFFIX = Suffix added to the generated library names (optional)
+#
+# TGT_SUFFIX = _tgt
+#
+# Ex: <dev>/lib/appname_tgt.a
+#---------------------------------------------------------------------------------------#
+#TGT_SUFFIX = _$(TGT_SYS)
+
+#------------------------------- Target lib suffix name --------------------------------#
+#
+# TGT_SYS_STR = Target String to be displayed when compiling
+#---------------------------------------------------------------------------------------#
+TGT_SYS_STR = $(TGT_SYS)-$(ENV_BIT)
+
+
+#--------------------------------- Target endian type ----------------------------------#
+#
+# MACH_ENDIAN = Target system endian definition. Normally detected by the headers
+#---------------------------------------------------------------------------------------#
+#Uncomment one of the 2 following lines if compilation complains about undetected endianness
+#MACH_ENDIAN=-D_OCT_ENDIAN_TYPE_LE_
+#MACH_ENDIAN=-D_OCT_ENDIAN_TYPE_BE_
+
+#-------------------------------- Cross-compiler tools ---------------------------------#
+#
+# 
+#---------------------------------------------------------------------------------------#
+# OCT_CC=Compiler
+ifeq '$(OCT_CC)' ''
+#	OCT_CC = gcc
+	OCT_CC = arm-cortexa9-linux-gnueabi-gcc -g
+endif
+
+
+# OCT_AR=Archive builder used when "APP_TYPE=lib"
+ifeq '$(OCT_AR)' ''
+#	OCT_AR = ar -rc
+	OCT_AR = arm-cortexa9-linux-gnueabi-ar -cr
+endif
+
+# OCT_LD=Loader used when "APP_TYPE=dll"
+#ifeq '$(OCT_LD)' ''
+#	OCT_LD = $(OCT_CC) -shared
+	OCT_LD = arm-cortexa9-linux-gnueabi-ld
+#endif
+
+ifeq '$(OCT_AS)' ''
+OCT_AS =
+endif 
+
+#-------------------------------- Cross-compiler paths ---------------------------------#
+#
+# 
+#---------------------------------------------------------------------------------------#
+ifeq '$(SYSTEM_LIB)' ''
+	SYSTEM_LIB = -L/$(PRJ_LIB_PATH) -lpthread -lrt -lm
+endif
+
+#ifeq '$(SYSTEM_INC)' ''	
+#	SYSTEM_INC = -I/usr/include
+#endif
+
+TARGET_DEF = -D_LINUX_
+
+

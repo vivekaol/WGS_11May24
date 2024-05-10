@@ -1,0 +1,144 @@
+
+/*############################################################################
+ *
+ *                   *** FXLynx Technologies Ltd. ***
+ *
+ *     The information contained in this file is the property of FXLynx
+ *     Technologies Ltd. Except as specifically authorized in writing by
+ *     FXLynx Technologies Ltd. The user of this file shall keep information
+ *     contained herein confidential and shall protect same in whole or in
+ *     part from disclosure and dissemination to third parties.
+ *
+ *     Without prior written consent of FXLynx Technologies Ltd. you may not
+ *     reproduce, represent, or download through any means, the information 
+ *     contained herein in any way or in any form.
+ *
+ *       (c) FXLynx Technologies Ltd. 2015, All Rights Reserved
+ *
+ ############################################################################ */
+
+/*############################################################################
+ * File Name   : cmnDebug.h 
+ *
+ * Description : This file has support for logging based on module
+ *
+ * History     :
+ *
+ * Date			Author		            Details
+ * ---------------------------------------------------------------------------
+ * 27/01/2015	   Roshan Kumar Singh            File Creation
+ *############################################################################ */
+ 
+#ifndef CMN_DEBUG_H
+#define CMN_DEBUG_H
+
+#include <syslog.h>
+#include <stdarg.h>
+#include <time.h>
+#include "cmnTypes.h"
+
+#define DBG_MODULE(mod) mod,
+
+#define WGS3G_LOG_FILE                "/var/log/wgs3G"
+
+
+// Enumerates the log level for use log function.
+typedef enum
+{
+    LOG_OF_MESSAGE = 0,
+    LOG_OF_ERROR,
+    LOG_OF_WARNING,
+    LOG_OF_INFO,
+    LOG_OF_DEBUG,
+    N_LOG_LEVELS
+} LogLevel_e;
+
+// Log type mask for use log function.
+#define LOG_TO_NONE     3 // no log
+#define LOG_TO_STDERR   0  // print log info on shell
+#define LOG_TO_SYSLOG   1  // save log using syslog
+#define LOG_TO_FILELOG  2  // save log to file
+
+typedef unsigned int LogType_t;
+
+//Log file's maxium size, united byte
+#define MAX_FILE_SIZE (1<<20)
+
+void 
+LogInit(const char *logFileName);
+
+void concatLogFileContent(void);
+
+
+void
+DbgToLog(int type,
+    int lev,
+    const char *modName,
+    const char *functionName,
+    unsigned lineNo,
+    const char *s);
+void callbackChangeLogType(int logType);
+
+extern char gLogFileName[256];
+
+typedef enum
+{
+#include "cmnDbgMod.dat"
+    N_DBG_MODS //*< special value- number of modules
+} DbgModule_e;
+
+
+const char *dbgFmt(const char *fmt, ...);
+
+extern int gDbgLevel;
+extern unsigned int gLogFileType;
+
+extern int gDbgLevelMod[N_DBG_MODS];
+
+extern const char *const mod_name[N_DBG_MODS];
+
+#ifndef WGS_LOGFILE_TYPE
+#define WGS_LOGFILE_TYPE LOG_TO_LOGFILE
+#endif
+#if UMTS_DEBUG
+// switch debug to enabled.
+#define DEBUG(lev, printf_args)                                                                         \
+{                                                                                                     \
+    if(gLogFileType != LOG_TO_NONE)                                                                   \
+    {                                                                                                 \
+       if(gLogFileType != LOG_TO_STDERR)                                                              \
+       {                                                                                              \
+           // Logging all debug messages to files.                                                  \
+           if ((lev <= gDbgLevel) && (lev <= gDbgLevelMod[DBG_MODULE]))                                      \
+              DbgToLog(gLogFileType, lev, mod_name[DBG_MODULE], __FUNCTION__, __LINE__, dbgFmt printf_args);     \
+       }                                                                                              \
+       else                                                                                           \
+       {                                                                                               \
+          if ((lev <= gDbgLevel) && (lev <= gDbgLevelMod[DBG_MODULE]))                                      \
+          {   //Logging specified debug level message to stderr.                                      \
+              DbgToLog(LOG_TO_STDERR, lev, mod_name[DBG_MODULE],  __FUNCTION__, __LINE__, dbgFmt printf_args);  \
+          }                                                                                           \
+       }                                                                                              \
+    }                                                                                                 \
+} 
+#else
+// switch debug to disabled
+#define DEBUG(lev, printf_args) {;}
+#endif
+
+#define DEBUG1(printf_args) DEBUG(1, printf_args)
+
+#define DEBUG2(printf_args) DEBUG(2, printf_args)
+
+#define DEBUG3(printf_args) DEBUG(3, printf_args)
+
+#define DEBUG4(printf_args) DEBUG(4, printf_args)
+
+#define DEBUGMSG(printf_args) DEBUG(0, printf_args)
+
+
+#define CMM_FUNC_TRACE(x) DEBUG2(("########### FUNC " #x " ENTRY ##########"));   
+#define CMM_FUNC_ENTRY_TRACE() DEBUG4(("ENTRY! ============================>>"));   
+
+#endif /* CMN_DEBUG_H */
+

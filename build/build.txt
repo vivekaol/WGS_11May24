@@ -1,0 +1,5 @@
+User need to run 
+
+./oneBin.sh
+
+It will create all the binary for BTS8000 and BTS9100 for different pack S, G, F, H all in one go.
