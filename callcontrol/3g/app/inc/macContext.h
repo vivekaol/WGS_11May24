@@ -49,10 +49,10 @@
 #define MAC_MAX_UE_NUM         100
 #define MAC_MAX_LOG_CH_UE_NUM  5
 #define MAC_MAX_DCH_TRCH_NUM   1
-#define MAX_PAGING_CNT_UE_OUT_OF_COVERAGE 90
+#define MAX_PAGING_CNT_UE_OUT_OF_COVERAGE 10
 
 #ifdef FXL_BL_UE_POWER_OFF
-#define MAX_PAGING_CNT_UE_POWER_OFF 10
+#define MAX_PAGING_CNT_UE_POWER_OFF 1
 #endif
 
 typedef struct _MacTf_t

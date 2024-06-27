@@ -479,6 +479,7 @@ void generateSibs(fxL4gConfigureIdCatcherParamsCmd * cmd)
 	     inSibs->sib2.pB = LTE_PB_VALUE_TDD;
 	     inSibs->sib2.p0NominalPUSCH = LTE_PO_NOMINAL_PUSCH_TDD; // This may need to tuning
 	     inSibs->sib2.refSignalPower = LTE_REFERENCE_SIGNAL_POWER_TDD;
+		 logPrint(LOG_INFO, "refSignalPower = %d\n", inSibs->sib2.refSignalPower);
 	     inSibs->sib2.p0NominalPUCCH = LTE_PO_NOMINAL_PUCCH_TDD;
 	     inSibs->sib2.n1CsAn = LTE_PUCCH_NUM_CYCLIC_SHIFT_TDD;
 	     inSibs->sib2.nRBCqi = LTE_PUCCH_NUM_CQI_RB_ALLOCATED_TDD;		 
@@ -492,6 +493,7 @@ void generateSibs(fxL4gConfigureIdCatcherParamsCmd * cmd)
 		inSibs->sib2.pB = LTE_PB_VALUE;
 		inSibs->sib2.p0NominalPUSCH = LTE_PO_NOMINAL_PUSCH; // This may need to tuning
 		inSibs->sib2.refSignalPower = LTE_REFERENCE_SIGNAL_POWER;
+		logPrint(LOG_INFO, "refSignalPower = %d\n", inSibs->sib2.refSignalPower);
 		inSibs->sib2.p0NominalPUCCH = LTE_PO_NOMINAL_PUCCH;
 		inSibs->sib2.n1CsAn = LTE_PUCCH_NUM_CYCLIC_SHIFT;
 		inSibs->sib2.nRBCqi = LTE_PUCCH_NUM_CQI_RB_ALLOCATED;		
@@ -985,6 +987,7 @@ void generateSibsModify(fxL4gSysInfoModifyCmd * cmd)
 		inSibs->sib2.pB = LTE_PB_VALUE;
 		inSibs->sib2.p0NominalPUSCH = LTE_PO_NOMINAL_PUSCH; // This may need to tuning
 		inSibs->sib2.refSignalPower = LTE_REFERENCE_SIGNAL_POWER;
+		logPrint(LOG_INFO, "refSignalPower = %d\n", inSibs->sib2.refSignalPower);
 		inSibs->sib2.p0NominalPUCCH = LTE_PO_NOMINAL_PUCCH;
 		inSibs->sib2.n1CsAn = LTE_PUCCH_NUM_CYCLIC_SHIFT;
 		inSibs->sib2.nRBCqi = LTE_PUCCH_NUM_CQI_RB_ALLOCATED;
@@ -1091,7 +1094,10 @@ void generateSibsModify(fxL4gSysInfoModifyCmd * cmd)
 		if((cmd->sib2.p0NominalPUSCH > -127)&&(cmd->sib2.p0NominalPUSCH < 25))
 			inSibs->sib2.p0NominalPUSCH = cmd->sib2.p0NominalPUSCH; 
 		if((cmd->sib2.refSignalPower > -61)&&(cmd->sib2.refSignalPower < 51))
-			inSibs->sib2.refSignalPower = cmd->sib2.refSignalPower;
+			{
+				inSibs->sib2.refSignalPower = cmd->sib2.refSignalPower;
+				logPrint(LOG_INFO, "refSignalPower = %d\n", inSibs->sib2.refSignalPower);
+			}
 		if((cmd->sib2.p0NominalPUCCH > -128)&&(cmd->sib2.p0NominalPUCCH < -95))
 			inSibs->sib2.p0NominalPUCCH = cmd->sib2.p0NominalPUCCH;
 

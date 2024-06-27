@@ -939,6 +939,7 @@ sint32 recvFromExternalSocketInterface(tOCT_UINT8 *rcvbuffer, tOCT_UINT32 size_b
 
         case FXL_3G_START_IDCATCHER_CMD:
             currentOneBinState = ONEBIN_STATE_3G_IDCATCHING;
+            logPrint(LOG_INFO, "FXL_3G_START_IDCATCHER_CMD :: lastLac \n");
             umtsStartIdCatcher(rcvbuffer);
             break;
         case FXL_3G_STOP_IDCATCHER_CMD:
@@ -4458,6 +4459,7 @@ void umtsStartIdCatcher(unsigned char *inMsgBuf)
 #endif
 
     setNetworkDriverPriorityForLte(TRUE);
+    logPrint(LOG_INFO, "umtsStartIdCatcher :: createAndStart3gIdCatcherThread :: lastLac \n");
     rsp->result = createAndStart3gIdCatcherThread();
 
     if (rsp->result == FXL_FAILURE)
@@ -5684,7 +5686,8 @@ fxLResult createAndStart3gIdCatcherThread(void)
 
     if (pthread_create(&gUmtsIdCatcherThreadId, &gUmtsIdCatcherAttr, umtsIdCatcher, NULL))
     {
-        //      DEBUG1(("3G Id Catcher Creation failed\n"));
+        logPrint(LOG_INFO, "createAndStart3gIdCatcherThread ::  3G Id Catcher Creation failed \n");
+        //DEBUG1(("createAndStart3gIdCatcherThread :: 3G Id Catcher Creation failed\n"));
         return FXL_FAILURE;
     }
 
@@ -9258,8 +9261,10 @@ void lteSysInfoModifyCmdHandler(uint8 *inMsgBuf)
     fxL4gSysInfoModifyRsp *rsp = (fxL4gSysInfoModifyRsp *)msgBuf;
     memset(msgBuf, 0, sizeof(msgBuf));
 
-    // generateSib1Modify(cmd);
-    // generateSibsModify(cmd);
+    logPrint(LOG_INFO, "lteSysInfoModifyCmdHandler :: generateSib1Modify calling\n");
+
+    generateSib1Modify(cmd);
+    generateSibsModify(cmd);
 
     rsp->result = FXL_SUCCESS;
     rsp->hdr.msgLength = sizeof(fxL4gSysInfoModifyRsp);

@@ -1,0 +1,18 @@
+Integration of Layer1 for following completed:
+1. OBM-02.08.06-B450
+2. OCTSDR-2G-04.04.00-B3188-ALPHA
+3. CBRSDR-SR-3G-05.02.00-B543-ALPHA
+4. OCTSDR-LTE-04.04.02-B3652-ALPHA
+
+Following task implementation completed:
+
+1. Bug fix along with new OBM update. Updated package with OBM-02.08.06-B450
+2. 3G Out of service timer to 30 seconds. WGS will send out of coverage indication within 30 seconds
+3. Network scan binary files stored in non-volatile memory. all bin files and txt files are now stored in  /tmp directory.
+4. Ability to display last  LAC info of MS.Last location area code of mobile station is displayed.
+5. Ability to display IMEISV of MS. Display International Mobile Equipment Identity - Software Version of mobile station.
+6. Fix for  multiple scan iterations
+7. Calling WnmStop  before  calling WnmClose
+8. Changed  UMTS BL user Out Of Coverage Timer from  10 minutes to 30 Seconds.
+9. Changed  Power Ramping Step to 3dBm from  1 dBm & UL Interference Value to - 90 instead  of -102 to avoid  multiple  RRC Connection  Request from  the  phone. 
+10.Corrected  enum values in LTE freq  band indicator.

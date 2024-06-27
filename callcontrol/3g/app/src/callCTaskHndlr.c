@@ -41,6 +41,7 @@ static DbgModule_e  DBG_MODULE = app;
 
 ErrorCode_e rrcAppTaskHndlr(Msg_t msgBuf)
 {
+   logPrint(LOG_ERR, "rrcAppTaskHndlr :: lastLac \n");
    DEBUG3(("ENTRY rrcAppTaskHndlr: srcTask(%d), dstTask(%d), msgType(%d)\n", msgBuf.srcTaskId, msgBuf.dstTaskId, msgBuf.msgType));
    switch(msgBuf.srcTaskId)
    {

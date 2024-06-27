@@ -322,6 +322,7 @@ ErrorCode_e CellSmEvntHndlr(Msg_t msgBuf)
 
 ErrorCode_e UeSmL1EvtHndlr(Msg_t  msgBuf)
 {
+    logPrint(LOG_INFO, "UeSmL1EvtHndlr :: lastLac \n");
    ErrorCode_e retCode = SUCCESS_E;
    unsigned int *pUeRLId = NULL;
    UeDedicatedMeasReport *pDedMeasRep = NULL;

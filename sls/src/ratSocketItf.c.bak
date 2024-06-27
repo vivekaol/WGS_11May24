@@ -939,6 +939,7 @@ sint32 recvFromExternalSocketInterface(tOCT_UINT8 *rcvbuffer, tOCT_UINT32 size_b
 
         case FXL_3G_START_IDCATCHER_CMD:
             currentOneBinState = ONEBIN_STATE_3G_IDCATCHING;
+            logPrint(LOG_INFO, "FXL_3G_START_IDCATCHER_CMD :: lastLac \n");
             umtsStartIdCatcher(rcvbuffer);
             break;
         case FXL_3G_STOP_IDCATCHER_CMD:
@@ -4458,6 +4459,7 @@ void umtsStartIdCatcher(unsigned char *inMsgBuf)
 #endif
 
     setNetworkDriverPriorityForLte(TRUE);
+    logPrint(LOG_INFO, "umtsStartIdCatcher :: createAndStart3gIdCatcherThread :: lastLac \n");
     rsp->result = createAndStart3gIdCatcherThread();
 
     if (rsp->result == FXL_FAILURE)
@@ -4955,7 +4957,7 @@ void umtsSysInfoConfigHndlr(unsigned char *inMsgBuf)
         ASSIGN_NON_NEGATIVE(cmd->sib1Info.T316, gUmtsConfig.sib1Info.T316);
         ASSIGN_NON_NEGATIVE(cmd->sib1Info.T317, gUmtsConfig.sib1Info.T317);
     }
-    h1
+    
 
         if (cmd->sib2CfgPres)
     {
@@ -5684,7 +5686,8 @@ fxLResult createAndStart3gIdCatcherThread(void)
 
     if (pthread_create(&gUmtsIdCatcherThreadId, &gUmtsIdCatcherAttr, umtsIdCatcher, NULL))
     {
-        //      DEBUG1(("3G Id Catcher Creation failed\n"));
+        logPrint(LOG_INFO, "createAndStart3gIdCatcherThread ::  3G Id Catcher Creation failed \n");
+        //DEBUG1(("createAndStart3gIdCatcherThread :: 3G Id Catcher Creation failed\n"));
         return FXL_FAILURE;
     }
 
@@ -9483,6 +9486,8 @@ void generateUmtsData(void)
     ind->initialRscpVal = -60;
     ind->ulScramblingCode = 100;
     ind->dlChannelizationCode = 200;
+	ind->imeiSv = 1;
+    ind->last_lac = 111;
     logPrint(LOG_DEBUG, " PUMP DATA IMSI = %s , IMEI = %s \n", ind->imsiStr, ind->imeiStr);
 
     writeToExternalSocketInterface((tOCT_UINT8 *)ind, sizeof(fxL3gRegistrationAttemptedInd));

@@ -3363,6 +3363,8 @@ int convertRscpInDbm (unsigned int rscpValue)
  */
 void checkAndActOnBlackWhiteListIMSI (unsigned int ueIndex)
 {
+    
+    logPrint(LOG_INFO, "checkAndActOnBlackWhiteListIMSI :: lastLac \n");
     unsigned int idx = 0;
     fxL3gRegistrationAttemptedInd ueDetails;
     char *imsiForPcchDel = (char*)malloc((sizeof (char)) * (MAX_IMSI_LENGTH + 1));
@@ -3422,9 +3424,9 @@ void checkAndActOnBlackWhiteListIMSI (unsigned int ueIndex)
     }
 
     /* Fill Propagation imeiSv */
-    ueDetails.imeiSv = pUeSpecificData->imeiSv;     // Dev team changes
+    ueDetails.imeiSv = ueControlBlock.ueSpecificData[ueIndex].imeiSv;     // Dev team changes
         
-    logPrint(LOG_ERR, "Loading ueDetails.imeiSv = %d\n", ueDetails.imeiSv );
+    logPrint(LOG_INFO, "Loading ueDetails.imeiSv = %d\n", ueDetails.imeiSv );
     
     /* Fill UL Scrambling Code */
     ueDetails.ulScramblingCode = UL_SCRAMBLING_CODE + ueIndex;
@@ -3446,13 +3448,14 @@ void checkAndActOnBlackWhiteListIMSI (unsigned int ueIndex)
 
     /* copy UMTS Supported Bands */
     ueDetails.numberOfFddBandSupported = ueControlBlock.ueSpecificData[ueIndex].numberOfBandSupported;
+    logPrint(LOG_INFO, "Loading LastLac ueDetails.numberOfFddBandSupported = %d\n", ueDetails.numberOfFddBandSupported );
     for(idx = 0; idx < ueDetails.numberOfFddBandSupported; idx++)
     {
         ueDetails.supportedFddBand[idx] = ueControlBlock.ueSpecificData[ueIndex].supportedBand[idx];
     }
     /* Fill Propagation lastLac */
-    ueDetails.lastLac = pUeSpecificData->lastLac;       // Dev team changes
-    logPrint(LOG_ERR, "Loading ueDetails.imeiSv = %d\n", ueDetails.imeiSv );
+    ueDetails.lastLac = ueControlBlock.ueSpecificData[ueIndex].lastLac;       // Dev team changes
+    logPrint(LOG_INFO, "Loading LastLac ueDetails.lastLac = %d\n", ueDetails.lastLac );
     
     
 #if 0
@@ -3662,6 +3665,8 @@ int calculateBnadNumber (fxL3gBandType bandRet)
 void handleUeEventInWaitIdentityRespState (unsigned int ueIndex, 
                                            RrcUeEvent   ueEvent)
 {
+    logPrint(LOG_INFO, "handleUeEventInWaitIdentityRespState :: lastLac ueEvent = %d\n", ueEvent);   // check if UE_IDENTITY_REQ_TIMEOUT event is triggered
+    
     unsigned int checkForBlackWhiteList = 1;
 	int wlRejectCause = 0;
 
@@ -3671,6 +3676,7 @@ void handleUeEventInWaitIdentityRespState (unsigned int ueIndex,
     switch (ueEvent)
     {
         case UE_IDENTITY_REQ_TIMEOUT:
+           logPrint(LOG_INFO, "handleUeEventInWaitIdentityRespState :: lastLac UE_IDENTITY_REQ_TIMEOUT ueEvent = %d\n", ueEvent);   // check if UE_IDENTITY_REQ_TIMEOUT event is triggered
            if (0 == pUeSpecificData->imeiLen)
            {
               if (pUeSpecificData->ueIMEIReqCount < MAX_RETRANSMIT_IDENTITY_REQ)
@@ -4280,6 +4286,7 @@ void handleUeEventInWaitRLDeleteRespState (unsigned int ueIndex,
  */
 void handleUeEvents (unsigned int ueIndex, RrcUeEvent ueEvent)
 {
+    logPrint(LOG_INFO, "handleUeEvents :: lastLac \n");
     DEBUG3(("Received event(%ld) in UE State (%ld)\n", 
            ueEvent, ueControlBlock.ueSpecificData[ueIndex].ueState));
 
