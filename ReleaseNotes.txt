@@ -16,3 +16,5 @@ Following task implementation completed:
 8. Changed  UMTS BL user Out Of Coverage Timer from  10 minutes to 30 Seconds.
 9. Changed  Power Ramping Step to 3dBm from  1 dBm & UL Interference Value to - 90 instead  of -102 to avoid  multiple  RRC Connection  Request from  the  phone. 
 10.Corrected  enum values in LTE freq  band indicator.
+
+moran test
